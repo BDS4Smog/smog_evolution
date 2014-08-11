@@ -1,0 +1,211 @@
+IAAI 2014
+
+INNOVATIVE APPLICATIONS OF ARTIFICIAL INTELLIGENCE
+Deployed
+
+Predictive Models for Determining If and When to Display Online Lead Forms
+Timothy Chan, Joseph I, Carlos Macasaet, Daniel Kang, Robert M. Hardy, Carlos Ruiz, Rigel Porras, Brian Baron, Karim Qazi, Padraic Hannon, Tomonori Honda
+
+Engineering Works Scheduling for Hong Kong's Rail Network
+Andy Hon Wai Chun, Ted Yiu Tat Suen
+
+THink: Inferring Cognitive Status from Subtle Behaviors
+Randall Davis, David J. Libon, Rhoda Au, David Pitman, Dana L. Penney
+
+The Quest Draft: An Automated Course Allocation Algorithm
+Richard Hoshino, Caleb Raible-Clark
+
+Evaluation and Deployment of a People-to-People Recommender in Online Dating
+A. Krzywicki, W. Wobcke, Y. S. Kim, X. Cai, M. Bain, P. Compton, A. Mahidadia
+
+Deploying Community Commands: A Software Command Recommender System Case Study
+Wei Li, Justin Matejka, Tovi Grossman, George Fitzmaurice
+
+CiteSeerX: AI in a Digital Library Search Engine
+Jian Wu, Kyle Williams, Hung-Hsuan Chen, Madian Khabsa, Cornelia Caragea, Alexander Ororbia, Douglas Jordan, C. Lee Giles
+
+Emerging Applications
+
+Pattern Discovery in Protein Networks Reveals High-Confidence Predictions of Novel Interactions
+Hazem Radwan Ahmed, Janice I. Glasgow
+
+Crowdsourcing for Multiple-Choice Question Answering
+Bahadir Ismail Aydin, Yavuz Selim Yilmaz, Yaliang Li, Qi Li, Jing Gao, Murat Demirbas
+
+Advice Provision for Energy Saving in Automobile Climate Control Systems
+Amos Azaria, Sarit Kraus, Claudia V. Goldman, Omer Tsimhoni
+
+A Smart Range Helping Cognitively-Impaired Persons Cooking
+Bruno Bouchard, Kevin Bouchard, Abdenour Bouzouane
+
+STREETS: Game-Theoretic Traffic Patrolling with Exploration and Exploitation
+Matthew Brown, Sandhya Saisubramanian, Pradeep Varakantham, Milind Tambe
+
+Swissnoise: Online Polls with Game-Theoretic Incentives
+Florent Garcin, Boi Faltings
+
+Robust Protection of Fisheries with COmPASS
+William B. Haskell, Debarun Kar, Fei Fang, Milind Tambe, Sam Cheung, Lt. Elizabeth Denicola
+
+Optimizing a Start-Stop Controller Using Policy Search
+Noel Hollingsworth, Jason Meyer, Ryan McGee, Jeffrey Doering, George Konidaris, Leslie Kaelbling
+
+A Unified Framework for Augmented Reality and Knowledge-Based Systems in Maintaining Aircraft
+Geun-Sik Jo, Kyeong-Jin Oh, Inay Ha, Kee-Sung Lee, Myung-Duk Hong, Ulrich Neumann, Suya You
+
+A Schedule Optimization Tool for Destructive and Non-Destructive Vehicle Tests
+Jeremy Ludwig, Annaka Kalton, Robert Richards, Brian Bautsch, Craig Markusic, J. Schumacher
+
+AI-MIX: Using Automated Planning to Steer Human Workers Towards Better Crowdsourced Plans
+Lydia Manikonda, Tathagata Chakraborti, Sushovan De, Kartik Talamadupula, Subbarao Kambhampati
+
+A Speech-Driven Second Screen Application for TV Program Discovery
+Peter Z. Yeh, Ben Douglas, William Jarrold, Adwait Ratnaparkhi, Deepak Ramachandran, Peter F. Patel-Schneider, Stephen Laverty, Nirvana Tikku, Sean Brown, Jeremy Mendel
+
+Clustering Species Accumulation Curves to Identify Skill Levels of Citizen Scientists Participating in the eBird Project
+Jun Yu, Weng-Keen Wong, Steve Kelling
+
+StrokeBank: Automating Personalized Chinese Handwriting Generation
+Alfred Zong, Yuke Zhu
+
+
+
+IAAI-13 ACCEPTED PAPERS
+Deployed
+
+An Antimicrobial Prescription Surveillance System that Learns from Experience 
+Mathieu Beaudoin, Froduald Kabanza, Vincent Nault, Louis Valiquette
+
+The Deployment of a Constraint-Based Dental School Timetabling System 
+Hadrien Cambazard, Barry O’Sullivan, Helmut Simonis
+
+Integrating Digital Pens in Breast Imaging for Instant Knowledge Acquisition 
+Daniel Sonntag, Markus Weber, Matthias Hammon, Alexander Cavallaro
+
+USI Answers: Natural Language Question Answering Over (Semi-) Structured Industry Data 
+Ulli Waltinger, Dan Tecuci, Mihaela Olteanu, Vlad Mocanu, Sean Sullivan
+
+GRADE: Machine Learning Support for Graduate Admissions 
+Austin Waters, Risto Miikkulainen
+
+Emerging
+
+Leveraging Crowdsourcing to Detect Improper Tasks in Crowdsourcing Marketplaces 
+Yukino Baba, Hisashi Kashima, Kei Kinoshita, Goushi Yamaguchi, Yosuke Akiyoshi
+
+Interactive Information Extraction and Navigation to Enable Effective Link Analysis and Visualization of Unstructured Text 
+Emily Budlong, Carrie Pine, Mark Zappavigna, James Homer, Charles Proefrock, John Gucwa, Michael Crystal, Ralph Weischedel
+
+Policies to Optimize Work Performance and Thermal Safety in Exercising Humans 
+Mark Buller, Eric Sodomka, William Tharion, Cynthia Clements, Reed Hoyt, Odest Chadwicke Jenkins
+
+Clustering Hand-Drawn Sketches via Analogical Generalization 
+Maria D. Chang, Kenneth D. Forbus
+
+Train Outstable Scheduling as Constraint Satisfaction 
+Andy Hon Wai Chun
+
+Timed Probabilistic Automaton: A Bridge between Raven and Song Scope for Automatic Species Recognition 
+Shufei Duan, Jinglan Zhang, Paul Roe, Jason Wimmer, Xueyan Dong, Anthony Truskinger, Michael Towsey
+
+Balancing the Traveling Tournament Problem for Weekday and Weekend Games 
+Richard Hoshino, Ken-ichi Kawarabayashi
+
+Assessing the Predictability of Hospital Readmission Using Machine Learning 
+Arian Hosseinzadeh, Masoumeh Izadi, Aman Verma, Doina Precup, David Buckeridge
+
+Detection and Prediction of Adverse and Anomalous Events in Medical Robots 
+Kai Liang, Feng Cao, Zhuofu Bai, Mark Renfrew, M. Cenk Çavusoglu, Andy Podgurski, Soumya Ray
+
+Detecting the Moment of Snap in Real-World Football Videos 
+Behrooz Mahasseni, Sheng Chen, Alan Fern, Sinisa Todorovic
+
+Multiagent Router Throttling: Decentralized Coordinated Response against DDoS Attacks 
+Kleanthis Malialis, Daniel Kudenko
+
+Early Prediction of Coronary Artery Calcification Levels Using Machine Learning 
+Sriraam Natarajan, Kristian Kersting, Edward Ip, David R. Jacobs, Jr, Jeffrey Carr
+
+Scalable Randomized Patrolling for Securing Rapid Transit Networks 
+Pradeep Varakantham, Hoong Chuin Lau, Zhi Yuan
+
+Case-Based Meta-Prediction for Bioinformatics 
+Xi Yun, Susan L. Epstein, Weiwei Han, Lei Xie
+
+Physical Activity Recognition from Accelerometer Data Using a Multi-Scale Ensemble Method 
+Yonglei Zheng, Weng-Keen Wong, Xinze Guan, Stewart Trost
+
+Challenge
+
+Scalable Models for Patterns of Life 
+J. T. Folsom-Kovarik, Sae Schatz, Randolph M. Jones, Kathleen Bartlett, Robert E. Wray
+
+
+IAAI-12 Accepted Papers
+Deployed Papers
+Advisor Agent Support for Issue Tracking in Medical Device Development
+Touby Drew, Maria Gini
+A Real-Time Decision Support System for High Cost Oil-Well Drilling
+Operations
+Odd Erik Gundersen, Frode Sørmo, Agnar Aamodt, Pål Skalle
+Statistical Anomaly Detection for Train Fleets
+Anders Holst, Markus Bohlin, Jan Ekman, Ola Sellin, Björn Lindström, Stefan
+Larsen
+Transcription System Using Automatic Speech Recognition for the Japanese
+Parliament (Diet)
+Tatsuya Kawahara
+eBird: A Human/Computer Learning Network for Biodiversity Conservation and
+Research
+Steve Kelling, Jeff Gerbracht, Daniel Fink, Carl Lagoze, Weng-Keen Wong, Jun
+Yu, Theodoros Damoulas, Carla Gomes
+Using AI Local Search to Improve an OR Optimizer
+F. Morgado, R. L. Saldanha, J. Roussado, L. Albino, E. Morgado, J. P. Martins
+Applying Automated Language Translation at a Global Enterprise Level
+Nestor Rychtyckyj, Craig Plesco
+Mechanix: A Sketch-Based Tutoring System for Statics Courses
+Stephanie Valentine, Francisco Vides, George Lucchese, David Turner, Hong-
+hoe Kim, Wenzhe Li, Julie Linse, Tracy Hammond
+Emerging Applications
+Applying Constraint Programming to Incorporate Engineering Methodologies
+into the Design Process of Complex Systems
+Odellia Boni, Fabiana Fournier, Nir Mashkif, Yehuda Naveh, Aviad Sela, Uri
+Shani, Zvi Lando, Alon Modai
+Using Quantitative Information to Improve Analogical Matching between
+Sketches
+Maria D. Chang, Kenneth D. Forbus
+A Methodology for Deploying the Max-Sum Algorithm and a Case Study on
+Unmanned Aerial VehiclesF. M. Delle Fave, A. Farinelli, A. Rogers, N. R. Jennings
+Toward Habitable Assistance from Spoken Dialogue Systems
+Susan L. Epstein, Rebecca J. Passonneau, Tiziana Ligorio, Joshua Gordon
+Integrating Learner Help Requests Using a POMDP in an Adaptive Training
+System
+Jeremiah T. Folsom-Kovarik, Gita Sukthankar, Sae Schatz
+Using POMDPs to Control an Accuracy-Processing Time Trade-Off in Video
+Surveillance
+Komal Kapoor, Christopher Amato, Nisheeth Srivastava, Paul Schrater
+Intelligent Computation of Reachability Sets for Space Missions
+Erik Komendera, Daniel Scheeres, Elizabeth Bradley
+Using a Critic to Promote Less Popular Candidates in a People-to-People
+Recommender System
+A. Krzywicki, W. Wobcke, X. Cai, M. Bain, A. Mahidadia, P. Compton, Y. S. Kim
+Local Search for Designing Noise-Minimal Rotorcraft Approach Trajectories
+Robert A. Morris, K. Brent Venable, Marco Pegoraro, James Lindsey
+Learning Driver's Behavior to Improve the Acceptance of Adaptive Cruise
+Control
+Avi Rosenfeld, Zevi Bareket, Claudia V. Goldman, Sarit Kraus, David J.
+LeBlanc, Omer Tsimoni
+Multi-Agent Simulation of En-Route Human Air-Traffic Controller
+David Sislák, Premysl Volf, Michal Pechoucek, Christopher T. Cannon, Duc N.
+Nguyen, William C. Regli
+QuickPup: A Heuristic Backtracking Algorithm for the Partner Units
+Configuration Problem
+Erich C. Teppan, Gerhard Friedrich, Andreas A. Falkner
+Cost-Sensitive Risk Stratification in the Diagnosis of Heart Disease
+Selen Uguroglu, Jaime Carbonell, Mark Doyle, Robert Biederman
+Statistical Relational Learning to Predict Primary Myocardial Infarction from
+Electronic Health Records
+Jeremy C. Weiss, David Page, Sriraam Natarajan, Peggy L. Peissig, Catherine
+McCarty
+TRUSTS: Scheduling Randomized Patrols for Fare Inspection in Transit
+Systems
+Zhengyu Yin, Albert Xin Jiang, Matthew P. Johnson, Milind Tambe, ChristopherKiekintveld, Kevin Leyton-Brown, Tuomas Sandholm, John P. Sullivan
