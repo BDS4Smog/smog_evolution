@@ -183,7 +183,18 @@ TestingTime=end_time_test-start_time_test           %   Calculate CPU time (seco
 if Elm_Type == REGRESSION
     TestingAccuracy=sqrt(mse(TV.T - TY))            %   Calculate testing accuracy (RMSE) for regression case
 end
-
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+num = size(TV.T,2);
+tmp_num = [];
+for i = 1:num
+    tmp_num(i)=i;
+end
+[new_tv,orders] = sort(TV.T);
+new_ty = TY(orders);
+%plot(tmp_num,TV.T,tmp_num,TY);
+%plot(tmp_num,new_tv,tmp_num,new_ty);
+1+1;
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 if Elm_Type == CLASSIFIER
 %%%%%%%%%% Calculate training & testing classification accuracy
     MissClassificationRate_Training=0;

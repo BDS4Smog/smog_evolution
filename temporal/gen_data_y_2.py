@@ -6,46 +6,42 @@ import string
 import codecs
 #import math
 #connect
-dic = {}
-result=[]
+conn = pymongo.Connection("10.214.0.147",27017)
+#set database
+db = conn.Air
+#db.authenticate("pm","ccntgrid")
+#set collection
+collection = db.City
 
-f = codecs.open('city_num_X', 'r',"utf-8")
-for line in f:
-    result.append(line.strip(u'\r\n').split(u','))
-for i in result:
-    t = string.atoi(i[1])
-    dic[t]=i[0]
+#get all city name
+city = collection.find()
 
-f.close()
-r = []
-with open('in.txt','r') as f:
-    for line in f:
-        r.append(map(int,line.split('\r\n')))
+#initialize the tmp result
+result = {}
+for i in city:
+    name = i["area"]
+    result[name] = -1 #aqi>200
 
-for i in r:
+#select result
+collection = db.Cities
 
-    print i[0]
-    print dic[i[0]]
-    
-
-
-
-'''
-ofile = codecs.open('city_num_y', 'w',"utf-8")
+ofile = codecs.open('city_num_y_1', 'w',"utf-8")
 count = 1
 for tmp in result:
-    ofile.write(tmp+",%d\r\n"%(count))
+    ofile.write(tmp+" %d\r\n"%(count))
     count+=1
 ofile.close()
 
 print "Ready"
 
-ofile = codecs.open('y', 'w',"utf-8")
+ofile = codecs.open('y_1_test_1', 'w',"utf-8")
 time = collection.distinct('time_point')
-current_time = "9999-99-99T"
-present_time = "9999-99-99T"
+tmp
+current_time = "2014-99-99T"
+present_time = "2014-99-99T"
 for i in time:
     if(i[:11]==current_time):
+#    if(i[11]!='1' or i[12]!='8'):
         continue
     print "---"
     present_time = current_time
@@ -57,27 +53,36 @@ for i in time:
     print i_s
     print i_l
     
-    record = collection.find({"time_point":{"$gt": i_s,"$lt":i_l}})
-
+    record = collection.find({"time_point":{"$gte": i_s,"$lt":i_l}})
+    
 #    print i
+    old_time = "2014-99-13T18:00:00Z"
+    old_area = "ss"
     for t in record:
         t_name = t["area"]
-        if(t["aqi"]>200):
-            result[t_name][0]=1
-        elif(result[t_name][0] == -1):
-            result[t_name][0]=0
-
+        if (result[t_name] == -1):
+            result[t_name]=0
+            
+        if(t["aqi"]>200 and (t["time_point"]!=old_time or t["area"]!=old_time)):
+            old_time = t["time_point"]
+            old_area = t["area"]
+#            result[t_name]+=1
+            result[t_name]=1       
     ofile.write(current_time)
     print current_time
     for tmp in result:
-        ofile.write(" %d"%(result[tmp][0]));
-        result[tmp][0] = -1
+#        if (result[tmp]>0 and result[tmp]<2):
+#            result[tmp]=0
+#        elif(result[tmp]>=2):
+#            result[tmp]=1
+        ofile.write(" %d"%(result[tmp]));
+        result[tmp] = -1
     ofile.write("\r\n")
 
      
 ofile.close()
 
-'''
+
 #result = collection.find({"area":"舟山","aqi":{"$gte":300}})
 #for i in result:
 #    print i

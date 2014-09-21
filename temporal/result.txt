@@ -1,8 +1,0 @@
-一、
-	仅采用北京的数据，参数如下：
-		weather wind temp_low temp_high
-		pm2_5 pm10 no2 so2 co o3
-		humidity wind_speed rain_3h clouds
-	共263组数据，其中210组作为训练数据，其余52组作为测试数据
-	采用elm算法，节点数30
-	准确率 0.877170(调整参数后可达到0.89左右)

@@ -63,11 +63,18 @@ for i in time:
         if (result[t_name] == -1):
             result[t_name]=0
             
-        if(t["aqi"]>200 and (t["time_point"]!=old_time or t["area"]!=old_time)):
+        if(result[t_name] < 1 and t["aqi"]>100 and t["aqi"]<=200 and (t["time_point"]!=old_time or t["area"]!=old_time)):
             old_time = t["time_point"]
             old_area = t["area"]
 #            result[t_name]+=1
-            result[t_name]=1       
+            result[t_name]=1
+            
+        if(result[t_name] < 2 and t["aqi"]>200 and (t["time_point"]!=old_time or t["area"]!=old_time)):
+            old_time = t["time_point"]
+            old_area = t["area"]
+#            result[t_name]+=1
+            result[t_name]=2
+         
     ofile.write(current_time)
     print current_time
     for tmp in result:
