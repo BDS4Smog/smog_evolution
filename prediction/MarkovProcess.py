@@ -13,6 +13,8 @@ def status_print(S):
     my_str = my_str + str(S[0][S.shape[1]-1]) + ')'
     print my_str
 
+#usage: python MarkovProvess file1 file 2  K
+#save file: np.save('xxx.npy',M)
 if __name__ == '__main__':
     m_f = sys.argv[1]
     v_f = sys.argv[2]
