@@ -1,3 +1,0 @@
-'''
-extract from mongo db
-'''
