@@ -9,20 +9,22 @@ def print_vector(V):
     my_str = my_str + str(V[V.shape[0]-1]) + ')'
     print my_str
 
-def Markov_process(M,V,K):
+def Markov_process(M,p,K):
+    V = labelToVector(p)
     for i in range(0,K):
         V = np.dot(V,M)
-    return V
+    l = vectorToLabel(V)
+    return l 
 
 def labelToVector(l):
     V=np.zeros(cm.LABEL_NUM)
     V[l-1]=1
     return V
 
-def vectorToLabel(S):
-    val = S.max()
-    for i in range(0,S.shape[0]-1):
-        if S[i] == val:
+def vectorToLabel(V):
+    val = V.max()
+    for i in range(0,V.shape[0]-1):
+        if V[i] == val:
             return i+1 
 
 def loadTest(test_file):
@@ -38,9 +40,8 @@ def loadTest(test_file):
 def predict(M,P,K):
     PP=[]
     for p in P:
-        V = labelToVector(p)
-        V = Markov_process(M,V,K)
-        PP.append(vectorToLable(V))
+        l = Markov_process(M,p,K)
+        PP.append(l)
     return PP
 
 def calAcc(PP,T):
@@ -52,6 +53,9 @@ def calAcc(PP,T):
     return float(num)/float(size)
 
 if __name__ == '__main__':
+    if len(sys.argv)!=4:
+       sys.stderr.write("usage: python Evaluation.py train_file test_file K\n")
+       sys.exit(1)
     train_file = sys.argv[1]
     M = cm.calM(train_file)
     test_file = sys.argv[2]

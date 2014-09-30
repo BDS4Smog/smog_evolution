@@ -36,7 +36,7 @@ def statisticsTran(T):
 
 def calM(sample_file):
     T = loadTranMap(sample_file)    
-    t = statisticsTran(T) 
-    return t
+    M = statisticsTran(T) 
+    return M 
 
 
