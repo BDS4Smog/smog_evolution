@@ -9,6 +9,7 @@ LABEL_NUM = 6
 def readFile(file_name):
     f = open(file_name,'r')
     lines = f.readlines()
+    f.close()
     return lines
    
 def loadTranMap(file_name):
