@@ -9,9 +9,9 @@ import codecs
 dic = {}
 result=[]
 
-f = codecs.open('city_num_X', 'r',"utf-8")
+f = codecs.open('city_num_X_1', 'r',"utf-8")
 for line in f:
-    result.append(line.strip(u'\r\n').split(u','))
+    result.append(line.strip(u'\r\n').split(u' '))
 for i in result:
     t = string.atoi(i[1])
     dic[t]=i[0]

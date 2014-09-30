@@ -3,8 +3,8 @@ function []  = select_city( n_dist, n_aqi)
 %   Detailed explanation goes here
 %n_dist = 10;
 %n_aqi = 8;
-n_dist = 10;
-n_aqi = 8;
+n_dist = 15;
+n_aqi = 15;
 
 dist_dic = load('dist_matrix');
 dist_bj = dist_dic(:,14);
@@ -19,7 +19,7 @@ final = cities(d);
 
 fp=fopen('in.txt','w'); 
 for i=1:n_aqi
-    fprintf(fp,'%d\n',final(i));  
+    fprintf(fp,'%d\r\n',final(i));  
 end
 
 X = load('X_1');

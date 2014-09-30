@@ -133,7 +133,7 @@ for i in distinct_time:
         ofile.write("\r\n")
 
         ofile1.write(oldtime+" "+newtime)
-        ofile1.write(" %f %d %f %d"%(result["pm2_5"],result["y"],result["n_pm2_5"],result["y1"]))
+        ofile1.write(" %f %d %f %d"%(result["y"],result["y1"]))
         ofile1.write("\r\n")
         print oldtime
         print newtime
