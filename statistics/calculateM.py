@@ -15,11 +15,12 @@ def loadTranMap(file_name):
     lines = readFile(file_name)
     T = np.zeros((LABEL_NUM,LABEL_NUM))
     for line in lines:
-        arr = line.strip().split(',')
-        s1 = int(arr[2])
-        s2 = int(arr[3])
+        arr = line.strip().split(' ')
+        s1 = int(arr[3]) - 1
+        s2 = int(arr[5]) - 1
         T[s1][s2] = T[s1][s2] + 1
     return T
+
 
 def statisticsTran(T):
     t = np.zeros((LABEL_NUM,LABEL_NUM))
@@ -33,6 +34,7 @@ def statisticsTran(T):
         
 
 if __name__ == '__main__':
-    T = loadTranMap('')    
+    T = loadTranMap(sys.argv[1])    
     t = statisticsTran(T) 
-    np.save('',t)
+    np.save(sys.argv[2],t)
+
