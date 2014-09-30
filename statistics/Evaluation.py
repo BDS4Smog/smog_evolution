@@ -17,4 +17,7 @@ def Markov_process(M,V,K):
     return V
 
 if __name__ == '__main__':
-    M = cm.calM(DIR + 'station_Changping.txt')
+    test_file = sys.argv[1]
+    train_file = sys.argv[2]
+    K = int(sys.argv[3])
+    M = cm.calM(DIR + test)
