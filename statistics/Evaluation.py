@@ -1,7 +1,5 @@
-DIR='../statistics/'
 import sys
 import numpy as np
-sys.path.append(DIR)
 import calculateM as cm
 
 def print_status(S):
@@ -17,7 +15,7 @@ def Markov_process(M,V,K):
     return V
 
 if __name__ == '__main__':
-    test_file = sys.argv[1]
-    train_file = sys.argv[2]
-    K = int(sys.argv[3])
+    train_file = sys.argv[1]
     M = cm.calM(DIR + test)
+    test_file = sys.argv[2]
+    K = int(sys.argv[3])
