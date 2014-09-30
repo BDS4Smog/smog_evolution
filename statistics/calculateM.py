@@ -33,8 +33,9 @@ def statisticsTran(T):
     return t
         
 
-if __name__ == '__main__':
-    T = loadTranMap(sys.argv[1])    
+def calM(sample_file):
+    T = loadTranMap(sample_file)    
     t = statisticsTran(T) 
-    np.save(sys.argv[2],t)
+    return t
+
 
