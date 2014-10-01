@@ -26,8 +26,8 @@ result = {}
 #select result
 print "Ready"
 
-ofile = codecs.open('X_1', 'w',"utf-8")
-ofile1 = codecs.open('city_Beijing', 'w',"utf-8")
+ofile = codecs.open('X_1.txt', 'w',"utf-8")
+ofile1 = codecs.open('city_Beijing.txt', 'w',"utf-8")
 distinct_time = collection.distinct('time_point')
 current_time = "2014-99-99T"
 for i in distinct_time:
@@ -54,9 +54,11 @@ for i in distinct_time:
     record = collection.find({"time_point":i,"area":c})
     flag1=0
     flag2=0
+    oldtime = i
+    newtime=0
     for r in record:
-        oldtime = i
-        newtime_s = time.mktime(time.strptime(oldtime,ISOTIMEFORMAT))+7200
+        
+        newtime_s = time.mktime(time.strptime(oldtime,ISOTIMEFORMAT))+14400
         newtime = time.strftime(ISOTIMEFORMAT,time.localtime(newtime_s))
         record1 = collection.find({"time_point":newtime,"area":c})
         if(record1.count()!=0):
@@ -101,10 +103,9 @@ for i in distinct_time:
         break
 
 #data for weather
-    record = collection_w.find({"time_point":{"$gte": oldtime,"$lte":newtime},"area":c})
+    record = collection_w.find({"time_point":{"$gt": oldtime,"$lt":newtime},"area":c})
     if(record.count()!=0):
         flag2=1
-        '''
         count = record.count()
         result["wind_direction"] = 0.0
         result["wind_speed"] = 0.0
@@ -120,14 +121,8 @@ for i in distinct_time:
         result["wind_speed"] /= count
         result["rain_3h"] /= count
         result["clouds"] /= count
-        '''
-        for r2 in record:
-            result["wind_direction"] = r2["wind_direction_value"]
-            result["wind_speed"] = r2["wind_speed_value"]
-            result["rain_3h"] = r2["rain_3h"]
-            result["clouds"] = r2["clouds_value"]
+        
 
-            
 #write to file
     if(flag1==1 and flag2==1):
         ofile.write(oldtime+" "+newtime)
