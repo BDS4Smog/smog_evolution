@@ -66,7 +66,7 @@ if __name__ == '__main__':
     test_file = sys.argv[2]
     Ps,Ts=loadTest(test_file)
     for k in range(0,cm.SPAN_NUM):
-        PP=predict(M,Ps[k],K)
+        PP=predict(M[k],Ps[k],K)
         acc = calAcc(PP,Ts[k])
         print 'Span:' + str(k+1) +  ', accuracy: ' + str(acc)
 
