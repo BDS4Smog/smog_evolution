@@ -58,7 +58,7 @@ for i in distinct_time:
     flag2=0
     for r in record:
         oldtime = i
-        newtime_s = time.mktime(time.strptime(oldtime,ISOTIMEFORMAT))+7200
+        newtime_s = time.mktime(time.strptime(oldtime,ISOTIMEFORMAT))+14400
         newtime = time.strftime(ISOTIMEFORMAT,time.localtime(newtime_s))
         record1 = collection.find({"time_point":newtime,"position_name":c})
         if(record1.count()!=0):
