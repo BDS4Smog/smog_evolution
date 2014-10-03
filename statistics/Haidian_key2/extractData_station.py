@@ -102,9 +102,10 @@ for i in distinct_time:
         break
 
     if(flag1==1):
-        ofile1.write(oldtime+" "+newtime)
-        ofile1.write(" %f %d %f %d"%(result["pm2_5"],result["y"],result["n_pm2_5"],result["y1"]))
-        ofile1.write("\r\n")
+        if result["pm2_5"]!=0.0 and result["n_pm2_5"]!=0:
+            ofile1.write(oldtime+" "+newtime)
+            ofile1.write(" %f %d %f %d"%(result["pm2_5"],result["y"],result["n_pm2_5"],result["y1"]))
+            ofile1.write("\r\n")
         print oldtime
         print newtime
         
