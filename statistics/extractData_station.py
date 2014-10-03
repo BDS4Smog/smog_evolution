@@ -9,7 +9,7 @@ ISOTIMEFORMAT='%Y-%m-%dT%XZ'
 
 #import math
 #connect
-c = "奥体中心"
+c = "海淀区万柳"
 conn = pymongo.Connection("10.214.0.147",27017)
 #set database
 db = conn.Air
@@ -27,7 +27,7 @@ result = {}
 print "Ready"
 
 #ofile = codecs.open('X_1', 'w',"utf-8")
-ofile1 = codecs.open('station_Aotizhongxin.txt', 'w',"utf-8")
+ofile1 = codecs.open('station_Haidian.txt', 'w',"utf-8")
 distinct_time = collection.distinct('time_point')
 current_time = "2014-99-99T"
 for i in distinct_time:
