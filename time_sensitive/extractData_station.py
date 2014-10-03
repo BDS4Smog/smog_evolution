@@ -9,7 +9,7 @@ ISOTIMEFORMAT='%Y-%m-%dT%XZ'
 
 #import math
 #connect
-c = "奥体中心"
+c = "东四"
 conn = pymongo.Connection("10.214.0.147",27017)
 #set database
 db = conn.Air
@@ -27,7 +27,7 @@ result = {}
 print "Ready"
 
 #ofile = codecs.open('X_1', 'w',"utf-8")
-ofile1 = codecs.open('station_Aotizhongxin.txt', 'w',"utf-8")
+ofile1 = codecs.open('station_Dongsi.txt', 'w',"utf-8")
 distinct_time = collection.distinct('time_point')
 current_time = "2014-99-99T"
 for i in distinct_time:
@@ -111,9 +111,10 @@ for i in distinct_time:
         break
 
     if(flag1==1):
-        ofile1.write(oldtime+" "+newtime)
-        ofile1.write(" %d %f %d %f %d"%(result["period"],result["pm2_5"],result["y"],result["n_pm2_5"],result["y1"]))
-        ofile1.write("\r\n")
+        if result["pm2_5"]!=0 and result["n_pm2_5"]!=0:
+            ofile1.write(oldtime+" "+newtime)
+            ofile1.write(" %d %f %d %f %d"%(result["period"],result["pm2_5"],result["y"],result["n_pm2_5"],result["y1"]))
+            ofile1.write("\r\n")
         print oldtime
         print newtime
         

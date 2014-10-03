@@ -1,0 +1,112 @@
+K=1...................
+Aotizhongxin
+Span:1, accuracy: 0.463157894737
+Span:2, accuracy: 0.430962343096
+Span:3, accuracy: 0.355102040816
+Span:4, accuracy: 0.497835497835
+Span:1, accuracy: 0.496732026144
+Span:2, accuracy: 0.380753138075
+Span:3, accuracy: 0.390756302521
+Span:4, accuracy: 0.493087557604
+Span:1, accuracy: 0.503267973856
+Span:2, accuracy: 0.361344537815
+Span:3, accuracy: 0.370044052863
+Span:4, accuracy: 0.454148471616
+Span:1, accuracy: 0.443452380952
+Span:2, accuracy: 0.442477876106
+Span:3, accuracy: 0.370078740157
+Span:4, accuracy: 0.472826086957
+Changping
+Span:1, accuracy: 0.411585365854
+Span:2, accuracy: 0.365217391304
+Span:3, accuracy: 0.334693877551
+Span:4, accuracy: 0.41116751269
+Span:1, accuracy: 0.424920127796
+Span:2, accuracy: 0.407725321888
+Span:3, accuracy: 0.364055299539
+Span:4, accuracy: 0.426160337553
+Span:1, accuracy: 0.422077922078
+Span:2, accuracy: 0.358974358974
+Span:3, accuracy: 0.396475770925
+Span:4, accuracy: 0.406926406926
+Span:1, accuracy: 0.431818181818
+Span:2, accuracy: 0.423076923077
+Span:3, accuracy: 0.342741935484
+Span:4, accuracy: 0.395238095238
+Haidian
+Span:1, accuracy: 0.498327759197
+Span:2, accuracy: 0.381818181818
+Span:3, accuracy: 0.33606557377
+Span:4, accuracy: 0.447257383966
+Span:1, accuracy: 0.5
+Span:2, accuracy: 0.417721518987
+Span:3, accuracy: 0.314814814815
+Span:4, accuracy: 0.507614213198
+Span:1, accuracy: 0.535947712418
+Span:2, accuracy: 0.48
+Span:3, accuracy: 0.420600858369
+Span:4, accuracy: 0.483050847458
+Span:1, accuracy: 0.513422818792
+Span:2, accuracy: 0.388
+Span:3, accuracy: 0.287449392713
+Span:4, accuracy: 0.507317073171
+Dongsi
+Span:1, accuracy: 0.4375
+Span:2, accuracy: 0.395652173913
+Span:3, accuracy: 0.402542372881
+Span:4, accuracy: 0.517391304348
+Span:1, accuracy: 0.424528301887
+Span:2, accuracy: 0.352422907489
+Span:3, accuracy: 0.378854625551
+Span:4, accuracy: 0.421052631579
+Span:1, accuracy: 0.467741935484
+Span:2, accuracy: 0.358974358974
+Span:3, accuracy: 0.384920634921
+Span:4, accuracy: 0.455882352941
+Span:1, accuracy: 0.434285714286
+Span:2, accuracy: 0.467592592593
+Span:3, accuracy: 0.347457627119
+Span:4, accuracy: 0.424242424242
+Beijing
+Span:1, accuracy: 0.526479750779
+Span:2, accuracy: 0.423423423423
+Span:3, accuracy: 0.461224489796
+Span:4, accuracy: 0.547169811321
+Span:1, accuracy: 0.564912280702
+Span:2, accuracy: 0.393305439331
+Span:3, accuracy: 0.425855513308
+Span:4, accuracy: 0.572769953052
+Span:1, accuracy: 0.526315789474
+Span:2, accuracy: 0.425101214575
+Span:3, accuracy: 0.423076923077
+Span:4, accuracy: 0.46976744186
+Span:1, accuracy: 0.553054662379
+Span:2, accuracy: 0.441767068273
+Span:3, accuracy: 0.466403162055
+Span:4, accuracy: 0.561497326203
+K=2....................
+Aotizhongxin
+Span:1, accuracy: 0.373027259684
+Span:2, accuracy: 0.207216494845
+Span:3, accuracy: 0.310218978102
+Span:4, accuracy: 0.316614420063
+Changping
+Span:1, accuracy: 0.366764275256
+Span:2, accuracy: 0.23599137931
+Span:3, accuracy: 0.285983066792
+Span:4, accuracy: 0.35970464135
+Haidian
+Span:1, accuracy: 0.399253731343
+Span:2, accuracy: 0.23467230444
+Span:3, accuracy: 0.27619047619
+Span:4, accuracy: 0.378114842904
+Dongsi
+Span:1, accuracy: 0.343441466855
+Span:2, accuracy: 0.217030114226
+Span:3, accuracy: 0.298165137615
+Span:4, accuracy: 0.287958115183
+Beijing
+Span:1, accuracy: 0.421218074656
+Span:2, accuracy: 0.251536885246
+Span:3, accuracy: 0.304050756467
+Span:4, accuracy: 0.476271186441
