@@ -9,7 +9,7 @@ ISOTIMEFORMAT='%Y-%m-%dT%XZ'
 
 #import math
 #connect
-c = "东四"
+c = "昌平镇"
 conn = pymongo.Connection("10.214.0.147",27017)
 #set database
 db = conn.Air
@@ -26,13 +26,13 @@ result = {}
 print "Ready"
 
 ofile = []
-ofile.append(codecs.open('city_Dongsi.txt', 'w',"utf-8"))
-ofile.append(codecs.open('city_Dongsi_1.txt', 'w',"utf-8"))
-ofile.append(codecs.open('city_Dongsi_2.txt', 'w',"utf-8"))
-ofile.append(codecs.open('city_Dongsi_3.txt', 'w',"utf-8"))
-ofile.append(codecs.open('city_Dongsi_4.txt', 'w',"utf-8"))
-ofile.append(codecs.open('city_Dongsi_5.txt', 'w',"utf-8"))
-ofile.append(codecs.open('city_Dongsi_6.txt', 'w',"utf-8"))
+ofile.append(codecs.open('city_Changping.txt', 'w',"utf-8"))
+ofile.append(codecs.open('city_Changping_1.txt', 'w',"utf-8"))
+ofile.append(codecs.open('city_Changping_2.txt', 'w',"utf-8"))
+ofile.append(codecs.open('city_Changping_3.txt', 'w',"utf-8"))
+ofile.append(codecs.open('city_Changping_4.txt', 'w',"utf-8"))
+ofile.append(codecs.open('city_Changping_5.txt', 'w',"utf-8"))
+ofile.append(codecs.open('city_Changping_6.txt', 'w',"utf-8"))
 
 distinct_time = collection.distinct('time_point')
 current_time = "2014-99-99T"

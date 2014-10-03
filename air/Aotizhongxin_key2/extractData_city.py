@@ -9,7 +9,7 @@ ISOTIMEFORMAT='%Y-%m-%dT%XZ'
 
 #import math
 #connect
-c = "东四"
+c = "奥体中心"
 conn = pymongo.Connection("10.214.0.147",27017)
 #set database
 db = conn.Air
@@ -26,13 +26,7 @@ result = {}
 print "Ready"
 
 ofile = []
-ofile.append(codecs.open('city_Dongsi.txt', 'w',"utf-8"))
-ofile.append(codecs.open('city_Dongsi_1.txt', 'w',"utf-8"))
-ofile.append(codecs.open('city_Dongsi_2.txt', 'w',"utf-8"))
-ofile.append(codecs.open('city_Dongsi_3.txt', 'w',"utf-8"))
-ofile.append(codecs.open('city_Dongsi_4.txt', 'w',"utf-8"))
-ofile.append(codecs.open('city_Dongsi_5.txt', 'w',"utf-8"))
-ofile.append(codecs.open('city_Dongsi_6.txt', 'w',"utf-8"))
+ofile.append(codecs.open('city_Aotizhongxin.txt', 'w',"utf-8"))
 
 distinct_time = collection.distinct('time_point')
 current_time = "2014-99-99T"
@@ -57,13 +51,13 @@ for i in distinct_time:
     
     print "-----"
 #data for weather pollution
-    record = collection.find({"time_point":i,"position_name":c})
+    record = collection.find({"time_point":i,"position_name":c,"area":"北京"})
     flag1=0
     for r in record:
         oldtime = i
-        newtime_s = time.mktime(time.strptime(oldtime,ISOTIMEFORMAT))+7200
+        newtime_s = time.mktime(time.strptime(oldtime,ISOTIMEFORMAT))+14400
         newtime = time.strftime(ISOTIMEFORMAT,time.localtime(newtime_s))
-        record1 = collection.find({"time_point":newtime,"position_name":c})
+        record1 = collection.find({"time_point":newtime,"position_name":c,"area":"北京"})
         if(record1.count()!=0):
             result["pm2_5"] = r["pm2_5"]
             result["pm10"] = r["pm10"]
@@ -126,13 +120,6 @@ for i in distinct_time:
         ofile[0].write(" %d %d %d"%(result["y"],result["y1"],result["train"]))
         ofile[0].write("\r\n")
 
-        tmp = result["y"]
-        ofile[tmp].write(oldtime+" "+newtime)
-        ofile[tmp].write(" %f %f %f %f %f %f"%(result["pm2_5"],result["pm10"],result["no2"],result["so2"],result["co"],result["o3"]))
-        ofile[tmp].write(" %d %d %d"%(result["y"],result["y1"],result["train"]))
-        ofile[tmp].write("\r\n")
-        print oldtime
-        print newtime
         
 for i in range(len(ofile)):
     ofile[i].close()
