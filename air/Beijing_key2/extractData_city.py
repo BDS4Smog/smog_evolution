@@ -26,8 +26,9 @@ result = {}
 #select result
 print "Ready"
 
-ofile = codecs.open('X_1', 'w',"utf-8")
-ofile1 = codecs.open('city_Beijing', 'w',"utf-8")
+ofile = []
+ofile.append(codecs.open('city_Beijing.txt', 'w',"utf-8"))
+
 distinct_time = collection.distinct('time_point')
 current_time = "2014-99-99T"
 for i in distinct_time:
@@ -36,27 +37,26 @@ for i in distinct_time:
     result["pm10"] = -1
     result["no2"] = -1
     result["so2"] = -1
-    #4 of weather condition in this time period
-    result["wind_direction"] = -1
-    result["wind_speed"] = -1
-    result["rain_3h"] = -1
-    result["clouds"] = -1
+    result["co"] = -1
+    result["o3"] = -1
     #4 of pollution 2/3 hours later 
     result["n_pm2_5"] = -1
     result["n_pm10"] = -1
     result["n_no2"] = -1
     result["n_so2"] = -1
+    result["n_co"] = -1
+    result["n_o3"] = -1
+    result["train"] = -1
     result["y"] = -1
-    
+    result["y1"]=-1
     
     print "-----"
 #data for weather pollution
     record = collection.find({"time_point":i,"area":c})
     flag1=0
-    flag2=0
     for r in record:
         oldtime = i
-        newtime_s = time.mktime(time.strptime(oldtime,ISOTIMEFORMAT))+7200
+        newtime_s = time.mktime(time.strptime(oldtime,ISOTIMEFORMAT))+14400
         newtime = time.strftime(ISOTIMEFORMAT,time.localtime(newtime_s))
         record1 = collection.find({"time_point":newtime,"area":c})
         if(record1.count()!=0):
@@ -64,22 +64,18 @@ for i in distinct_time:
             result["pm10"] = r["pm10"]
             result["no2"] = r["no2"]
             result["so2"] = r["so2"]
+            result["co"] = r["co"]
+            result["o3"] = r["o3"]
             for r1 in record1:
+                flag1=1
                 result["n_pm2_5"] = r1["pm2_5"]
                 result["n_pm10"] = r1["pm10"]
                 result["n_no2"] = r1["no2"]
-                flag1=1
                 result["n_so2"] = r1["so2"]
+                result["n_co"] = r1["co"]
+                result["n_o3"] = r1["o3"]
                 tmp = r["pm2_5"]
                 tmp1 = r1["pm2_5"]
-                if(oldtime[11:13]<="06"):
-                    result["period"]=1
-                elif(oldtime[11:13]<="12"):
-                    result["period"]=2
-                elif(oldtime[11:13]<="18"):
-                    result["period"]=3
-                else:
-                    result["period"]=4
                 if(tmp<=35):
                     result["y"]=1
                 elif(tmp<=75):
@@ -105,46 +101,29 @@ for i in distinct_time:
                     result["y1"]=5
                 else:
                     result["y1"]=6
+
+
+                if(oldtime[8:10]<="05"):
+                    result["train"]=0
+                else:
+                    result["train"]=1
                 break
+
+                
         break
-
-#data for weather
-    record = collection_w.find({"time_point":{"$gt": oldtime,"$lt":newtime},"area":c})
-    if(record.count()!=0):
-        flag2=1
-        count = record.count()
-        result["wind_direction"] = 0.0
-        result["wind_speed"] = 0.0
-        result["rain_3h"] = 0.0
-        result["clouds"] = 0.0
-
-        for r2 in record:
-            result["wind_direction"] += r2["wind_direction_value"]
-            result["wind_speed"] += r2["wind_speed_value"]
-            result["rain_3h"] += r2["rain_3h"]
-            result["clouds"] += r2["clouds_value"]
-        result["wind_direction"] /= count
-        result["wind_speed"] /= count
-        result["rain_3h"] /= count
-        result["clouds"] /= count
-        
+ 
 
 #write to file
-    if(flag1==1 and flag2==1):
-        ofile.write(oldtime+" "+newtime)
-        
+    if(flag1==1):
+        ofile[0].write(oldtime+" "+newtime)
         #write to file
-        ofile.write(" %d %d %f %f %f %f"%(result["period"],result["y"],result["pm2_5"],result["pm10"],result["no2"],result["so2"]))
-        ofile.write(" %f %f %f %f"%(result["wind_direction"],result["wind_speed"],result["rain_3h"],result["clouds"]))  
-        ofile.write(" %f %f %f %f"%(result["n_pm2_5"],result["n_pm10"],result["n_no2"],result["n_so2"]))
-        ofile.write(" %d"%(result["y1"]))
-        ofile.write("\r\n")
+        ofile[0].write(" %f %f %f %f %f %f"%(result["pm2_5"],result["pm10"],result["no2"],result["so2"],result["co"],result["o3"]))
+        ofile[0].write(" %d %d %d"%(result["y"],result["y1"],result["train"]))
+        ofile[0].write("\r\n")
 
-        ofile1.write(oldtime+" "+newtime)
-        ofile1.write(" %d %f %d %f %d"%(result["period"],result["pm2_5"],result["y"],result["n_pm2_5"],result["y1"]))
-        ofile1.write("\r\n")
         print oldtime
         print newtime
         
-ofile.close()
+for i in range(len(ofile)):
+    ofile[i].close()
 
