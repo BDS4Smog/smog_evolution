@@ -3,7 +3,7 @@ function [ Train_acc, Test_acc ] = evaluation_ELM( type,name )
 %   Detailed explanation goes here
 LABEL_NUM=6;
 ROUND_NUM=4;
-NEURONS =[20,20,20,20,20,20];
+NEURONS =[20,20,20,20,20,5];
 Train_acc = [0,0,0,0];
 Test_acc = [0,0,0,0];
 for j = 1:LABEL_NUM
@@ -23,7 +23,7 @@ for j = 1:LABEL_NUM
            Tr = [T(1:start_1-1,:)',T(end_1+1:length(T),:)']';    
        end
        Tr = [Tr(:,10),Tr(:,3:8)];
-       [Tr_acc, Te_acc] = my_ELM(Tr, Te, 1, NEURONS(j), 'sig');
+       [Tr_acc, Te_acc] = my_ELM(Tr, Te, 1, NEURONS(j), 'sig')
        Train_acc(i) = Train_acc(i) + Tr_acc;
        Test_acc(i) = Test_acc(i) + Te_acc;
    end

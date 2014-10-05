@@ -140,12 +140,12 @@ OutputWeight=pinv(H') * T';                        % implementation without regu
 %Guang-Bin Huang, Hongming Zhou, Xiaojian Ding, and Rui Zhang, "Extreme Learning Machine for Regression and Multi-Class Classification," submitted to IEEE Transactions on Pattern Analysis and Machine Intelligence, October 2010. 
 
 end_time_train=cputime;
-TrainingTime=end_time_train-start_time_train        %   Calculate CPU time (seconds) spent for training ELM
+TrainingTime=end_time_train-start_time_train;        %   Calculate CPU time (seconds) spent for training ELM
 
 %%%%%%%%%%% Calculate the training accuracy
 Y=(H' * OutputWeight)';                             %   Y: the actual output of the training data
 if Elm_Type == REGRESSION
-    TrainingAccuracy=sqrt(mse(T - Y))               %   Calculate training accuracy (RMSE) for regression case
+    TrainingAccuracy=sqrt(mse(T - Y));               %   Calculate training accuracy (RMSE) for regression case
 end
 clear H;
 
@@ -176,10 +176,10 @@ switch lower(ActivationFunction)
 end
 TY=(H_test' * OutputWeight)';                       %   TY: the actual output of the testing data
 end_time_test=cputime;
-TestingTime=end_time_test-start_time_test           %   Calculate CPU time (seconds) spent by ELM predicting the whole testing data
+TestingTime=end_time_test-start_time_test;           %   Calculate CPU time (seconds) spent by ELM predicting the whole testing data
 
 if Elm_Type == REGRESSION
-    TestingAccuracy=sqrt(mse(TV.T - TY))            %   Calculate testing accuracy (RMSE) for regression case
+    TestingAccuracy=sqrt(mse(TV.T - TY));            %   Calculate testing accuracy (RMSE) for regression case
 end
 
 if Elm_Type == CLASSIFIER
@@ -194,7 +194,7 @@ if Elm_Type == CLASSIFIER
             MissClassificationRate_Training=MissClassificationRate_Training+1;
         end
     end
-    TrainingAccuracy=1-MissClassificationRate_Training/size(T,2)
+    TrainingAccuracy=1-MissClassificationRate_Training/size(T,2);
     for i = 1 : size(TV.T, 2)
         [x, label_index_expected]=max(TV.T(:,i));
         [x, label_index_actual]=max(TY(:,i));
@@ -202,5 +202,5 @@ if Elm_Type == CLASSIFIER
             MissClassificationRate_Testing=MissClassificationRate_Testing+1;
         end
     end
-    TestingAccuracy=1-MissClassificationRate_Testing/size(TV.T,2)  
+    TestingAccuracy=1-MissClassificationRate_Testing/size(TV.T,2);  
 end
