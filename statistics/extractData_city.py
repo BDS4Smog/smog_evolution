@@ -133,7 +133,6 @@ for i in distinct_time:
        
         #ensure the records are not missing values
         if result["pm2_5"] != 0.0 and result["n_pm2_5"] !=0.0:
-            print 'hello'
             ofile1.write(oldtime+" "+newtime)
             ofile1.write(" %f %d %f %d"%(result["pm2_5"],result["y"],result["n_pm2_5"],result["y1"]))
             ofile1.write("\r\n")

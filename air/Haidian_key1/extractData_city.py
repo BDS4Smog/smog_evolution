@@ -26,13 +26,13 @@ result = {}
 print "Ready"
 
 ofile = []
-ofile.append(codecs.open('city_Haidian.txt', 'w',"utf-8"))
-ofile.append(codecs.open('city_Haidian_1.txt', 'w',"utf-8"))
-ofile.append(codecs.open('city_Haidian_2.txt', 'w',"utf-8"))
-ofile.append(codecs.open('city_Haidian_3.txt', 'w',"utf-8"))
-ofile.append(codecs.open('city_Haidian_4.txt', 'w',"utf-8"))
-ofile.append(codecs.open('city_Haidian_5.txt', 'w',"utf-8"))
-ofile.append(codecs.open('city_Haidian_6.txt', 'w',"utf-8"))
+ofile.append(codecs.open('station_Haidian.txt', 'w',"utf-8"))
+ofile.append(codecs.open('station_Haidian_1.txt', 'w',"utf-8"))
+ofile.append(codecs.open('station_Haidian_2.txt', 'w',"utf-8"))
+ofile.append(codecs.open('station_Haidian_3.txt', 'w',"utf-8"))
+ofile.append(codecs.open('station_Haidian_4.txt', 'w',"utf-8"))
+ofile.append(codecs.open('station_Haidian_5.txt', 'w',"utf-8"))
+ofile.append(codecs.open('station_Haidian_6.txt', 'w',"utf-8"))
 
 distinct_time = collection.distinct('time_point')
 current_time = "2014-99-99T"
@@ -119,7 +119,7 @@ for i in distinct_time:
  
 
 #write to file
-    if(flag1==1):
+    if(flag1==1 and result["pm2_5"]!=0.0 and result["pm10"]!=0.0 and result["no2"]!=0.0 and result["so2"]!=0.0 and result["co"]!=0.0 and result["o3"]!=0.0 and result["n_pm2_5"]!=0.0):
         ofile[0].write(oldtime+" "+newtime)
         #write to file
         ofile[0].write(" %f %f %f %f %f %f"%(result["pm2_5"],result["pm10"],result["no2"],result["so2"],result["co"],result["o3"]))
