@@ -1,4 +1,4 @@
-function [ TrainingTime,TrainingAccuracy ] = my_elm_train( train_data, Elm_Type, NumberofHiddenNeurons, ActivationFunction, ModelName)
+function [ TrainingAccuracy ] = my_elm_train( train_data, Elm_Type, NumberofHiddenNeurons, ActivationFunction, ModelName)
 %MY_ELM_TRAIN Summary of this function goes here
 %   Detailed explanation goes here
 
@@ -41,8 +41,6 @@ if Elm_Type~=REGRESSION
     T=temp_T*2-1;
 end                                                 %   end if of Elm_Type
 
-%%%%%%%%%%% Calculate weights & biases
-start_time_train=cputime;
 
 %%%%%%%%%%% Random generate input weights InputWeight (w_i) and biases BiasofHiddenNeurons (b_i) of hidden neurons
 InputWeight=rand(NumberofHiddenNeurons,NumberofInputNeurons)*2-1;
@@ -70,13 +68,11 @@ clear tempH;                                        %   Release the temparary ar
 
 %%%%%%%%%%% Calculate output weights OutputWeight (beta_i)
 OutputWeight=pinv(H') * T';
-end_time_train=cputime;
-TrainingTime=end_time_train-start_time_train        %   Calculate CPU time (seconds) spent for training ELM
 
 %%%%%%%%%%% Calculate the training accuracy
 Y=(H' * OutputWeight)';                             %   Y: the actual output of the training data
 if Elm_Type == REGRESSION
-    TrainingAccuracy=sqrt(mse(T - Y))               %   Calculate training accuracy (RMSE) for regression case
+    TrainingAccuracy=sqrt(mse(T - Y));               %   Calculate training accuracy (RMSE) for regression case
     output=Y;    
 end
 clear H;
