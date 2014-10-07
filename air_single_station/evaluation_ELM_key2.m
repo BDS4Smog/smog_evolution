@@ -2,8 +2,8 @@ function [ accuracy ] = evaluation_ELM_key2( type, name )
 %EVALUATION_ELM2 Summary of this function goes here
 %   Detailed explanation goes hert
 
-type = 'station'
-name = 'Aotizhongxin'
+type = 'city'
+name = 'Beijing'
 
 LABEL_NUM=6;
 ROUND_NUM=4;
@@ -42,7 +42,7 @@ for i = 1:N
     init = zeros(1,LABEL_NUM);
     init(1,te_data(i,9)) = 1;
     
-    result(i,:) = init*M*M;
+    result(i,:) = init*M;
     [ tmp ,c]=max(result(i,:));
     if c==te_data(i,10)
         correct = correct+1;
