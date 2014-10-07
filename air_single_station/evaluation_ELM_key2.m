@@ -2,12 +2,12 @@ function [ accuracy ] = evaluation_ELM_key2( type, name )
 %EVALUATION_ELM2 Summary of this function goes here
 %   Detailed explanation goes hert
 
-type = 'city'
-name = 'Beijing'
+type = 'station'
+name = 'Aotizhongxin'
 
 LABEL_NUM=6;
 ROUND_NUM=4;
-NEURONS =[20,20,20,20,20,5];
+NEURONS =[10,10,10,10,10,5];
 
 for i = 1:LABEL_NUM
     

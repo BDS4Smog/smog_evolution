@@ -9,8 +9,8 @@ ISOTIMEFORMAT='%Y-%m-%dT%XZ'
 
 #import math
 #connect
-c = "海淀区万柳"
-cities = [u"奥体中心",u"官园",u"天坛",u"农展馆"]
+c = "东四"
+cities = [u"昌平镇",u"古城",u"万寿西宫",u"奥体中心"]
 
 
 
@@ -30,13 +30,7 @@ result = {}
 print "Ready"
 
 ofile = []
-ofile.append(codecs.open('station_Haidian.txt', 'w',"utf-8"))
-ofile.append(codecs.open('station_Haidian_1.txt', 'w',"utf-8"))
-ofile.append(codecs.open('station_Haidian_2.txt', 'w',"utf-8"))
-ofile.append(codecs.open('station_Haidian_3.txt', 'w',"utf-8"))
-ofile.append(codecs.open('station_Haidian_4.txt', 'w',"utf-8"))
-ofile.append(codecs.open('station_Haidian_5.txt', 'w',"utf-8"))
-ofile.append(codecs.open('station_Haidian_6.txt', 'w',"utf-8"))
+ofile.append(codecs.open('station_Dongsi.txt', 'w',"utf-8"))
 
 distinct_time = collection.distinct('time_point')
 current_time = "2014-99-99T"
@@ -93,7 +87,7 @@ for i in distinct_time:
         avg_count["o3"] = 0
         
         oldtime = i
-        newtime_s = time.mktime(time.strptime(oldtime,ISOTIMEFORMAT))+7200
+        newtime_s = time.mktime(time.strptime(oldtime,ISOTIMEFORMAT))+14400
         newtime = time.strftime(ISOTIMEFORMAT,time.localtime(newtime_s))
         record1 = collection.find({"time_point":newtime,"position_name":c})
         if(record1.count()!=0):
@@ -248,13 +242,7 @@ for i in distinct_time:
         ofile[0].write(" %d %d %d"%(result["y"],result["y1"],result["train"]))
         ofile[0].write("\r\n")
 
-        tmp = result["y"]
-        ofile[tmp].write(oldtime+" "+newtime)
-        ofile[tmp].write(" %f %f %f %f %f %f"%(result["pm2_5"],result["pm10"],result["no2"],result["so2"],result["co"],result["o3"]))
-        for i_c in range(len(cities)):
-            ofile[tmp].write(" %f %f %f %f %f %f"%(tmp_result[i_c]["pm2_5"],tmp_result[i_c]["pm10"],tmp_result[i_c]["no2"],tmp_result[i_c]["so2"],tmp_result[i_c]["co"],tmp_result[i_c]["o3"]))
-        ofile[tmp].write(" %d %d %d"%(result["y"],result["y1"],result["train"]))
-        ofile[tmp].write("\r\n")
+
         print oldtime
         print newtime
         
