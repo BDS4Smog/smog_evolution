@@ -1,4 +1,4 @@
-function [ output] = my_elm_predict( test_data, model_name )
+function [ output,label] = my_elm_predict( test_data, model_name )
 %MY_ELM_PREDICT Summary of this function goes here
 %   Detailed explanation goes here
 REGRESSION=0;
