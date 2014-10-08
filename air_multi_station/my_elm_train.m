@@ -89,7 +89,7 @@ if Elm_Type == CLASSIFIER
             MissClassificationRate_Training=MissClassificationRate_Training+1;
         end
     end
-    TrainingAccuracy=1-MissClassificationRate_Training/NumberofTrainingData
+    TrainingAccuracy=1-MissClassificationRate_Training/NumberofTrainingData;
 end
 
 if Elm_Type~=REGRESSION

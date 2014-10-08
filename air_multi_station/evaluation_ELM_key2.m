@@ -1,12 +1,14 @@
-function [ accuracy ] = evaluation_ELM_key2( type, name )
+function [ accuracy ] = evaluation_ELM_key2( type, name, if_pca)
 %EVALUATION_ELM2 Summary of this function goes here
 %   Detailed explanation goes hert
 
-type = 'station'
-name = 'Dongsi'
+type = 'station';
+name = 'Dongsi';
+if_pca = 1;
 
 LABEL_NUM=6;
 NEURONS =[20,20,20,20,20,10];
+REDUCED_DIM = 30;
 
 for i = 1:LABEL_NUM
     
@@ -14,10 +16,15 @@ for i = 1:LABEL_NUM
     tr_data = load(tr_FILE);
     
     tr_data = tr_data(find(tr_data(:,35)==1),:);
-%    tr_data = [tr_data(:,34) tr_data(:,3) tr_data(:,9) tr_data(:,15) tr_data(:,21) tr_data(:,27)]
-    tr_data = [tr_data(:,34) tr_data(:,3:32)]
+%   tr_data = [tr_data(:,34) tr_data(:,3) tr_data(:,9) tr_data(:,15) tr_data(:,21) tr_data(:,27)]
+    if if_pca == 1
+        [COEFF,tr_SCORE,LATENT] = pca(tr_data(:,3:32));
+        tr_data_used = [tr_data(:,34) tr_SCORE(:,1:REDUCED_DIM)]; 
+    else
+        tr_data_used = [tr_data(:,34) tr_data(:,3:32)];
+    end 
     
-    my_elm_train(tr_data,1,NEURONS(i),'sig',['model',num2str(i)]);
+    my_elm_train(tr_data_used,1,NEURONS(i),'sig',['model',num2str(i)]);
 end
 
 te_FILE = strcat(name,'_key1/',type, '_', name,'.txt');    
@@ -28,9 +35,16 @@ N = size(te_data,1);
 correct = 0;
 result = zeros(N,LABEL_NUM);
 for i = 1:N
-    M = []
+    M = [];
     for j = 1:LABEL_NUM
-       [tmp_output,label] = my_elm_predict([te_data(i,34) te_data(i,3:32)],['model',num2str(j)]);
+       if if_pca == 1
+           te_SCORE = te_data(i,3:32)*COEFF;
+           te_data_used = [te_data(i,34) te_SCORE(:,1:REDUCED_DIM)];
+       else
+           te_data_used = [te_data(i,34) te_data(i,3:32)];
+       end
+       
+       [tmp_output,label] = my_elm_predict(te_data_used,['model',num2str(j)]);
        
        tmp_output = (tmp_output-min(tmp_output))/(max(tmp_output)-min(tmp_output));
        tmp_output = tmp_output/sum(tmp_output);
