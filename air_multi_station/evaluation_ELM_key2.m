@@ -4,11 +4,11 @@ function [ accuracy ] = evaluation_ELM_key2( type, name, if_pca)
 
 type = 'station';
 name = 'Dongsi';
-if_pca = 1;
+if_pca = 0;
 
 LABEL_NUM=6;
-NEURONS =[20,20,20,20,20,10];
-REDUCED_DIM = 30;
+NEURONS =[30,20,20,10,10,5];
+REDUCED_DIM = 25;
 
 for i = 1:LABEL_NUM
     
@@ -24,7 +24,7 @@ for i = 1:LABEL_NUM
         tr_data_used = [tr_data(:,34) tr_data(:,3:32)];
     end 
     
-    my_elm_train(tr_data_used,1,NEURONS(i),'sig',['model',num2str(i)]);
+    [TrainingAccuracy]=my_elm_train(tr_data_used,1,NEURONS(i),'sig',['model',num2str(i)]);
 end
 
 te_FILE = strcat(name,'_key1/',type, '_', name,'.txt');    

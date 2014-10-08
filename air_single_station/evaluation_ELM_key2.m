@@ -6,7 +6,6 @@ type = 'station'
 name = 'Dongsi'
 
 LABEL_NUM=6;
-ROUND_NUM=4;
 NEURONS =[10,10,10,10,10,5];
 
 for i = 1:LABEL_NUM
@@ -15,7 +14,7 @@ for i = 1:LABEL_NUM
     tr_data = load(tr_FILE);
     
     tr_data = tr_data(find(tr_data(:,11)==1),:);
-    tr_data = [tr_data(:,10) tr_data(:,3:8)]
+    tr_data = [tr_data(:,10) tr_data(:,3:8)];
     
     my_elm_train(tr_data,1,NEURONS(i),'sig',['model',num2str(i)]);
 end
@@ -28,7 +27,7 @@ N = size(te_data,1);
 correct = 0;
 result = zeros(N,LABEL_NUM);
 for i = 1:N
-    M = []
+    M = [];
     for j = 1:LABEL_NUM
        [tmp_output,label] = my_elm_predict([te_data(i,10) te_data(i,3:8)],['model',num2str(j)]);
        
