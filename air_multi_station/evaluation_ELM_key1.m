@@ -8,7 +8,7 @@ if_pca = 0;
 
 LABEL_NUM=6;
 NEURONS =[30,20,20,10,10,5];
-REDUCED_DIM = 25;
+REDUCED_DIM = 15;
 
 for i = 1:LABEL_NUM
     
@@ -18,7 +18,7 @@ for i = 1:LABEL_NUM
     tr_data = tr_data(find(tr_data(:,35)==1),:);
 %   tr_data = [tr_data(:,34) tr_data(:,3) tr_data(:,9) tr_data(:,15) tr_data(:,21) tr_data(:,27)]
     if if_pca == 1
-        [COEFF,tr_SCORE,LATENT] = pca(tr_data(:,3:32));
+        [COEFF,tr_SCORE,LATENT] = princomp(tr_data(:,3:32));
         tr_data_used = [tr_data(:,34) tr_SCORE(:,1:REDUCED_DIM)]; 
     else
         tr_data_used = [tr_data(:,34) tr_data(:,3:32)];
@@ -27,7 +27,7 @@ for i = 1:LABEL_NUM
     [TrainingAccuracy]=my_elm_train(tr_data_used,1,NEURONS(i),'sig',['model',num2str(i)]);
 end
 
-te_FILE = strcat(name,'_key2/',type, '_', name,'.txt');    
+te_FILE = strcat(name,'_key1/',type, '_', name,'.txt');    
 te_data = load(te_FILE);
 te_data = te_data(find(te_data(:,35)==0),:);
 
@@ -56,7 +56,7 @@ for i = 1:N
     init = zeros(1,LABEL_NUM);
     init(1,te_data(i,33)) = 1;
     
-    result(i,:) = init*M*M;
+    result(i,:) = init*M;
     [ tmp ,c]=max(result(i,:));
     if c==te_data(i,34)
         correct = correct+1;
@@ -64,6 +64,7 @@ for i = 1:N
 end
 
 accuracy = correct/N;
+
 for i = 1:LABEL_NUM
     delete(['model',num2str(i),'.mat']);
 end
