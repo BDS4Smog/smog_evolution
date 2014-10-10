@@ -1,4 +1,4 @@
-function [ Train_acc, Test_acc ] = evaluation_ELM( type,name )
+function [ Train_acc, Test_acc ] = ELM_RandomCV( type,name )
 %CALCULATEM_ELM Summary of this function goes here
 %   Detailed explanation goes here
 LABEL_NUM=6;
