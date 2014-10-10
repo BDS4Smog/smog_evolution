@@ -3,7 +3,7 @@ function [ accuracy ] = ELM_K( type, name, k,if_pca)
 %   Detailed explanation goes hert
 
 type = 'station';
-name = 'Haidian';
+name = 'Dongsi';
 k=1;
 if_pca = 0;
 
