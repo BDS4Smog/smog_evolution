@@ -28,7 +28,7 @@ te_FILE = strcat(name,'_key',num2str(k),'/',type, '_', name,'.txt');
 te_data = load(te_FILE);
 te_data = te_data(find(te_data(:,12)==0),:);
 
-N = size(te_data,1);`
+N = size(te_data,1);
 correct = 0;
 result = zeros(N,LABEL_NUM);
 for i = 1:N
