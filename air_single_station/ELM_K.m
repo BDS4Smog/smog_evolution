@@ -2,9 +2,9 @@ function [ accuracy ] = ELM_K( type, name )
 %EVALUATION_ELM2 Summary of this function goes here
 %   Detailed explanation goes hert
 
-type = 'station'
-name = 'Dongsi'
-k=2
+type = 'city'
+name = 'Beijing'
+k= 2
 
 LABEL_NUM=6;
 NEURONS =[10,10,10,10,10,5];
