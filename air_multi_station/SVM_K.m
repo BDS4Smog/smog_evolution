@@ -18,14 +18,9 @@ for i = 1:LABEL_NUM
     
     tr_data = tr_data(find(tr_data(:,35)==1),:);
 %   tr_data = [tr_data(:,34) tr_data(:,3) tr_data(:,9) tr_data(:,15) tr_data(:,21) tr_data(:,27)]
-    if if_pca == 1
-        [COEFF,tr_SCORE,LATENT] = princomp(tr_data(:,3:32));
-        tr_data_used = [tr_data(:,34) tr_SCORE(:,1:REDUCED_DIM)]; 
-    else
-        tr_data_used = [tr_data(:,34) tr_data(:,3:32)];
-    end 
+
     
-    [TrainingAccuracy]=my_elm_train(tr_data_used,1,NEURONS(i),'sig',['model',num2str(i)]);
+    model(i)=svmtrain(tr_data(:,34),tr_data(:,3:32),'-b 1');
 end
 
 te_FILE = strcat(name,'_key',num2str(k),'/',type, '_', name,'.txt');    
@@ -35,24 +30,17 @@ te_data = te_data(find(te_data(:,35)==0),:);
 N = size(te_data,1);
 correct = 0;
 result = zeros(N,LABEL_NUM);
-result2 = zeros(N,3);
 for i = 1:N
     M = [];
     for j = 1:LABEL_NUM
-       if if_pca == 1
-           te_SCORE = te_data(i,3:32)*COEFF;
-           te_data_used = [te_data(i,34) te_SCORE(:,1:REDUCED_DIM)];
-       else
-           te_data_used = [te_data(i,34) te_data(i,3:32)];
-       end
        
-       [tmp_output,label] = my_elm_predict(te_data_used,['model',num2str(j)]);
+       label = model(j).Label;
+       [~,~,tmp_output] = svmpredict(te_data(i,34),te_data(i,3:32),model(j),'-b 1');
        
-       tmp_output = (tmp_output-min(tmp_output))/(max(tmp_output)-min(tmp_output));
-       tmp_output = tmp_output/sum(tmp_output);
+
        
        tmp = zeros(1,LABEL_NUM);
-       tmp(1,label)=tmp_output;
+       tmp(1,label')=tmp_output;
        M = [M;tmp];
     end
     init = zeros(1,LABEL_NUM);
@@ -63,18 +51,13 @@ for i = 1:N
     if k==2
         result(i,:) = init*M*M;
     end
-    [tmp ,c]=max(result(i,:));
-    result2(i,1)=te_data(i,33);
-    result2(i,2)=te_data(i,34);
-    result2(i,3)=c;
+    [ tmp ,c]=max(result(i,:));
     if c==te_data(i,34)
         correct = correct+1;
     end
 end
 
 accuracy = correct/N;
-
-
 
 for i = 1:LABEL_NUM
     delete(['model',num2str(i),'.mat']);
