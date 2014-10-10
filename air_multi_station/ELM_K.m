@@ -1,9 +1,10 @@
-function [ accuracy ] = evaluation_ELM_key2( type, name, if_pca)
+function [ accuracy ] = ELM_K( type, name, k,if_pca)
 %EVALUATION_ELM2 Summary of this function goes here
 %   Detailed explanation goes hert
 
 type = 'station';
 name = 'Haidian';
+k=1;
 if_pca = 0;
 
 LABEL_NUM=6;
@@ -27,7 +28,7 @@ for i = 1:LABEL_NUM
     [TrainingAccuracy]=my_elm_train(tr_data_used,1,NEURONS(i),'sig',['model',num2str(i)]);
 end
 
-te_FILE = strcat(name,'_key1/',type, '_', name,'.txt');    
+te_FILE = strcat(name,'_key',num2str(k),'/',type, '_', name,'.txt');    
 te_data = load(te_FILE);
 te_data = te_data(find(te_data(:,35)==0),:);
 
@@ -55,8 +56,12 @@ for i = 1:N
     end
     init = zeros(1,LABEL_NUM);
     init(1,te_data(i,33)) = 1;
-    
-    result(i,:) = init*M;
+    if k==1
+        result(i,:) = init*M;
+    end
+    if k==2
+        result(i,:) = init*M*M;
+    end
     [ tmp ,c]=max(result(i,:));
     if c==te_data(i,34)
         correct = correct+1;
