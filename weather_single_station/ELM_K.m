@@ -1,9 +1,10 @@
-function [ accuracy ] = evaluation_ELM_key2( type, name )
+function [ accuracy ] = ELM_K( type, name, k )
 %EVALUATION_ELM2 Summary of this function goes here
 %   Detailed explanation goes hert
 
-type = 'station'
-name = 'Dongsi'
+type = 'station';
+name = 'Dongsi';
+k = 1;
 
 LABEL_NUM=6;
 NEURONS =[6,6,6,6,6,2];
@@ -15,7 +16,7 @@ for i = 1:LABEL_NUM
     
     tr_data = tr_data(find(tr_data(:,12)==1),:);
     n=size(tr_data,1);
-    tr_data(:,3:9)=(tr_data(:,3:9)-ones(n,1)*min(tr_data(:,3:9)))./(ones(n,1)*(max(tr_data(:,3:9))-min(tr_data(:,3:9))));
+%    tr_data(:,3:9)=(tr_data(:,3:9)-ones(n,1)*min(tr_data(:,3:9)))./(ones(n,1)*(max(tr_data(:,3:9))-min(tr_data(:,3:9))));
     
     tr_data = [tr_data(:,11) tr_data(:,3:9)];
     
@@ -23,11 +24,11 @@ for i = 1:LABEL_NUM
     my_elm_train(tr_data,1,NEURONS(i),'sig',['model',num2str(i)]);
 end
 
-te_FILE = strcat(name,'_key1/',type, '_', name,'.txt');    
+te_FILE = strcat(name,'_key',num2str(k),'/',type, '_', name,'.txt');    
 te_data = load(te_FILE);
 te_data = te_data(find(te_data(:,12)==0),:);
 
-N = size(te_data,1);
+N = size(te_data,1);`
 correct = 0;
 result = zeros(N,LABEL_NUM);
 for i = 1:N
@@ -45,7 +46,12 @@ for i = 1:N
     init = zeros(1,LABEL_NUM);
     init(1,te_data(i,10)) = 1;
     
-    result(i,:) = init*M;
+    if k==1
+        result(i,:) = init*M;
+    end
+    if k==2
+        result(i,:) = init*M*M;
+    end
     [ tmp ,c]=max(result(i,:));
     if c==te_data(i,11)
         correct = correct+1;
