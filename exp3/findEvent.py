@@ -1,18 +1,18 @@
+# -*- coding: utf-8 -*-
 import pymongo
 import sys
 import datetime
+import codecs
 
 HOST = '10.214.0.147'
 PORT = 27017
 DB_NAME = 'Air'
 C_NAME = 'Stations'
 CITY = '北京'
-HOURS_BEFORE = 8
-BETA1 = 2
+HOURS_BEFORE = 6 
 HOURS_AFTER = 8
-BETA2 = 2
 ALPHA = 150
-START_TIME = '2013-05-01T00:00:00Z'
+START_TIME = '2013-12-25T00:00:00Z'
 END_TIME = '2014-10-13T00:00:00Z'
 
 def strToDatetime(s):
@@ -26,60 +26,115 @@ def dataFromMongo(position):
     conn = pymongo.Connection(HOST,PORT)
     db = conn[DB_NAME]
     c = db[C_NAME]
-    records = c.find({"time_point":{"$gte":START_TIME,"$lte":END_TIME},"position_name":c,"area":CITY})
+    records = c.find({"position_name":position,"area":CITY})
     t_aqi = {}
     for r in records:
-        t_aqi[r['time_point']]=r['aqi']
+        time_point = r['time_point']
+        aqi = r['aqi']
+        if aqi > 0:
+            print time_point + ': ' + str(aqi)
+            t_aqi[time_point[0:19]]=aqi
+    conn.close()
     return t_aqi
 
 def checkTime_increase(t_aqi,hour_i):
-    if !t_aqi.has_key(hour_i.isoformat()+'Z'):
+
+    if t_aqi.has_key(hour_i.isoformat())==False:
         return False
+
+    if t_aqi[hour_i.isoformat()]>=150:
+        return False
+
+    hour_after = hour_i + datetime.timedelta(0,3600)
+    if t_aqi.has_key(hour_after.isoformat()) and t_aqi[hour_after.isoformat()]<150:
+        return False
+
+    hour_before = hour_i - datetime.timedelta(0,3600)
+    if t_aqi.has_key(hour_before.isoformat()) and t_aqi[hour_before.isoformat()]>=150:
+        return False
+
     count1 = 0
-    for j in range(1,HOURS_AFTER):
-        hour = hour_i + datetime.timedelta(0,3600*j)
-        if t_aqi.has_key(hour.isoformat()+'Z') and t_aqi[hour.isoformat()+'Z']<150:
-            count1 = count1 + 1 
-    if count1 > BETA1:
-        return False
     count2 = 0
-    for k in range(0,HOURS_BEFORE):
-        hour = hour_i - datetime.timedelta(0,3600*j)
-        if t_aqi.has_key(hour.isoformat()+'Z') and t_aqi[hour.isoformat()+'Z']>=150:
+    for j in range(1,HOURS_AFTER+1):
+        hour = hour_i + datetime.timedelta(0,3600*j)
+        if t_aqi.has_key(hour.isoformat())==False or t_aqi[hour.isoformat()]>=150:
+            count1 = count1 + 1 
+        if t_aqi.has_key(hour.isoformat()):
             count2 = count2 + 1
-    if count2 > BETA2:
+    if count1 <= HOURS_AFTER - 1:
         return False
-    return True
+    if count2 < 2:
+        return False
+
+    count1 = 0
+    count2 = 0
+    for k in range(1,HOURS_BEFORE+1):
+        hour = hour_i - datetime.timedelta(0,3600*k)
+        if t_aqi.has_key(hour.isoformat())==False or t_aqi[hour.isoformat()]<150:
+            count1 = count1 + 1
+        if t_aqi.has_key(hour.isoformat()):
+            count2 = count2 + 1
+    if count1 <= HOURS_BEFORE - 1:
+        return False
+    if count2 < 2:
+        return False
+
+    return True 
 
 def checkTime_decrease(t_aqi,hour_i):
-    if !t_aqi.has_key(hour_i.isoformat()+'Z'):
+    if t_aqi.has_key(hour_i.isoformat())==False:
         return False
+
+    if t_aqi[hour_i.isoformat()]<150:
+        return False
+
+    hour_after = hour_i + datetime.timedelta(0,3600)
+    if t_aqi.has_key(hour_after.isoformat()) and t_aqi[hour_after.isoformat()]>=150:
+        return False
+    
+    hour_before = hour_i - datetime.timedelta(0,3600)
+    if t_aqi.has_key(hour_before.isoformat()) and t_aqi[hour_before.isoformat()]<150:
+        return False
+
     count1 = 0
-    for j in range(0,HOURS_AFTER):
-        hour = hour_i + datetime.timedelta(0,3600*j)
-        if t_aqi.has_key(hour.isoformat()+'Z') and t_aqi[hour.isoformat()+'Z']>=150:
-            count1 = count1 + 1 
-    if count1 > BETA1:
-        return False
     count2 = 0
-    for k in range(1,HOURS_BEFORE):
-        hour = hour_i - datetime.timedelta(0,3600*j)
-        if t_aqi.has_key(hour.isoformat()+'Z') and t_aqi[hour.isoformat()+'Z']<150:
+    for j in range(1,HOURS_AFTER+1):
+        hour = hour_i + datetime.timedelta(0,3600*j)
+        if t_aqi.has_key(hour.isoformat()) == False or t_aqi[hour.isoformat()]<150:
+            count1 = count1 + 1 
+        if t_aqi.has_key(hour.isoformat()):
             count2 = count2 + 1
-    if count2 > BETA2:
+    if count1 <= HOURS_AFTER - 1:
         return False
+    if count2 < HOURS_AFTER/2:
+        return False
+
+    count1 = 0
+    count2 = 0
+    for k in range(1,HOURS_BEFORE+1):
+        hour = hour_i - datetime.timedelta(0,3600*k)
+        if t_aqi.has_key(hour.isoformat()) == False or t_aqi[hour.isoformat()]>=150:
+            count1 = count1 + 1
+        if t_aqi.has_key(hour.isoformat()):
+            count2 = count2 + 1
+    if count1 <= HOURS_BEFORE - 1:
+        return False
+    if count2 < HOURS_BEFORE/2:
+        return False
+
     return True
 
 def saveFile(file_name,lines):
-    f=open(file_name,'w')
+    f=codecs.open(file_name,'w','utf-8')
     f.writelines(lines)
     f.close()
 
 if __name__ == '__main__':
-    if len(sys.argv)!=2:
-        print 'usage: python findEvent.py type station'
-    eventType = sys.argv[0]
-    position = sys.argv[1]
+    if len(sys.argv) != 3:
+        print 'usage: python findEvent.py increase/decrease station'
+        sys.exit(0)
+    eventType = sys.argv[1]
+    position = sys.argv[2]
     fileName = 'hours_' + position + '_' + eventType + '.txt'
     print 'get data from mongo ...'
     t_aqi = dataFromMongo(position)
