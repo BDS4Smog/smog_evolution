@@ -3,10 +3,11 @@ import codecs
 import time
 
 ISOTIMEFORMAT='%Y-%m-%dT%XZ'
+STEP = 6
 
 def readFile(file_name):
     f=codecs.open(file_name,'r','utf-8')
-    lines = f.readlines(lines)
+    lines = f.readlines()
     f.close()
     return lines
 
@@ -23,10 +24,10 @@ def saveFile(file_name,lines):
     f.close()
 
 def inEvent(t, in_times, de_times):
-    in_times.append(de_times)
-    for item in in_times:
+    times = in_times + de_times
+    for item in times:
         unix_current = time.mktime(time.strptime(item,ISOTIMEFORMAT))
-        for i in range(0,6):
+        for i in range(0,STEP):
             unix_tmp = unix_current-i*3600
             tmp_time = time.strftime(ISOTIMEFORMAT,time.localtime(unix_tmp))
             if tmp_time == t:
@@ -41,19 +42,19 @@ if __name__ == '__main__':
     eventType = sys.argv[1]
     station = sys.argv[2]
     records = readFile('events/' + station + '_records.txt')
-    in_times = readFile('hours_' + station + '_increase.txt')
-    de_times = readFile('hours_' + station + '_decrease.txt')
+    in_times = readTime('events/' + station + '_increase.txt')
+    de_times = readTime('events/' + station + '_decrease.txt')
     results = []
     for record in records:
         tmp = record.strip().split(' ')
         t = tmp[0][0:19]
         aqi = int(tmp[1])
         if eventType == 'low':
-            if aqi<150 and  !inEvent(t,in_times,de_time):
+            if aqi<150 and inEvent(t,in_times,de_times)==False:
                 results.append(t + '\r\n')
-                saveFile('events/' + station + '_low.txt')
+                saveFile('events/' + station + '_low.txt',results)
         if eventType == 'high':
-            if aqi>=150 and  !inEvent(t,in_times,de_time):
+            if aqi>150 and inEvent(t,in_times,de_times)==False:
                 results.append(t + '\r\n')
-                saveFile('events/' + station + '_low.txt')
+                saveFile('events/' + station + '_high.txt',results)
 

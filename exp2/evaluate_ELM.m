@@ -12,15 +12,18 @@ if type==1
 end
 
 if type==2
-    range = 14;
+    range = 2:14;
 end
 
 ROUND_NUM = 4;
 
-d0 = load(['data/' station '_low.txt']);
+d0 = load(['data/' station '_high.txt']);
 d0 = [zeros(size(d0,1),1) d0(:,range)];
-d1 = load(['data/' station '_increase.txt']);
+d0 = d0(randperm(length(d0)),:); 
+d0 = d0(1:216,:);
+d1 = load(['data/' station '_decrease.txt']);
 d1 = [ones(size(d1,1),1) d1(:,range)];
+d1 = d1(1:216,:);
 d = [d0' d1']';
 d = d(randperm(length(d)),:); 
 Train_Accuracy = 0;

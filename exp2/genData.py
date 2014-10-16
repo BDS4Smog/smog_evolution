@@ -6,27 +6,40 @@ import string
 import codecs
 import time
 ISOTIMEFORMAT='%Y-%m-%dT%XZ'
+STEP = 1 
 
-c = u"官园"  ###################### Need to change when changing station ######################
+STATION = 'haidian'
+TYPE = 'high'
+
+c = u"海淀区万柳"  ###################### Need to change when changing station ######################
 #c = "海淀区万柳"
-cities = [u"古城",u"海淀区万柳",u"奥体中心",u"东四",u"天坛",u"万寿西宫"]  ###################### Need to change when changing station ######################
+cities = [u"昌平镇",u"奥体中心",u"官园",u"古城"]  ###################### Need to change when changing station ######################
+
+#c = u"官园"  ###################### Need to change when changing station ######################
+#c = "海淀区万柳"
+#cities = [u"古城",u"海淀区万柳",u"奥体中心",u"东四",u"天坛",u"万寿西宫"]  ###################### Need to change when changing station ######################
+
+#c = u"古城"  ###################### Need to change when changing station ######################
+#c = "海淀区万柳"
+#cities = [u"昌平镇",u"古城",u"万寿西宫",u"奥体中心"]  ###################### Need to change when changing station ######################
 
 conn = pymongo.Connection("10.214.0.147",27017)
+
 #set database
 db = conn.Air
 db_weather = conn.forecastio_bj
 #db1 = conn.Beijing
 #db.authenticate("pm","ccntgrid")
 collection = db.Stations
-collection_weather = db_weather.Guanyuan  ###################### Need to change when changing station ######################
+collection_weather = db_weather.Haidian  ###################### Need to change when changing station ######################
 #collection_b = db1.BJ_Weather_Forecast
 
 
-ofile=codecs.open(u'hours_官园_increase_data.txt', 'w',"utf-8")
+ofile=codecs.open(u'data/'+STATION+'_'+TYPE+'.txt', 'w',"utf-8")
 result = {}
 m_result = [{}]*len(cities)
 print 'Ready' 
-ifile=codecs.open(u'hours_官园_increase.txt', 'r',"utf-8") ###################### Need to change when changing station ######################
+ifile=codecs.open(u'events/'+STATION+'_'+TYPE+'.txt', 'r',"utf-8") ###################### Need to change when changing station ######################
 time_list = ifile.readlines()
 for current_time in time_list:
     result["pm2_5"]=-1
@@ -44,10 +57,11 @@ for current_time in time_list:
     result["windBearing"] = -1
     
     print '-----'
-    current_time = current_time.strip('\r\n')+'Z';
+    current_time = current_time.strip('\r\n')[0:19] + 'Z'
+    print current_time
     
     unix_current = time.mktime(time.strptime(current_time,ISOTIMEFORMAT))
-    for time_iter in range(0,4):
+    for time_iter in range(0,STEP):
         unix_tmp = unix_current-time_iter*3600
         tmp_time = time.strftime(ISOTIMEFORMAT,time.localtime(unix_tmp))
         print tmp_time
