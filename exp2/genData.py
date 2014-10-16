@@ -6,22 +6,22 @@ import string
 import codecs
 import time
 ISOTIMEFORMAT='%Y-%m-%dT%XZ'
-STEP = 1 
+STEP = 6 
 
-STATION = 'haidian'
-TYPE = 'high'
+STATION = 'gucheng'
+TYPE = 'decrease'
 
-c = u"海淀区万柳"  ###################### Need to change when changing station ######################
+#c = u"海淀区万柳"  ###################### Need to change when changing station ######################
 #c = "海淀区万柳"
-cities = [u"昌平镇",u"奥体中心",u"官园",u"古城"]  ###################### Need to change when changing station ######################
+#cities = [u"昌平镇",u"奥体中心",u"官园",u"古城"]  ###################### Need to change when changing station ######################
 
 #c = u"官园"  ###################### Need to change when changing station ######################
 #c = "海淀区万柳"
 #cities = [u"古城",u"海淀区万柳",u"奥体中心",u"东四",u"天坛",u"万寿西宫"]  ###################### Need to change when changing station ######################
 
-#c = u"古城"  ###################### Need to change when changing station ######################
+c = u"古城"  ###################### Need to change when changing station ######################
 #c = "海淀区万柳"
-#cities = [u"昌平镇",u"古城",u"万寿西宫",u"奥体中心"]  ###################### Need to change when changing station ######################
+cities = [u"昌平镇",u"古城",u"万寿西宫",u"奥体中心"]  ###################### Need to change when changing station ######################
 
 conn = pymongo.Connection("10.214.0.147",27017)
 
