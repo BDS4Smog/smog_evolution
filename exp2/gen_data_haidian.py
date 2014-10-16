@@ -22,11 +22,11 @@ collection_weather = db_weather.Haidian  ###################### Need to change w
 #collection_b = db1.BJ_Weather_Forecast
 
 
-ofile=codecs.open(u'hours_海淀区万柳_increase_data.txt', 'w',"utf-8")
+ofile=codecs.open(u'data/haidian_increase.txt', 'w',"utf-8")
 result = {}
 m_result = [{}]*len(cities)
 print 'Ready' 
-ifile=codecs.open(u'hours_海淀区万柳_increase.txt', 'r',"utf-8") ###################### Need to change when changing station ######################
+ifile=codecs.open(u'events/haidian_increase.txt', 'r',"utf-8") ###################### Need to change when changing station ######################
 time_list = ifile.readlines()
 for current_time in time_list:
     result["pm2_5"]=-1
@@ -44,10 +44,11 @@ for current_time in time_list:
     result["windBearing"] = -1
     
     print '-----'
-    current_time = current_time.strip('\r\n')+'Z';
+    current_time = current_time.strip('\r\n')[0:19] + 'Z'
+    print current_time
     
     unix_current = time.mktime(time.strptime(current_time,ISOTIMEFORMAT))
-    for time_iter in range(0,4):
+    for time_iter in range(0,6):
         unix_tmp = unix_current-time_iter*3600
         tmp_time = time.strftime(ISOTIMEFORMAT,time.localtime(unix_tmp))
         print tmp_time
