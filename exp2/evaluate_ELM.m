@@ -1,50 +1,70 @@
-function [ Train_Accuracy,Test_Accuracy ] = evaluate_ELM( type,station )
+function evaluate_ELM( range,station )
 %EVALUATE_ELM Summary of this function goes here
 %   Detailed explanation goes here
 %Local air
-%station = 'haidian';
-%type = 2;
-if type==0
-    range=2:7;
-end
-if type==1
-    range=8:14;
-end
+station = 'haidian';
+range = [2 11:14];
 
-if type==2
-    range = 12;
-end
+f1 = ['data/' station '_increase.txt'];
+f0 = ['data/' station '_low.txt'];
 
+HIDDEN_NUM = 50;
 ROUND_NUM = 4;
+REPEAT_NUM = 10;
 
-d0 = load(['data/' station '_low.txt']);
-d0 = [zeros(size(d0,1),1) d0(:,range)];
-d0 = d0(randperm(length(d0)),:); 
-d0 = d0(1:180,:);
-d1 = load(['data/' station '_increase.txt']);
-d1 = [ones(size(d1,1),1) d1(:,range)];
-d1 = d1(1:180,:);
-d = [d0' d1']';
-d = d(randperm(length(d)),:); 
 Train_Accuracy = 0;
 Test_Accuracy = 0;
-for i = 1:ROUND_NUM
-    start_1 = 1+(i-1)*floor(length(d)/ROUND_NUM);
-    end_1 = i*floor(length(d)/ROUND_NUM); 
-    Te = d(start_1:end_1,:);
-    if i == 1
-        Tr = d(end_1+1:length(d),:);
-    elseif i == ROUND_NUM
-        Tr = d(1:start_1-1,:);
-    else
-        Tr = [d(1:start_1-1,:)',d(end_1+1:length(d),:)']';    
-    end
-    [Tr_acc, Te_acc] = my_ELM(Tr, Te, 1, 40, 'sig');
-    Train_Accuracy = Train_Accuracy + Tr_acc;
-    Test_Accuracy = Test_Accuracy + Te_acc;
-end
-Train_Accuracy = Train_Accuracy/ROUND_NUM;
-Test_Accuracy = Test_Accuracy/ROUND_NUM;
+for k = 1:REPEAT_NUM
+    d1 = load(f1);
+%    tmp_d1 = [max((d1(:,[15 21 27 33]))')' min((d1(:,[15 21 27 33]))')'];
+    d1 = [ones(size(d1,1),1) d1(:,range)];
+    d1 = compRecord(d1);
+    d0 = load(f0);
+%    tmp_d0 = [max((d0(:,[15 21 27 33]))')' min((d0(:,[15 21 27 33]))')'];
+    d0 = [zeros(size(d0,1),1) d0(:,range)];
+    d0 = compRecord(d0);
+    d0 = d0(randperm(length(d0)),:); 
+ %   d0 = d0(1:size(d1,1),:);
+    d = [d0' d1']';
+    d = d(randperm(length(d)),:); 
+    d = myNormalize(d);
 
+    for i = 1:ROUND_NUM
+        start_1 = 1+(i-1)*floor(length(d)/ROUND_NUM);
+        end_1 = i*floor(length(d)/ROUND_NUM); 
+        Te = d(start_1:end_1,:);
+        if i == 1
+            Tr = d(end_1+1:length(d),:);
+        elseif i == ROUND_NUM
+            Tr = d(1:start_1-1,:);
+        else
+            Tr = [d(1:start_1-1,:)',d(end_1+1:length(d),:)']';    
+        end
+        [Tr_acc, Te_acc] = my_ELM(Tr, Te, 1, HIDDEN_NUM, 'sig');
+        Train_Accuracy = Train_Accuracy + Tr_acc;
+        Test_Accuracy = Test_Accuracy + Te_acc;
+    end
+end
+Train_Accuracy = Train_Accuracy/(ROUND_NUM*REPEAT_NUM);
+Test_Accuracy = Test_Accuracy/(ROUND_NUM*REPEAT_NUM);
+fprintf('Train_Accuracy: %f \n',Train_Accuracy);
+fprintf('Test_Accuracy: %f \n',Test_Accuracy);
+
+end
+
+function [r_d] = compRecord(d)
+    for col = 2:size(d,2)
+        d = d(find(d(:,col)~=-1),:);
+    end
+    r_d = d;
+end
+
+function [n_d] = myNormalize(d)
+    for col = 2:size(d,2)
+        ma = max(d(:,col));
+        mi = min(d(:,col));
+        d(:,col) = (d(:,col)-mi)/(ma-mi);
+    end
+    n_d = d;
 end
 
