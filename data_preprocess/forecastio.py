@@ -6,7 +6,7 @@ import sys
 import os
 import demjson
 
-DB_NAME='forecastio_bj'
+DB_NAME='forecastio'
 HOST='10.214.0.147'
 PORT=27017
 MY_KEY = '86a5bd6b6fcbd22af6916469cf0433fb'
@@ -21,8 +21,8 @@ def callAPI(my_url):
     return result
 
 if __name__ == '__main__':
-    if len(sys.argv)!=6:
-        sys.stderr.write("usage: python forecastio.py lat lon start_day end_day collection_name\n")
+    if len(sys.argv)!=7:
+        sys.stderr.write("usage: python forecastio.py lat lon start_day end_day position city\n")
         sys.exit(1)
     lat =  sys.argv[1]
     lon =  sys.argv[2]
@@ -30,7 +30,8 @@ if __name__ == '__main__':
     start_day = datetime.date(int(tmp[0]),int(tmp[1]),int(tmp[2]))
     tmp = sys.argv[4].split('-')
     end_day = datetime.date(int(tmp[0]),int(tmp[1]),int(tmp[2]))
-    c_name = sys.argv[5]
+    position_name = sys.argv[5]
+    c_name = sys.argv[6]
 
     print 'Collect data for ' + c_name + ' day by day'
 
@@ -43,7 +44,7 @@ if __name__ == '__main__':
         my_url = URL_BASE + MY_KEY + '/' + lat + ',' + lon + ',' + day_i.isoformat() + 'T00:00:00' 
         print day_i.isoformat() 
         result = callAPI(my_url)
-        result = result[0] + '"date":"' + day_i.isoformat() + '",' + result[1:len(result)]
+        result = result[0] + '"position":"' + position_name + '",' + '"date":"' + day_i.isoformat() + '",' + result[1:len(result)]
         text=demjson.decode(result)
         c.insert(text)
         day_i = day_i + datetime.timedelta(1)
