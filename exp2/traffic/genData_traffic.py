@@ -97,14 +97,14 @@ if __name__ == '__main__':
     for t in T1:
         print t
         traffic_num,tweet_num = tweet_filter(t,c)
-        pec = '%.2f' % (float(traffic_num)/float(tweet_num))
+        pec = '%.5f' % (float(traffic_num)/float(tweet_num))
         result1.append(t+' '+pec+' '+str(traffic_num)+' '+str(tweet_num)+'\r\n')
     saveFile(result1, 'data_traffic/'+station+'_increase_traffic.txt')
     print 'for low time stamps'
     for t in T0:
         print t
         traffic_num,tweet_num = tweet_filter(t,c)
-        pec = '%.2f' % (float(traffic_num)/float(tweet_num))
+        pec = '%.5f' % (float(traffic_num)/float(tweet_num))
         result0.append(t+' '+pec+' '+str(traffic_num)+' '+str(tweet_num)+'\r\n')
     saveFile(result0, 'data_traffic/'+station+'_low_traffic.txt')
     conn.close()
