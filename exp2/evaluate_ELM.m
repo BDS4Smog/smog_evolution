@@ -2,13 +2,13 @@ function evaluate_ELM( range,station )
 %EVALUATE_ELM Summary of this function goes here
 %   Detailed explanation goes here
 %Local air
-station = 'gucheng';
-range = [2 11:14];
+station = 'haidian';
+range = [13:14];
 
-f1 = ['data/' station '_increase.txt'];
-f0 = ['data/' station '_low.txt'];
+f1 = ['data/' station '_decrease.txt'];
+f0 = ['data/' station '_high.txt'];
 
-HIDDEN_NUM = 50;
+HIDDEN_NUM = 20;
 ROUND_NUM = 4;
 REPEAT_NUM = 10;
 
