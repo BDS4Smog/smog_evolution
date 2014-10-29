@@ -43,16 +43,16 @@ def get_records():
                 print r['pm2_5']
     return record
 
-def get_time_list():
-    ifile=codecs.open(u'events/'+STATION+'_'+TYPE+'.txt', 'r',"utf-8") 
+def get_time_list(station,mtype):
+    ifile=codecs.open(u'events/'+station+'_'+mtype+'.txt', 'r',"utf-8") 
     tmp_list = ifile.readlines()
     time_list = []
     for t in tmp_list:
         time_list.append(t.strip('\r\n')[0:19] + 'Z')
     return time_list
 
-def pro_and_write_data(record):
-    ofile=codecs.open(u'air_surround/'+STATION+'_'+TYPE+'.txt', 'w',"utf-8")
+def pro_and_write_data(record,station,mtype):
+    ofile=codecs.open(u'air_surround/'+station+'_'+mtype+'.txt', 'w',"utf-8")
 
     m_result = [{}]*len(cities)
     for current_time in time_list:
@@ -81,9 +81,14 @@ def pro_and_write_data(record):
 if __name__ == '__main__':
     print "Ready"
     record = get_records()
-    time_list = get_time_list()
-    pro_and_write_data(record)
-
+    time_list = get_time_list('haidian','low')
+    pro_and_write_data(record,'haidian','low')
+    time_list = get_time_list('haidian','increase')
+    pro_and_write_data(record,'haidian','increase')
+    time_list = get_time_list('haidian','decrease')
+    pro_and_write_data(record,'haidian','decrease')
+    time_list = get_time_list('haidian','high')
+    pro_and_write_data(record,'haidian','high')
 
 
 
