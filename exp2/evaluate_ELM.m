@@ -1,18 +1,14 @@
 function evaluate_ELM( range,station )
 %EVALUATE_ELM Summary of this function goes here
 %   Detailed explanation goes here
-<<<<<<< HEAD
 %Local air
 station = 'haidian';
 range = [13:14];
 
 f1 = ['data/' station '_decrease.txt'];
 f0 = ['data/' station '_high.txt'];
-=======
-station = 'haidian';
 type1 = 'increase'
 type2 = 'low'
->>>>>>> 7e5fdae41a258b145412d3158ec6d3f494c48436
 
 HIDDEN_NUM = 20;
 ROUND_NUM = 4;
