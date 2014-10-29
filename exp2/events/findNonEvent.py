@@ -27,11 +27,11 @@ def inEvent(t, in_times, de_times):
     times = in_times + de_times
     for item in times:
         unix_current = time.mktime(time.strptime(item,ISOTIMEFORMAT))
-        for i in range(0,STEP):
-            unix_tmp = unix_current-i*3600
-            tmp_time = time.strftime(ISOTIMEFORMAT,time.localtime(unix_tmp))
-            if tmp_time == t:
-                return True
+#        for i in range(0,STEP):
+#            unix_tmp = unix_current-i*3600
+#            tmp_time = time.strftime(ISOTIMEFORMAT,time.localtime(unix_tmp))
+        if unix_current == t:
+            return True
     return False
 
 
