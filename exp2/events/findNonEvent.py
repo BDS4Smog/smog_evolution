@@ -41,20 +41,21 @@ if __name__ == '__main__':
         sys.exit(0)
     eventType = sys.argv[1]
     station = sys.argv[2]
-    records = readFile('events/' + station + '_records.txt')
-    in_times = readTime('events/' + station + '_increase.txt')
-    de_times = readTime('events/' + station + '_decrease.txt')
+    records = readFile(station + '_records.txt')
+    in_times = readTime(station + '_increase.txt')
+    de_times = readTime(station + '_decrease.txt')
     results = []
-    for record in records:
+    for i,record in enumerate(records):
+        print 'i:' + str(i)
         tmp = record.strip().split(' ')
         t = tmp[0][0:19]
         aqi = int(tmp[1])
         if eventType == 'low':
             if aqi<150 and inEvent(t,in_times,de_times)==False:
                 results.append(t + '\r\n')
-                saveFile('events/' + station + '_low.txt',results)
+                saveFile(station + '_low.txt',results)
         if eventType == 'high':
             if aqi>150 and inEvent(t,in_times,de_times)==False:
                 results.append(t + '\r\n')
-                saveFile('events/' + station + '_high.txt',results)
+                saveFile(station + '_high.txt',results)
 
