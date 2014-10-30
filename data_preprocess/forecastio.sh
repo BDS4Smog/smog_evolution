@@ -1,6 +1,6 @@
 #! /bin/sh
-start_day=2014-10-22
-end_day=2014-10-22
+start_day=2014-10-23
+end_day=2014-10-29
 #==========Beijing=========
 python forecastio.py 39.98966 116.4035 $start_day $end_day Aotizhongxin Beijing
 python forecastio.py 40.22994 116.233 $start_day $end_day Changping Beijing
