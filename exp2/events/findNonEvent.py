@@ -1,15 +1,34 @@
 import sys
 import codecs
 import time
+import datetime
 
 ISOTIMEFORMAT='%Y-%m-%dT%XZ'
 STEP = 6
+START_TIME = '2013-12-24T22:00:00'
+END_TIME = '2014-10-30T12:00:00'
+AQI_LEVEL = 150
+
+def strToDatetime(s):
+    year = int(s[0:4])
+    month = int(s[5:7])
+    day = int(s[8:10])
+    hour = int(s[11:13])
+    return datetime.datetime(year,month,day,hour)
 
 def readFile(file_name):
     f=codecs.open(file_name,'r','utf-8')
     lines = f.readlines()
     f.close()
     return lines
+
+def readTAQI(file_name):
+    lines = readFile(file_name)
+    t_aqi = {} 
+    for line in lines:
+        tmp = line.strip().split(' ')
+        t_aqi[tmp[0]] = int(tmp[1])
+    return t_aqi
 
 def readTime(file_name):
     lines = readFile(file_name)
@@ -23,16 +42,19 @@ def saveFile(file_name,lines):
     f.writelines(lines)
     f.close()
 
-def inEvent(t, in_times, de_times):
-    times = in_times + de_times
-    for item in times:
-        unix_current = time.mktime(time.strptime(item,ISOTIMEFORMAT))
-#        for i in range(0,STEP):
-#            unix_tmp = unix_current-i*3600
-#            tmp_time = time.strftime(ISOTIMEFORMAT,time.localtime(unix_tmp))
-        if unix_current == t:
-            return True
-    return False
+def isHigh(hour_i,t_aqi):
+    for k in range(0,STEP + 1): 
+        hour = hour_i + datetime.timedelta(0,3600*k)
+        if t_aqi.has_key(hour.isoformat())==False or t_aqi[hour.isoformat()] < AQI_LEVEL:
+            return False
+    return True
+
+def isLow(hour_i,t_aqi):
+    for k in range(0,STEP + 1): 
+        hour = hour_i + datetime.timedelta(0,3600*k)
+        if t_aqi.has_key(hour.isoformat())==False or t_aqi[hour.isoformat()] >= AQI_LEVEL:
+            return False
+    return True
 
 
 if __name__ == '__main__':
@@ -41,21 +63,12 @@ if __name__ == '__main__':
         sys.exit(0)
     eventType = sys.argv[1]
     station = sys.argv[2]
-    records = readFile(station + '_records.txt')
-    in_times = readTime(station + '_increase.txt')
-    de_times = readTime(station + '_decrease.txt')
-    results = []
-    for i,record in enumerate(records):
-        print 'i:' + str(i)
-        tmp = record.strip().split(' ')
-        t = tmp[0][0:19]
-        aqi = int(tmp[1])
-        if eventType == 'low':
-            if aqi<150 and inEvent(t,in_times,de_times)==False:
-                results.append(t + '\r\n')
-                saveFile(station + '_low.txt',results)
-        if eventType == 'high':
-            if aqi>150 and inEvent(t,in_times,de_times)==False:
-                results.append(t + '\r\n')
-                saveFile(station + '_high.txt',results)
+    t_aqi = readTAQI(station + '_records.txt')
+    hour_i = strToDatetime(START_TIME)
+    hours = []
+    while hour_i.isoformat() <= END_TIME:
+        if (eventType == 'low' and isLow(hour_i,t_aqi)) or (eventType == 'high' and isHigh(hour_i,t_aqi)):
+            hours.append(hour_i.isoformat() + '\r\n')
+        hour_i = hour_i + datetime.timedelta(0,3600)
 
+    saveFile(station + '_' + eventType + '.txt',hours)
