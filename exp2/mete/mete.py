@@ -44,7 +44,7 @@ def get_records():
     return record[0]
 
 def get_time_list(station,mtype):
-    ifile=codecs.open(u'events/'+station+'_'+mtype+'.txt', 'r',"utf-8") 
+    ifile=codecs.open(u'../events/'+station+'_'+mtype+'.txt', 'r',"utf-8") 
     tmp_list = ifile.readlines()
     time_list = []
     for t in tmp_list:
@@ -52,7 +52,7 @@ def get_time_list(station,mtype):
     return time_list
 
 def pro_and_write_data(record,station,mtype):
-    ofile=codecs.open(u'mete/'+station+'_'+mtype+'.txt', 'w',"utf-8")
+    ofile=codecs.open(u'./'+station+'_'+mtype+'1.txt', 'w',"utf-8")
     result = {}
     for current_time in time_list:
         

@@ -49,7 +49,7 @@ def get_records():
     return record[0]
 
 def get_time_list(station,type):
-    ifile=codecs.open(u'events/'+station+'_'+type+'.txt', 'r',"utf-8") 
+    ifile=codecs.open(u'../events/'+station+'_'+type+'.txt', 'r',"utf-8") 
     tmp_list = ifile.readlines()
     time_list = []
     for t in tmp_list:
@@ -57,7 +57,7 @@ def get_time_list(station,type):
     return time_list
 
 def pro_and_write_data(record,station,type):
-    ofile=codecs.open(u'air/'+station+'_'+type+'.txt', 'w',"utf-8")
+    ofile=codecs.open(u'./'+station+'_'+type+'1.txt', 'w',"utf-8")
     result = {}
     for current_time in time_list:
         
