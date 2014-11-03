@@ -10,12 +10,13 @@ f0 = ['data/' station '_high.txt'];
 type1 = 'decrease'
 type2 = 'high'
 
-HIDDEN_NUM = 150;
+HIDDEN_NUM = 50;
 ROUND_NUM = 4;
-REPEAT_NUM =200;
-LIMIT_OF_EMPTY = 8
+REPEAT_NUM =500;
 
-field = [0 1 1 0 0]
+LIMIT_OF_EMPTY = 0
+
+field = [1 0 0 0 0]
 
 %air_range = [2:7];
 air_range = [2:7];
@@ -85,7 +86,8 @@ Test_Accuracy = 0;
 for k = 1:REPEAT_NUM
     d0 = d0(randperm(length(d0)),:); 
     d0 = d0(1:size(d1,1),:);
-    d = [d0' d1']';
+%    d = [d0' d1']';
+    d = [d0;d1];
     d = d(randperm(length(d)),:); 
     d = myNormalize(d);
     

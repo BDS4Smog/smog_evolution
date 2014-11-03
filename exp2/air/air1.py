@@ -89,7 +89,7 @@ def pro_and_write_data(record,station,type):
                 result["o3"] = record[tmp_time]['o3']
 
             ofile.write(tmp_time)
-            ofile.write(" %d %d %d %d %d %d"%(result["pm2_5"],result["pm10"],result["no2"],result["so2"],result["co"],result["o3"]))
+            ofile.write(" %d %d %d %d %f %d"%(result["pm2_5"],result["pm10"],result["no2"],result["so2"],result["co"],result["o3"]))
 
             ofile.write("\r\n")
 
