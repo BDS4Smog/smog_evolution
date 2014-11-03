@@ -6,7 +6,7 @@ import string
 import codecs
 import time
 ISOTIMEFORMAT='%Y-%m-%dT%XZ'
-STEP = 6 
+STEP = 1 
 STATION = 'haidian'
 TYPE = 'low'
 
