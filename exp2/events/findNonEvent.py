@@ -4,9 +4,9 @@ import time
 import datetime
 
 ISOTIMEFORMAT='%Y-%m-%dT%XZ'
-STEP = 6
-START_TIME = '2013-12-24T22:00:00'
-END_TIME = '2014-10-30T12:00:00'
+STEP = 10 
+START_TIME = '2013-05-28T00:00:00'
+END_TIME = '2014-11-04T18:00:00'
 AQI_LEVEL = 150
 
 def strToDatetime(s):

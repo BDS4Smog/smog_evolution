@@ -7,15 +7,15 @@ import codecs
 HOST = '10.214.0.147'
 PORT = 27017
 DB_NAME = 'Air'
-C_NAME = 'Stations'
+C_NAME = 'Cities'
 CITY = '北京'
 IN_HOURS_BEFORE = 4 
 IN_HOURS_AFTER = 6 
 DE_HOURS_BEFORE = 4 
 DE_HOURS_AFTER = 6 
 AQI_LEVEL = 150
-START_TIME = '2013-12-24T22:00:00'
-END_TIME = '2014-10-30T12:00:00'
+START_TIME = '2013-05-28T00:00:00'
+END_TIME = '2014-11-04T18:00:00'
 STEP = 6
 POSITION={'haidian':'海淀区万柳','gucheng':'古城'}
 
@@ -30,7 +30,10 @@ def dataFromMongo(position):
     conn = pymongo.Connection(HOST,PORT)
     db = conn[DB_NAME]
     c = db[C_NAME]
-    records = c.find({"position_name":position,"area":CITY})
+    if position == '':
+        records = c.find({"area":CITY})
+    else:
+        records = c.find({"position_name":position,"area":CITY})
     t_aqi = {}
     for r in records:
         time_point = r['time_point']
@@ -104,7 +107,10 @@ if __name__ == '__main__':
     position = sys.argv[2]
     fileName = position + '_' + eventType + '.txt'
     print 'get data from mongo ...'
-    t_aqi = dataFromMongo(POSITION[position])
+    if position == 'beijing':
+        t_aqi = dataFromMongo('')
+    else:
+        t_aqi = dataFromMongo(POSITION[position])
     t_aqi = aqiFit(t_aqi)
     print 'find events ...'
     hour_i = strToDatetime(START_TIME)
