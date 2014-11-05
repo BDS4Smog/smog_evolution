@@ -16,7 +16,7 @@ EDGE = 0.25
 C_LAT = 39.87275
 C_LON = 116.3057
 
-POSITIVE_WORDS = [u'堵车',u'塞车',u'堵死了',u'车好多',u'道路拥堵',u'行驶缓慢']
+POSITIVE_WORDS = [u'堵车',u'塞车',u'堵死了',u'车好多',u'道路拥堵',u'行驶缓慢',u'好多车']
 NEGATIVE_WORDS = [u'私信订阅路况，微博应对堵车']
 
 def getTime(file_name):
@@ -50,11 +50,10 @@ def tweet_filter(t,c):
     records = c.find({'created_at':{'$lt':end_dt,'$gt':start_dt}})
     for r in records:
         text = r['text']
-        if inArea(r['lat'],r['lon']):
-            tweet_num += 1
-            if hasKeyword(text):
-                print text
-                traffic_num += 1
+        tweet_num += 1
+        if hasKeyword(text):
+            print text
+            traffic_num += 1
     return traffic_num,tweet_num
 
 def getTimeRange(t):
@@ -85,9 +84,9 @@ if __name__ == '__main__':
         print 'usage: python genData_traffic.py station'
         sys.exit(0)
     station = sys.argv[1]
-    T1 = getTime('events/'+station+'_increase.txt')
+    T1 = getTime('../events/'+station+'_increase.txt')
     T1 = expendTime(T1)
-    T0 = getTime('events/'+station+'_low.txt')
+    T0 = getTime('../events/'+station+'_low.txt')
     result1 = []
     result0 = []
     conn = pymongo.Connection(HOST,PORT)
@@ -97,15 +96,21 @@ if __name__ == '__main__':
     for t in T1:
         print t
         traffic_num,tweet_num = tweet_filter(t,c)
-        pec = '%.5f' % (float(traffic_num)/float(tweet_num))
+        if tweet_num != 0:
+            pec = '%.5f' % (float(traffic_num)/float(tweet_num))
+        else:
+            pec = '0.00000'
         result1.append(t+' '+pec+' '+str(traffic_num)+' '+str(tweet_num)+'\r\n')
-    saveFile(result1, 'data_traffic/'+station+'_increase_traffic.txt')
+    saveFile(result1, station+'_increase1.txt')
     print 'for low time stamps'
     for t in T0:
         print t
         traffic_num,tweet_num = tweet_filter(t,c)
-        pec = '%.5f' % (float(traffic_num)/float(tweet_num))
+        if tweet_num != 0:
+            pec = '%.5f' % (float(traffic_num)/float(tweet_num))
+        else:
+            pec = '0.00000'
         result0.append(t+' '+pec+' '+str(traffic_num)+' '+str(tweet_num)+'\r\n')
-    saveFile(result0, 'data_traffic/'+station+'_low_traffic.txt')
+    saveFile(result0, station+'_low1.txt')
     conn.close()
 
