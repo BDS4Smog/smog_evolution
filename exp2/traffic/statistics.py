@@ -17,7 +17,8 @@ if __name__ == '__main__':
         tmp = line.strip().split(' ')
         tweets_num = int(tmp[3])
         hour = int(tmp[0][11:13])
-        if tweets_num >= 2000 and hour < 17:
+        if tweets_num >= 2000 and ((hour >= 17 and hour <= 21) or (hour>=9 and hour<=12)):
+#        if tweets_num >= 2000:
             pec += float(tmp[1])
             traf += int(tmp[2])
             tweets +=tweets_num 
