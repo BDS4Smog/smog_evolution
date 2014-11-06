@@ -84,9 +84,8 @@ if __name__ == '__main__':
         print 'usage: python genData_traffic.py station'
         sys.exit(0)
     station = sys.argv[1]
-    T1 = getTime('../events/'+station+'_increase.txt')
-    T1 = expendTime(T1)
-    T0 = getTime('../events/'+station+'_low.txt')
+    T1 = getTime('../events/'+station+'_decrease.txt')
+    T0 = getTime('../events/'+station+'_high.txt')
     result1 = []
     result0 = []
     conn = pymongo.Connection(HOST,PORT)
@@ -101,7 +100,7 @@ if __name__ == '__main__':
         else:
             pec = '0.00000'
         result1.append(t+' '+pec+' '+str(traffic_num)+' '+str(tweet_num)+'\r\n')
-    saveFile(result1, station+'_increase1.txt')
+    saveFile(result1, station+'_raw_decrease1.txt')
     print 'for low time stamps'
     for t in T0:
         print t
@@ -111,6 +110,6 @@ if __name__ == '__main__':
         else:
             pec = '0.00000'
         result0.append(t+' '+pec+' '+str(traffic_num)+' '+str(tweet_num)+'\r\n')
-    saveFile(result0, station+'_low1.txt')
+    saveFile(result0, station+'_raw_high1.txt')
     conn.close()
 
