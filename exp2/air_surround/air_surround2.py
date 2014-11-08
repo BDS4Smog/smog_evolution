@@ -7,7 +7,7 @@ import codecs
 import time
 ISOTIMEFORMAT='%Y-%m-%dT%XZ'
 STEP = 1 
-STATION = 'haidian'
+STATION = 'beijing'
 TYPE = 'low'
 
 #import math
@@ -79,14 +79,14 @@ def pro_and_write_data(record,station,mtype):
 if __name__ == '__main__':
     print "Ready"
     record = get_records()
-    time_list = get_time_list('haidian','low')
-    pro_and_write_data(record,'haidian','low')
-    time_list = get_time_list('haidian','increase')
-    pro_and_write_data(record,'haidian','increase')
-    time_list = get_time_list('haidian','decrease')
-    pro_and_write_data(record,'haidian','decrease')
-    time_list = get_time_list('haidian','high')
-    pro_and_write_data(record,'haidian','high')
+    time_list = get_time_list('beijing','low')
+    pro_and_write_data(record,'beijing','low')
+    time_list = get_time_list('beijing','increase')
+    pro_and_write_data(record,'beijing','increase')
+    time_list = get_time_list('beijing','decrease')
+    pro_and_write_data(record,'beijing','decrease')
+    time_list = get_time_list('beijing','high')
+    pro_and_write_data(record,'beijing','high')
 
 
 
