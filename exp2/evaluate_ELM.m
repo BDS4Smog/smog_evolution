@@ -1,32 +1,27 @@
-function evaluate_ELM( range,station )
+function evaluate_ELM( station )
 %EVALUATE_ELM Summary of this function goes here
 %   Detailed explanation goes here
 %Local air
 station = 'beijing';
-version = '2'
-version = '1'
+version = '1';
 
-%f1 = ['data/' station '_decrease.txt'];
-%f0 = ['data/' station '_high.txt'];
-type1 = 'increase'
-type2 = 'low'
+type1 = 'increase';
+type2 = 'low';
 
-HIDDEN_NUM = 100;
+HIDDEN_NUM = 80;
 ROUND_NUM = 4;
 REPEAT_NUM =200;
 
-LIMIT_OF_EMPTY = 0
+LIMIT_OF_EMPTY = 6;
 
-field = [0 0 0 0 0 1]
+field = [1 0 0 0 0 0];
 
-%air_range = [2:7];
-air_range = [2 7];
-mete_range = [2:5 7:8];
+air_range = [2:7];
+mete_range = [2:8];
 air_surround_range = [2:6];
-%mete_surround_range = [2:21];
 mete_surround_range = [2:36];
-air_surround_diff_range = [2:6]
-traffic_range = [2]
+air_surround_diff_range = [2:6];
+traffic_range = [2];
 
 air_f1 = ['air/' station '_' type1 version '.txt'];
 air_f0 = ['air/' station '_' type2 version '.txt'];
@@ -41,43 +36,43 @@ air_surround_diff_f0 = ['air_surround_diff/' station '_' type2 version '.txt'];
 traffic_f1 = ['traffic/' station '_' type1 version '.txt'];
 traffic_f0 = ['traffic/' station '_' type2 version '.txt'];
 
-d1 = []
-d0 = []
+d1 = [];
+d0 = [];
 if field(1)==1
     tmp_d = load(air_f1);
-    d1 = [d1 tmp_d(:,air_range)]
+    d1 = [d1 tmp_d(:,air_range)];
     tmp_d = load(air_f0);
-    d0 = [d0 tmp_d(:,air_range)]
+    d0 = [d0 tmp_d(:,air_range)];
 end
 if field(2)==1
     tmp_d = load(mete_f1);
-    d1 = [d1 tmp_d(:,mete_range)]
+    d1 = [d1 tmp_d(:,mete_range)];
     tmp_d = load(mete_f0);
-    d0 = [d0 tmp_d(:,mete_range)]
+    d0 = [d0 tmp_d(:,mete_range)];
 end
 if field(3)==1
     tmp_d = load(air_surround_f1);
-    d1 = [d1 tmp_d(:,air_surround_range)]
+    d1 = [d1 tmp_d(:,air_surround_range)];
     tmp_d = load(air_surround_f0);
-    d0 = [d0 tmp_d(:,air_surround_range)]
+    d0 = [d0 tmp_d(:,air_surround_range)];
 end
 if field(4)==1
     tmp_d = load(mete_surround_f1);
-    d1 = [d1 tmp_d(:,mete_surround_range)]
+    d1 = [d1 tmp_d(:,mete_surround_range)];
     tmp_d = load(mete_surround_f0);
-    d0 = [d0 tmp_d(:,mete_surround_range)]
+    d0 = [d0 tmp_d(:,mete_surround_range)];
 end
 if field(5)==1
     tmp_d = load(air_surround_diff_f1);
-    d1 = [d1 tmp_d(:,air_surround_diff_range)]
+    d1 = [d1 tmp_d(:,air_surround_diff_range)];
     tmp_d = load(air_surround_diff_f0);
-    d0 = [d0 tmp_d(:,air_surround_diff_range)]
+    d0 = [d0 tmp_d(:,air_surround_diff_range)];
 end
 if field(6)==1
     tmp_d = load(traffic_f1);
-    d1 = [d1 tmp_d(:,traffic_range)]
+    d1 = [d1 tmp_d(:,traffic_range)];
     tmp_d = load(traffic_f0);
-    d0 = [d0 tmp_d(:,traffic_range)]
+    d0 = [d0 tmp_d(:,traffic_range)];
 end
 
 %    tmp_d1 = [max((d1(:,[15 21 27 33]))')' min((d1(:,[15 21 27 33]))')'];
@@ -96,7 +91,6 @@ Test_Accuracy = 0;
 for k = 1:REPEAT_NUM
     d0 = d0(randperm(length(d0)),:); 
     d0 = d0(1:size(d1,1),:);
-%    d = [d0' d1']';
     d = [d0;d1];
     d = d(randperm(length(d)),:); 
     d = myNormalize(d);
