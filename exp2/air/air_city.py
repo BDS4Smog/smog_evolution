@@ -7,13 +7,12 @@ import codecs
 import time
 ISOTIMEFORMAT='%Y-%m-%dT%XZ'
 STEP = 1 
-STATION = 'haidian'
+STATION = 'beijing'
 TYPE = 'low'
 
 #import math
 #connect
 
-stations = ["海淀区万柳"]  
 cities = ["北京"]
 #stations = ["环境监测监理中心","万寿西宫","美国大使馆","官园","定陵","东四","天坛","顺义新城","昌平镇"]  
 #cities = ["廊坊","北京","北京","北京","北京","北京","北京","北京","北京"]
@@ -27,24 +26,42 @@ final_time = "2014-10-20T00:00:00Z"
 def get_records():
     conn = pymongo.Connection("10.214.0.147",27017)
     db = conn.Air
-    collection = db.Stations
+    collection = db.Cities
 
 
-    record = [{}]*len(stations)
-    for i in range(len(stations)):
+    record = [{}]*len(cities)
+    for i in range(len(cities)):
         record[i]={}
         print i
-        print stations[i]
         print cities[i]
-        tmp_record = collection.find({"position_name":stations[i],"area":cities[i]})
+        tmp_record = collection.find({"area":cities[i]})
         for r in tmp_record:
-            record[i][r['time_point']]={}
-            record[i][r['time_point']]['pm2_5'] = r['pm2_5']
-            record[i][r['time_point']]['pm10'] = r['pm10']
-            record[i][r['time_point']]['no2'] = r['no2']
-            record[i][r['time_point']]['so2'] = r['so2']
-            record[i][r['time_point']]['co'] = r['co']
-            record[i][r['time_point']]['o3'] = r['o3']
+            if r.has_key('time_point'):
+                record[i][r['time_point']]={}
+                if r.has_key('pm2_5'):
+                    record[i][r['time_point']]['pm2_5'] = r['pm2_5']
+                else:
+                    record[i][r['time_point']]['pm2_5'] = -1
+                if r.has_key('pm10'):
+                    record[i][r['time_point']]['pm10'] = r['pm10']
+                else:
+                    record[i][r['time_point']]['pm10'] = -1
+                if r.has_key('no2'):
+                    record[i][r['time_point']]['no2'] = r['no2']
+                else:
+                    record[i][r['time_point']]['no2'] = -1
+                if r.has_key('so2'):
+                    record[i][r['time_point']]['so2'] = r['so2']
+                else:
+                    record[i][r['time_point']]['so2'] = -1
+                if r.has_key('co'):
+                    record[i][r['time_point']]['co'] = r['co']
+                else:
+                    record[i][r['time_point']]['co'] = -1
+                if r.has_key('o3'):
+                    record[i][r['time_point']]['o3'] = r['o3']
+                else:
+                    record[i][r['time_point']]['o3'] = -1
 
     return record[0]
 
@@ -57,7 +74,7 @@ def get_time_list(station,type):
     return time_list
 
 def pro_and_write_data(record,station,type):
-    ofile=codecs.open(u'./'+station+'_'+type+'.txt', 'w',"utf-8")
+    ofile=codecs.open(u'./'+station+'_'+type+'1.txt', 'w',"utf-8")
     result = {}
     for current_time in time_list:
         
@@ -99,14 +116,14 @@ def pro_and_write_data(record,station,type):
 if __name__ == '__main__':
     print "Ready"
     record = get_records()
-    time_list = get_time_list('haidian','low')
-    pro_and_write_data(record,'haidian','low')
-    time_list = get_time_list('haidian','increase')
-    pro_and_write_data(record,'haidian','increase')
-    time_list = get_time_list('haidian','decrease')
-    pro_and_write_data(record,'haidian','decrease')
-    time_list = get_time_list('haidian','high')
-    pro_and_write_data(record,'haidian','high')
+    time_list = get_time_list('beijing','low')
+    pro_and_write_data(record,'beijing','low')
+    time_list = get_time_list('beijing','increase')
+    pro_and_write_data(record,'beijing','increase')
+    time_list = get_time_list('beijing','decrease')
+    pro_and_write_data(record,'beijing','decrease')
+    time_list = get_time_list('beijing','high')
+    pro_and_write_data(record,'beijing','high')
 
 
 

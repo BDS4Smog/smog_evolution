@@ -1,23 +1,25 @@
-function evaluate_ELM( range,station )
-%EVALUATE_ELM Summary of this function goes here
+function evaluate_cca_ELM( station )
+%EVALUATE_CCA_ELM Summary of this function goes here
 %   Detailed explanation goes here
-%Local air
-station = 'beijing';
-version = '2'
+station = 'beijing'
+version = '1'
 
+%f1 = ['data/' station '_decrease.txt'];
+%f0 = ['data/' station '_high.txt'];
 type1 = 'increase'
 type2 = 'low'
+
 HIDDEN_NUM = 100;
 ROUND_NUM = 4;
-REPEAT_NUM = 1000;
-LIMIT_OF_EMPTY = 0
+REPEAT_NUM =200;
 
-field = [1 0 0 0 0 0]
+LIMIT_OF_EMPTY = 0;
+
+field = [1 1 0 0 0 0]
 
 air_range = [2:7];
 mete_range = [2:8];
 air_surround_range = [2:6];
-%mete_surround_range = [2:21];
 mete_surround_range = [2:36];
 air_surround_diff_range = [2:6]
 traffic_range = [2]
@@ -35,8 +37,8 @@ air_surround_diff_f0 = ['air_surround_diff/' station '_' type2 version '.txt'];
 traffic_f1 = ['traffic/' station '_' type1 version '.txt'];
 traffic_f0 = ['traffic/' station '_' type2 version '.txt'];
 
-d1 = []
-d0 = []
+d1 = [];
+d0 = [];
 if field(1)==1
     tmp_d = load(air_f1);
     d1 = [d1 tmp_d(:,air_range)]
@@ -69,9 +71,9 @@ if field(5)==1
 end
 if field(6)==1
     tmp_d = load(traffic_f1);
-    d1 = [d1 tmp_d(:,traffic_range)]
+    d1 = [d1 tmp_d(:,traffic_range)];
     tmp_d = load(traffic_f0);
-    d0 = [d0 tmp_d(:,traffic_range)]
+    d0 = [d0 tmp_d(:,traffic_range)];
 end
 
 %    tmp_d1 = [max((d1(:,[15 21 27 33]))')' min((d1(:,[15 21 27 33]))')'];
@@ -143,4 +145,5 @@ function [n_d] = myNormalize(d)
     end
     n_d = d;
 end
+
 
