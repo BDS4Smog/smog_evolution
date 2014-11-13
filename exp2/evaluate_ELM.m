@@ -3,34 +3,19 @@ function evaluate_ELM( range,station )
 %   Detailed explanation goes here
 %Local air
 station = 'beijing';
-<<<<<<< HEAD
 version = '2'
-=======
-version = '1'
->>>>>>> 882921b1dcd528884d1c2fff8b3ee5eea72529f0
 
-%f1 = ['data/' station '_decrease.txt'];
-%f0 = ['data/' station '_high.txt'];
 type1 = 'increase'
 type2 = 'low'
-
-<<<<<<< HEAD
 HIDDEN_NUM = 100;
 ROUND_NUM = 4;
-REPEAT_NUM =200;
-=======
-HIDDEN_NUM = 10;
-ROUND_NUM = 4;
-REPEAT_NUM = 100;
->>>>>>> 882921b1dcd528884d1c2fff8b3ee5eea72529f0
-
+REPEAT_NUM = 1000;
 LIMIT_OF_EMPTY = 0
 
-field = [0 0 0 0 0 1]
+field = [1 0 0 0 0 0]
 
-%air_range = [2:7];
-air_range = [2 7];
-mete_range = [2:5 7:8];
+air_range = [2:7];
+mete_range = [2:8];
 air_surround_range = [2:6];
 %mete_surround_range = [2:21];
 mete_surround_range = [2:36];
