@@ -9,7 +9,7 @@ type1 = 'increase'
 type2 = 'low'
 HIDDEN_NUM = 100;
 ROUND_NUM = 4;
-REPEAT_NUM = 100;
+REPEAT_NUM = 50;
 
 LIMIT_OF_EMPTY = 0;
 
