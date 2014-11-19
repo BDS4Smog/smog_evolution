@@ -11,9 +11,9 @@ HIDDEN_NUM = 100;
 ROUND_NUM = 4;
 REPEAT_NUM = 50;
 
-LIMIT_OF_EMPTY = 0;
+LIMIT_OF_EMPTY = 6;
 
-field = [1 0 1 0 0 0];
+field = [1 1 0 0 0 0];
 
 
 air_range = [2:7];
