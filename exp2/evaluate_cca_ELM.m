@@ -13,11 +13,12 @@ REPEAT_NUM = 50;
 LIMIT_OF_EMPTY = 6;
    
 view_d1 = loadView(1, station, version, type1, type2);
-view_d2 = loadView(2, station, version, type1, type2);
+view_d2 = loadView(3, station, version, type1, type2);
 
 [view_d1,view_d2] = extract_record(view_d1,view_d2,LIMIT_OF_EMPTY);
-d = [view_d1 view_d2(:,2:size(view_d2,2))];
+[view_d1,view_d2] = equalize_label(view_d1,view_d2);
 
+d = [view_d1 view_d2(:,2:size(view_d2,2))];
 d = d(randperm(length(d)),:); 
 d = myNormalize(d);
     
@@ -110,8 +111,6 @@ function [view_d] = loadView(view_num, station, version, type1, type2)
     
     d1 = [ones(size(d1,1),1) d1];
     d0 = [zeros(size(d0,1),1) d0];
-    d0 = d0(randperm(length(d0)),:); 
-    d0 = d0(1:size(d1,1),:);
     view_d = [d1;d0];
     
 end
@@ -129,6 +128,16 @@ function [d1,d2] = extract_record(view_d1, view_d2, limit)
     end
     d1 = view_d1(indexes,:);
     d2 = view_d2(indexes,:);
+end
+
+function [d1,d2] = equalize_label(view_d1,view_d2)
+    indexes1 = find(view_d1(:,1)==1);
+    num1 = length(indexes1);
+    indexes0 = find(view_d1(:,1)==0);
+    indexes0 = indexes0(randperm(length(indexes0)));
+    indexes0 = indexes0(1:num1);
+    d1 = view_d1([indexes1;indexes0],:);
+    d2 = view_d2([indexes1;indexes0],:);
 end
 
 function [n_d] = myNormalize(d)
