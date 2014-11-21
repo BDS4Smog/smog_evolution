@@ -6,10 +6,11 @@ version = '1';
 type1 = 'decrease';
 type2 = 'high';
 
+KERNEL = 0;
+
 HIDDEN_NUM = 100;
 ROUND_NUM = 4;
 REPEAT_NUM = 50;
-
 LIMIT_OF_EMPTY = 6;
    
 view_d1 = loadView(3, station, version, type1, type2);
@@ -17,10 +18,12 @@ view_d2 = loadView(4, station, version, type1, type2);
 [view_d1,view_d2] = extract_record(view_d1,view_d2,LIMIT_OF_EMPTY);
 [view_d1,view_d2] = equalize_label(view_d1,view_d2);
 
-[A B r U V] = canoncorr(view_d1(:,2:size(view_d1,2)),view_d2(:,2:size(view_d2,2)));
-view_d1 = [view_d1(:,1) U(:,1:size(U,2))];
-view_d2 = [view_d2(:,1) V(:,1:size(V,2))];
-
+if KERNEL ==0
+    [view_d1,view_d2] = myCCA(view_d1,view_d2);
+else
+    [view_d1,view_d2] = myKCCA(view_d1,view_d2);
+   
+end
 
 d = [view_d1 view_d2(:,2:size(view_d2,2))];
 d = d(randperm(length(d)),:); 
@@ -29,7 +32,6 @@ d = myNormalize(d);
 Train_Accuracy = 0;
 Test_Accuracy = 0; 
 for k = 1:REPEAT_NUM    
-    
     for i = 1:ROUND_NUM
         start_1 = 1+(i-1)*floor(length(d)/ROUND_NUM);
         end_1 = i*floor(length(d)/ROUND_NUM); 
@@ -153,4 +155,20 @@ function [n_d] = myNormalize(d)
     n_d = d;
 end
 
+function [d1,d2] = myCCA(view_d1,view_d2)
+    [A B r U V] = canoncorr(view_d1(:,2:size(view_d1,2)),view_d2(:,2:size(view_d2,2)));
+    d1 = [view_d1(:,1) U(:,1:size(U,2))];
+    d2 = [view_d2(:,1) V(:,1:size(V,2))];
+end
+
+function [d1,d2] = myKCCA(view_d1,view_d2)
+    kernel1 = {'gauss',1};
+    kernel2 = {'gauss',1}; 
+    reg = 1E-5;
+    Mmax = 50;
+    [y1,y2,beta] = km_kcca(view_d1(:,2:size(view_d1,2)),view_d2(:,2:size(view_d2,2)),kernel1,kernel2,reg,'ICD',Mmax);
+    fprintf('Canonical correlation: %f\n',beta)
+    d1 = [view_d1(:,1) y1];
+    d2 = [view_d2(:,1) y2];
+end
 
