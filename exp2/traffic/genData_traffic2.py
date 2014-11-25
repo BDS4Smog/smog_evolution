@@ -94,13 +94,14 @@ if __name__ == '__main__':
     #    sys.exit(0)
     #station = sys.argv[1]
     station = 'beijing'
-    T1 = getTime('../events/'+station+'_decrease.txt')
-    T0 = getTime('../events/'+station+'_high.txt')
+    T1 = getTime('../events/'+station+'_increase.txt')
+    T0 = getTime('../events/'+station+'_low.txt')
     result1 = []
     result0 = []
     conn = pymongo.Connection(HOST,PORT)
     db = conn[DB_NAME]
     c = db[C_NAME]
+    
     print 'for increase time stamps'
     for t in T1:
         print t
@@ -110,7 +111,8 @@ if __name__ == '__main__':
         else:
             pec = '0.00000'
         result1.append(t+' '+pec+' '+str(traffic_num1)+" "+str(traffic_num2)+' '+str(tweet_num)+'\r\n')
-    saveFile(result1, station+'_raw_decrease2.txt')
+    saveFile(result1, station+'_raw_increase2.txt')
+    
     print 'for low time stamps'
     for t in T0:
         print t
@@ -120,6 +122,6 @@ if __name__ == '__main__':
         else:
             pec = '0.00000'
         result0.append(t+' '+pec+' '+str(traffic_num1)+" "+str(traffic_num2)+' '+str(tweet_num)+'\r\n')
-    saveFile(result0, station+'_raw_high2.txt')
+    saveFile(result0, station+'_raw_low2.txt')
     conn.close()
 
