@@ -66,12 +66,12 @@ if __name__ == '__main__':
     # Print the feature ranking
     print("Feature ranking:")
     for f in range(0,X_num):
-        print("%d. feature %d (%f)" % (f + 1, indices[f], importances[indices[f]]))
+        print("%d. feature %d (%f) (%f)" % (f + 1, indices[f], importances[indices[f]],std[indices[f]]))
 
     # Plot the feature importances of the forest
     pl.figure()
-    pl.title("Feature importances")
-    pl.bar(range(X_num), importances[indices],color="r", yerr=std[indices], align="center")
+    pl.title("Feature Importance")
+    pl.bar(range(X_num), importances[indices], color="r", yerr=std[indices], align="center")
     pl.xticks(range(10), indices)
     pl.xlim([-1, X_num])
     pl.show()
