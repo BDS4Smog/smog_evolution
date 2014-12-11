@@ -18,7 +18,7 @@ if __name__ == '__main__':
         tmp = line.strip().split(' ')
         tweets_num = int(tmp[3])
         hour = int(tmp[0][11:13])
-        if tweets_num >= 2000 and hour <= 21 and hour >= 17:
+        if hour <= 21 and hour >= 17:
             result = tmp[0]+' '+tmp[1]+' '+'1'+'\n'
             results.append(result)
         else:
