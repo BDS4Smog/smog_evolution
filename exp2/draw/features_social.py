@@ -50,11 +50,11 @@ def calCheckinPec(file1,file2):
 def smogOpinionData(fileName):
     f = open(fileName)
     lines = f.readlines()
-    data = np.zeros([len(lines),Traffics]) 
+    data = np.zeros([len(lines),2]) 
     for i,line in enumerate(lines):
         tmp = line.strip().split(' ')
-        for j in range(Traffics):
-            data[i][j] = float(tmp[j+1])
+        data[i][0] = float(tmp[7])
+        data[i][1] = float(tmp[8])
     f.close()
     return data
 
@@ -227,9 +227,9 @@ if __name__ == '__main__':
     autoPec2(rects1,rects2,0.07)
 
 
-    y1,y2 = calSmogOpinionPec('../opinion_mining/beijing_increase2.txt','../opinion_mining/beijing_low2.txt')
-    y1=np.array([0.00101,0.00081])
-    y2=np.array([0.00061,0.00091])
+    y1,y2 = calSmogOpinionPec('../opinion_mining/beijing_increase1.txt','../opinion_mining/beijing_low1.txt')
+#    y1=np.array([0.00101,0.00081])
+#    y2=np.array([0.00061,0.00091])
     print y1
     print y2
     y1 = y1*100
@@ -241,10 +241,10 @@ if __name__ == '__main__':
     rects2 = plt.bar(x+width,y2,width,color='y',align='center')
     plt.xlim([-0.5,2])
     plt.xticks(x+width/2,name,rotation=0)
-    plt.ylim([0,0.17])
+    plt.ylim([0,0.16])
     autolabel2(rects1)
     autolabel2(rects2)
-    autoPec(rects1,rects2,1.3)
+    autoPec2(rects1,rects2,0.03)
 
     plt.show()
 
