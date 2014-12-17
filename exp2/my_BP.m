@@ -27,7 +27,7 @@ correct_count = 0;
 [s1 s2] = size(Y);
 for i=1:s2
 	[~,Index] = max(Y(:,i));
-	if(Index == test_raw_target(i)+1)
+	if(Index == test_raw_target(i))
 		correct_count = correct_count+1;
 	end
 end
