@@ -50,11 +50,11 @@ def calCheckinPec(file1,file2):
 def smogOpinionData(fileName):
     f = open(fileName)
     lines = f.readlines()
-    data = np.zeros([len(lines),Traffics]) 
+    data = np.zeros([len(lines),2]) 
     for i,line in enumerate(lines):
         tmp = line.strip().split(' ')
-        for j in range(Traffics):
-            data[i][j] = float(tmp[j+1])
+        data[i][0] = float(tmp[7])
+        data[i][1] = float(tmp[8])
     f.close()
     return data
 
@@ -110,14 +110,14 @@ def calTrafficPec(file1,file2):
 def autolabel(rects):
     for i,rect in enumerate(rects):
         height = rect.get_height()
-        plt.text(rect.get_x()+rect.get_width()/2., 1.02*height, '%.1f'%float(height),ha='center', va='bottom',fontsize=12)
+        plt.text(rect.get_x()+rect.get_width()/2., 1.02*height, '%.1f'%float(height),ha='center', va='bottom',fontsize=15)
 
 def autolabel2(rects):
     for i,rect in enumerate(rects):
         height = rect.get_height()
-        plt.text(rect.get_x()+rect.get_width()/2., 1.02*height, '%.3f%%'%float(height),ha='center', va='bottom',fontsize=12)
+        plt.text(rect.get_x()+rect.get_width()/2., 1.02*height, '%.3f%%'%float(height),ha='center', va='bottom',fontsize=15)
 
-def autoPec(rects1,rects2):
+def autoPec(rects1,rects2,p):
     for i, rect1 in enumerate(rects1):
         rect2 = rects2[i]
         height1 = rect1.get_height()
@@ -129,15 +129,28 @@ def autoPec(rects1,rects2):
             height = height2
             pec = (height2 - height1)/height1
             label = '-'
-        plt.text(rect1.get_x()+rect1.get_width()/2., height*1.28, label+'%.1f%%'%(pec*100), va='top',color='b',fontsize=14)
+        plt.text(rect1.get_x()+rect1.get_width()/2., height*p, label+'%.1f%%'%(pec*100), va='top',color='b',fontsize=16)
 
+def autoPec2(rects1,rects2,p):
+    for i, rect1 in enumerate(rects1):
+        rect2 = rects2[i]
+        height1 = rect1.get_height()
+        height2 = rect2.get_height()
+        height = height1
+        pec = (height1 - height2)/height2
+        label = '+'
+        if height1 < height2: 
+            height = height2
+            pec = (height2 - height1)/height1
+            label = '-'
+        plt.text(rect1.get_x()+rect1.get_width()/2., height+p, label+'%.1f%%'%(pec*100), va='top',color='b',fontsize=16)
 
 if __name__ == '__main__':
     y1,y2 = calCheckinPec('../check-in/beijing_increase1.txt','../check-in/beijing_low1.txt')
     name_all = getCheckinName()
     width = 0.45
-#    font = {'size':15}
-#    plt.rc('font',**font)
+    font = {'size':16.5}
+    plt.rc('font',**font)
     plt.subplot2grid((2,4),(0,0))
     x=np.array([0])
     y=np.array([y1[2]])
@@ -152,7 +165,7 @@ if __name__ == '__main__':
     plt.legend(['A','N-A'],bbox_to_anchor=(0., 1.02, 1., .102), loc=3, ncol=2, mode="expand", borderaxespad=0.)
     autolabel(rects1)
     autolabel(rects2)
-    autoPec(rects1,rects2)
+    autoPec(rects1,rects2,1.34)
 
     plt.subplot2grid((2,4),(0,1))
     x=np.array([0])
@@ -166,7 +179,7 @@ if __name__ == '__main__':
     plt.ylim([0,90])
     autolabel(rects1)
     autolabel(rects2)
-    autoPec(rects1,rects2)
+    autoPec(rects1,rects2,1.3)
 
     plt.subplot2grid((2,4),(0,2))
     x=np.array([0])
@@ -180,7 +193,7 @@ if __name__ == '__main__':
     plt.ylim([0,50])
     autolabel(rects1)
     autolabel(rects2)
-    autoPec(rects1,rects2)
+    autoPec(rects1,rects2,1.3)
 
     plt.subplot2grid((2,4),(0,3))
     x=np.array([0])
@@ -194,7 +207,7 @@ if __name__ == '__main__':
     plt.ylim([0,35])
     autolabel(rects1)
     autolabel(rects2)
-    autoPec(rects1,rects2)
+    autoPec(rects1,rects2,1.32)
 
 
     y1,y2 = calTrafficPec('../traffic/beijing_increase2.txt','../traffic/beijing_low2.txt')
@@ -202,7 +215,7 @@ if __name__ == '__main__':
     y2 = y2*100
     plt.subplot2grid((2,4),(1,0),colspan=2)
     x=np.array([0,1])
-    name=np.array(['Traffic Jam \n(Hour: 00-24)','Traffic Jam \n(Hour: 17-21)'])
+    name=np.array(['Traffic jam tweet\n(Hour: 00-24)','Traffic jam tweet\n(Hour: 17-21)'])
     rects1 = plt.bar(x,y1,width,color='r',align='center')
     rects2 = plt.bar(x+width,y2,width,color='y',align='center')
     plt.xlim([-0.5,2])
@@ -211,38 +224,27 @@ if __name__ == '__main__':
     plt.ylabel('Tweet percentage %')
     autolabel2(rects1)
     autolabel2(rects2)
-    autoPec(rects1,rects2)
+    autoPec2(rects1,rects2,0.07)
 
 
-    y1,y2 = calSmogOpinionPec('../opinion_mining/beijing_increase2.txt','../opinion_mining/beijing_low2.txt')
+    y1,y2 = calSmogOpinionPec('../opinion_mining/beijing_increase1.txt','../opinion_mining/beijing_low1.txt')
+#    y1=np.array([0.00101,0.00081])
+#    y2=np.array([0.00061,0.00091])
     print y1
     print y2
-    plt.subplot2grid((2,4),(1,2))
-    x=np.array([0])
-    y=np.array([y1[0]*100])
-    yy=np.array([y2[0]*100])
-    name=np.array(['Smog Disaster'])
-    rects1 = plt.bar(x,y,width,color='r',align='center')
-    rects2 = plt.bar(x+width,yy,width,color='y',align='center')
-    plt.xlim([-0.5,1])
+    y1 = y1*100
+    y2 = y2*100
+    plt.subplot2grid((2,4),(1,2),colspan=2)
+    x=np.array([0,1])
+    name=np.array(['Smog disaster tweet','Good air tweet'])
+    rects1 = plt.bar(x,y1,width,color='r',align='center')
+    rects2 = plt.bar(x+width,y2,width,color='y',align='center')
+    plt.xlim([-0.5,2])
     plt.xticks(x+width/2,name,rotation=0)
-    plt.ylim([0,70])
+    plt.ylim([0,0.16])
     autolabel2(rects1)
     autolabel2(rects2)
-    autoPec(rects1,rects2)
+    autoPec2(rects1,rects2,0.03)
 
-    plt.subplot2grid((2,4),(1,3))
-    x=np.array([0])
-    y=np.array([y1[1]*100])
-    yy=np.array([y2[1]*100])
-    name=np.array(['Good Air'])
-    rects1 = plt.bar(x,y,width,color='r',align='center')
-    rects2 = plt.bar(x+width,yy,width,color='y',align='center')
-    plt.xlim([-0.5,1])
-    plt.xticks(x+width/2,name,rotation=0)
-    plt.ylim([0,70])
-    autolabel2(rects1)
-    autolabel2(rects2)
-    autoPec(rects1,rects2)
     plt.show()
 
