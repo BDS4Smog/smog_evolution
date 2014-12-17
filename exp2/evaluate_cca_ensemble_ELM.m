@@ -18,6 +18,10 @@ d = d(randperm(length(d)),:);
 d = myNormalize(d);  
         
 Test_Accuracy = 0; 
+recall = 0
+precision = 0
+f1_score = 0
+
 for k = 1:REPEAT_NUM
     for i = 1:ROUND_NUM
 %%%%% air + mete + air_surround + mete_surround
@@ -43,12 +47,32 @@ for k = 1:REPEAT_NUM
                 num = num + 1;
             end
         end
+
+        %calculate precision,recall,f1_score
+        [~,label_Actual_whole] = max(T_Actual,[],2)
+        [~,label_Expected_whole] = max(T_Expected,[],2)
+        positives_Actural = length(find(label_Actual_whole==1))
+        positives_Expected = length(find(label_Expected_whole==1))
+        positives_correct = length(find(label_Expected_whole==label_Actual_whole & label_Actual_whole==1))
+        tmp_precision = positives_correct/positives_Actural
+        tmp_recall = positives_correct/positives_Expected
+        tmp_f1_score = 2*tmp_precision*tmp_recall/(tmp_precision+tmp_recall)
+        %add up result of every iteration in order to caculate average value
         Test_Accuracy = Test_Accuracy + num/size(T_Actual,1);
+        precision = precision+tmp_precision
+        recall = recall+tmp_recall
+        f1_score = f1_score+tmp_f1_score
     end
 end
 
 Test_Accuracy = Test_Accuracy/(REPEAT_NUM*ROUND_NUM);
+precision = precision/(REPEAT_NUM*ROUND_NUM);
+recall = recall/(REPEAT_NUM*ROUND_NUM);
+f1_score = f1_score/(REPEAT_NUM*ROUND_NUM);
 fprintf('Test_Accuracy: %f \n',Test_Accuracy);
+fprintf('Test_precision: %f \n',precision);
+fprintf('Test_recall: %f \n',recall);
+fprintf('Test_f1_score: %f \n',f1_score);
 fprintf('Size of d: %d \n', size(d,1));
 end
 
@@ -88,8 +112,11 @@ function [d] = loadData(station, version, type1, type2)
     mete_range = 2:8;
     air_surround_range = 2:6;
     mete_surround_range = 2:36;
-%    air_surround_diff_range = 2:6;
-%    traffic_range = 2;
+ %   air_surround_diff_range = 2:6;
+ %   traffic_range = 2:9;
+ %   checkin_range = 2:12;
+ %   om_range = 2:9;
+
     air_f1 = ['air/' station '_' type1 version '.txt'];
     air_f0 = ['air/' station '_' type2 version '.txt'];
     mete_f1 = ['mete/' station '_' type1 version '.txt'];
@@ -98,10 +125,16 @@ function [d] = loadData(station, version, type1, type2)
     air_surround_f0 = ['air_surround/' station '_' type2 version '.txt'];
     mete_surround_f1 = ['mete_surround/' station '_' type1 version '.txt'];
     mete_surround_f0 = ['mete_surround/' station '_' type2 version '.txt'];
-%    air_surround_diff_f1 = ['air_surround_diff/' station '_' type1 version '.txt'];
-%    air_surround_diff_f0 = ['air_surround_diff/' station '_' type2 version '.txt'];
-%    traffic_f1 = ['traffic/' station '_' type1 version '.txt'];
-%    traffic_f0 = ['traffic/' station '_' type2 version '.txt'];
+%{
+    air_surround_diff_f1 = ['air_surround_diff/' station '_' type1 version '.txt'];
+    air_surround_diff_f0 = ['air_surround_diff/' station '_' type2 version '.txt'];
+    traffic_f1 = ['traffic_new/' station '_' type1 version '.txt'];
+    traffic_f0 = ['traffic_new/' station '_' type2 version '.txt'];
+    checkin_f1 = ['check-in/' station '_' type1 version '.txt'];
+    checkin_f0 = ['check-in/' station '_' type2 version '.txt'];
+    om_f1 = ['opinion_mining/' station '_' type1 version '.txt'];
+    om_f0 = ['opinion_mining/' station '_' type2 version '.txt'];
+%}
 
     tmp_d = load(air_f1);
     d1 = tmp_d(:,air_range);
@@ -122,7 +155,31 @@ function [d] = loadData(station, version, type1, type2)
     d1 = [d1 tmp_d(:,mete_surround_range)];
     tmp_d = load(mete_surround_f0);
     d0 = [d0 tmp_d(:,mete_surround_range)];
-    
+%{
+    tmp_d = load(air_surround_diff_f1);
+    d1 = [d1 tmp_d(:,air_surround_diff_range)];
+    tmp_d = load(air_surround_diff_f0);
+    d0 = [d0 tmp_d(:,air_surround_diff_range)];
+
+
+    tmp_d = load(traffic_f1);
+    d1 = [d1 tmp_d(:,traffic_range)];
+    tmp_d = load(traffic_f0);
+    d0 = [d0 tmp_d(:,traffic_range)];
+
+
+    tmp_d = load(checkin_f1);
+    d1 = [d1 tmp_d(:,checkin_range)];
+    tmp_d = load(checkin_f0);
+    d0 = [d0 tmp_d(:,checkin_range)];
+
+
+    tmp_d = load(om_f1);
+    d1 = [d1 tmp_d(:,om_range)];
+    tmp_d = load(om_f0);
+    d0 = [d0 tmp_d(:,om_range)];
+
+%}  
     d1 = [ones(size(d1,1),1) d1];
     d0 = [zeros(size(d0,1),1) d0];
     d = [d1;d0];

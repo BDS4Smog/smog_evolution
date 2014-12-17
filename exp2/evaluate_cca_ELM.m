@@ -31,6 +31,9 @@ d = myNormalize(d);
     
 Train_Accuracy = 0;
 Test_Accuracy = 0; 
+precision = 0;
+recall = 0;
+f1_score = 0;
 for k = 1:REPEAT_NUM    
     for i = 1:ROUND_NUM
         start_1 = 1+(i-1)*floor(length(d)/ROUND_NUM);
@@ -43,15 +46,25 @@ for k = 1:REPEAT_NUM
         else
             Tr = [d(1:start_1-1,:)',d(end_1+1:length(d),:)']';    
         end
-        [Tr_acc, Te_acc] = my_ELM(Tr, Te, 1, HIDDEN_NUM, 'sig');
+        [Tr_acc, Te_acc, tmp_precision, tmp_recall, tmp_f1_score] = my_ELM(Tr, Te, 1, HIDDEN_NUM, 'sig');
         Train_Accuracy = Train_Accuracy + Tr_acc;
         Test_Accuracy = Test_Accuracy + Te_acc;
+        precision = precision+tmp_precision
+        recall = recall+tmp_recall
+        f1_score = f1_score+tmp_f1_score
     end
 end
+
 Train_Accuracy = Train_Accuracy/(ROUND_NUM*REPEAT_NUM);
 Test_Accuracy = Test_Accuracy/(ROUND_NUM*REPEAT_NUM);
+precision = precision/(REPEAT_NUM*ROUND_NUM);
+recall = recall/(REPEAT_NUM*ROUND_NUM);
+f1_score = f1_score/(REPEAT_NUM*ROUND_NUM);
 fprintf('Train_Accuracy: %f \n',Train_Accuracy);
 fprintf('Test_Accuracy: %f \n',Test_Accuracy);
+fprintf('Test_precision: %f \n',precision);
+fprintf('Test_recall: %f \n',recall);
+fprintf('Test_f1_score: %f \n',f1_score);
 fprintf('Number of records: %d \n',size(d,1));
 
 end
@@ -64,7 +77,10 @@ function [view_d] = loadView(view_num, station, version, type1, type2)
     air_surround_range = 2:6;
     mete_surround_range = 2:36;
     air_surround_diff_range = 2:6;
-    traffic_range = 2;
+    traffic_range = 2:9;
+    checkin_range = 2:12;
+    om_range = 2:9;
+
     air_f1 = ['air/' station '_' type1 version '.txt'];
     air_f0 = ['air/' station '_' type2 version '.txt'];
     mete_f1 = ['mete/' station '_' type1 version '.txt'];
@@ -75,8 +91,12 @@ function [view_d] = loadView(view_num, station, version, type1, type2)
     mete_surround_f0 = ['mete_surround/' station '_' type2 version '.txt'];
     air_surround_diff_f1 = ['air_surround_diff/' station '_' type1 version '.txt'];
     air_surround_diff_f0 = ['air_surround_diff/' station '_' type2 version '.txt'];
-    traffic_f1 = ['traffic/' station '_' type1 version '.txt'];
-    traffic_f0 = ['traffic/' station '_' type2 version '.txt'];
+    traffic_f1 = ['traffic_new/' station '_' type1 version '.txt'];
+    traffic_f0 = ['traffic_new/' station '_' type2 version '.txt'];
+    checkin_f1 = ['check-in/' station '_' type1 version '.txt'];
+    checkin_f0 = ['check-in/' station '_' type2 version '.txt'];
+    om_f1 = ['opinion_mining/' station '_' type1 version '.txt'];
+    om_f0 = ['opinion_mining/' station '_' type2 version '.txt'];
 
     if view_num==1
         tmp_d = load(air_f1);
@@ -114,6 +134,19 @@ function [view_d] = loadView(view_num, station, version, type1, type2)
         tmp_d = load(traffic_f0);
         d0 = tmp_d(:,traffic_range);
     end
+    if view_num==7
+        tmp_d = load(checkin_f1);
+        d1 = tmp_d(:,checkin_range);
+        tmp_d = load(checkin_f0);
+        d0 = tmp_d(:,checkin_range);
+    end
+    if view_num==8
+        tmp_d = load(om_f1);
+        d1 = tmp_d(:,om_range);
+        tmp_d = load(om_f0);
+        d0 = tmp_d(:,om_range);
+    end
+
     
     d1 = [ones(size(d1,1),1) d1];
     d0 = [zeros(size(d0,1),1) d0];

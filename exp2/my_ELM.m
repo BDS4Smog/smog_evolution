@@ -1,4 +1,4 @@
-function [TrainingAccuracy, TestingAccuracy] = my_ELM(train_data, test_data, Elm_Type, NumberofHiddenNeurons, ActivationFunction)
+function [TrainingAccuracy, TestingAccuracy, precision, recall, f1_score] = my_ELM(train_data, test_data, Elm_Type, NumberofHiddenNeurons, ActivationFunction)
 
 % Usage: elm(TrainingData_File, TestingData_File, Elm_Type, NumberofHiddenNeurons, ActivationFunction)
 % OR:    [TrainingTime, TestingTime, TrainingAccuracy, TestingAccuracy] = elm(TrainingData_File, TestingData_File, Elm_Type, NumberofHiddenNeurons, ActivationFunction)
@@ -202,5 +202,18 @@ if Elm_Type == CLASSIFIER
             MissClassificationRate_Testing=MissClassificationRate_Testing+1;
         end
     end
-    TestingAccuracy=1-MissClassificationRate_Testing/size(TV.T,2);  
+    TestingAccuracy=1-MissClassificationRate_Testing/size(TV.T,2); 
+
+    %calculate precision,recall,f1_score
+    T_Actual = TY';
+    T_Expected = TV.T';
+    [~,label_Actual_whole] = max(T_Actual,[],2)
+    [~,label_Expected_whole] = max(T_Expected,[],2)
+    positives_Actural = length(find(label_Actual_whole==1))
+    positives_Expected = length(find(label_Expected_whole==1))
+    positives_correct = length(find(label_Expected_whole==label_Actual_whole & label_Actual_whole==1))
+    precision = positives_correct/positives_Actural
+    recall = positives_correct/positives_Expected
+    f1_score = 2*precision*recall/(precision+recall)
+
 end
