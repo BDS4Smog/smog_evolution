@@ -1,4 +1,4 @@
-function evaluate_ELM( station )
+function evaluate_BP( station )
 %EVALUATE_ELM Summary of this function goes here
 %   Detailed explanation goes here
 %Local air
@@ -7,13 +7,12 @@ version = '1';
 
 type1 = 'increase';
 type2 = 'low';
-HIDDEN_NUM = 150;
 ROUND_NUM = 4;
-REPEAT_NUM = 50;
+REPEAT_NUM = 1;
 
 LIMIT_OF_EMPTY = 6;
 
-field = [1 1 1 1 0 0 0 0];
+field = [1 1 0 0 0 0 0 0];
 
 
 air_range = [2:7];
@@ -126,7 +125,7 @@ for k = 1:REPEAT_NUM
         else
             Tr = [d(1:start_1-1,:)',d(end_1+1:length(d),:)']';    
         end
-        [Tr_acc, Te_acc, tmp_precision, tmp_recall, tmp_f1_score] = my_ELM(Tr, Te, 1, HIDDEN_NUM, 'sig');
+        [Tr_acc, Te_acc, tmp_precision, tmp_recall, tmp_f1_score] = my_BP(Tr, Te);
 
         precision = precision+tmp_precision
         recall = recall+tmp_recall
