@@ -7,13 +7,13 @@ version = '1';
 
 type1 = 'increase';
 type2 = 'low';
-HIDDEN_NUM = 100;
+HIDDEN_NUM = 150;
 ROUND_NUM = 4;
-REPEAT_NUM = 500;
+REPEAT_NUM = 50;
 
 LIMIT_OF_EMPTY = 6;
 
-field = [0 0 0 0 0 0 0 1];
+field = [1 1 1 1 0 1 1 1];
 
 
 air_range = [2:7];
@@ -21,7 +21,7 @@ mete_range = [2:8];
 air_surround_range = [2:6];
 mete_surround_range = [2:36];
 air_surround_diff_range = [2:6];
-traffic_range = [2 4];
+traffic_range = [2:8];
 checkin_range = [2:12]
 om_range = [2:9]
 
@@ -35,8 +35,8 @@ mete_surround_f1 = ['mete_surround/' station '_' type1 version '.txt'];
 mete_surround_f0 = ['mete_surround/' station '_' type2 version '.txt'];
 air_surround_diff_f1 = ['air_surround_diff/' station '_' type1 version '.txt'];
 air_surround_diff_f0 = ['air_surround_diff/' station '_' type2 version '.txt'];
-traffic_f1 = ['traffic_new/' station '_' type1  '2.txt'];
-traffic_f0 = ['traffic_new/' station '_' type2  '2.txt'];
+traffic_f1 = ['traffic_new/' station '_' type1  version '.txt'];
+traffic_f0 = ['traffic_new/' station '_' type2  version '.txt'];
 checkin_f1 = ['check-in/' station '_' type1 version '.txt'];
 checkin_f0 = ['check-in/' station '_' type2 version '.txt'];
 om_f1 = ['opinion_mining/' station '_' type1 version '.txt'];

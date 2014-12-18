@@ -13,8 +13,8 @@ ROUND_NUM = 4;
 REPEAT_NUM = 50;
 LIMIT_OF_EMPTY = 6;
    
-view_d1 = loadView(3, station, version, type1, type2);
-view_d2 = loadView(4, station, version, type1, type2);
+view_d1 = loadView(1, station, version, type1, type2);
+view_d2 = loadView(2, station, version, type1, type2);
 [view_d1,view_d2] = extract_record(view_d1,view_d2,LIMIT_OF_EMPTY);
 [view_d1,view_d2] = equalize_label(view_d1,view_d2);
 

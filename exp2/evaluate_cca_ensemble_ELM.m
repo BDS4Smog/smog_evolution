@@ -4,11 +4,11 @@ function evaluate_cca_ensemble_ELM( station )
 
 station = 'beijing';
 version = '1';
-type1 = 'increase';
-type2 = 'low';
+type1 = 'decrease';
+type2 = 'high';
 
 ROUND_NUM = 4;
-REPEAT_NUM = 10;
+REPEAT_NUM = 5;
 LIMIT_OF_EMPTY = 6;
 
 d = loadData(station, version, type1, type2);
@@ -24,21 +24,93 @@ f1_score = 0
 
 for k = 1:REPEAT_NUM
     for i = 1:ROUND_NUM
-%%%%% air + mete + air_surround + mete_surround
         [Tr,Te] = dataPartion(d,i,ROUND_NUM);
-        T1 = my_predict(Tr(:,1), Tr(:,2:7), Tr(:,8:14), Te(:,1), Te(:,2:7), Te(:,8:14)); 
-        T2 = my_predict(Tr(:,1), Tr(:,2:7), Tr(:,15:19), Te(:,1), Te(:,2:7), Te(:,15:19));
-        T3 = my_predict(Tr(:,1), Tr(:,2:7), Tr(:,20:54), Te(:,1), Te(:,2:7), Te(:,20:54));
-        T4 = my_predict(Tr(:,1), Tr(:,8:14), Tr(:,15:19), Te(:,1), Te(:,8:14), Te(:,15:19));
-        [T5,T_Expected] = my_predict(Tr(:,1), Tr(:,15:19), Tr(:,20:54), Te(:,1), Te(:,15:19), Te(:,20:54));
-        T_Actual = (T1 + T2 + T3 + T4 + T5)/5;
-
-%%%%% air  + mete + air surround
+%%%%% air + mete + air_surround + mete_surround
 %        T1 = my_predict(Tr(:,1), Tr(:,2:7), Tr(:,8:14), Te(:,1), Te(:,2:7), Te(:,8:14)); 
 %        T2 = my_predict(Tr(:,1), Tr(:,2:7), Tr(:,15:19), Te(:,1), Te(:,2:7), Te(:,15:19));
-%        [T4 ,T_Expected] = my_predict(Tr(:,1), Tr(:,8:14), Tr(:,15:19), Te(:,1), Te(:,8:14), Te(:,15:19));
-%        T_Actual = (T1 + T2 + T4)/3;
+%        T3 = my_predict(Tr(:,1), Tr(:,2:7), Tr(:,20:54), Te(:,1), Te(:,2:7), Te(:,20:54));
+%        T4 = my_predict(Tr(:,1), Tr(:,8:14), Tr(:,15:19), Te(:,1), Te(:,8:14), Te(:,15:19));
+%        [T5,T_Expected] = my_predict(Tr(:,1), Tr(:,15:19), Tr(:,20:54), Te(:,1), Te(:,15:19), Te(:,20:54));
+%        T_Actual = (T1 + T2 + T3 + T4 + T5)/5;
+
+%%%%% air  + mete + traffic + checkin + om_range
+%        T1 = my_predict(Tr(:,1), Tr(:,2:7), Tr(:,8:14), Te(:,1), Te(:,2:7), Te(:,8:14)); 
+%        T2 = my_predict(Tr(:,1), Tr(:,2:7), Tr(:,55:62), Te(:,1), Te(:,2:7), Te(:,55:62));
+%        T3 = my_predict(Tr(:,1), Tr(:,2:7), Tr(:,63:73), Te(:,1), Te(:,2:7), Te(:,63:73));
+%        T4 = my_predict(Tr(:,1), Tr(:,2:7), Tr(:,74:81), Te(:,1), Te(:,2:7), Te(:,74:81));
+%        T5 = my_predict(Tr(:,1), Tr(:,8:14), Tr(:,55:62), Te(:,1), Te(:,8:14), Te(:,55:62));
+%        T6 = my_predict(Tr(:,1), Tr(:,8:14), Tr(:,63:73), Te(:,1), Te(:,8:14), Te(:,63:73));
+%        T7 = my_predict(Tr(:,1), Tr(:,8:14), Tr(:,74:81), Te(:,1), Te(:,8:14), Te(:,74:81));
+%        T8 = my_predict(Tr(:,1), Tr(:,55:62), Tr(:,63:73), Te(:,1), Te(:,55:62), Te(:,63:73));
+%        T9 = my_predict(Tr(:,1), Tr(:,55:62), Tr(:,74:81), Te(:,1), Te(:,55:62), Te(:,74:81));
+%        [T10,T_Expected] = my_predict(Tr(:,1), Tr(:,63:73), Tr(:,74:81), Te(:,1), Te(:,63:73), Te(:,74:81));    
+%        T_Actual = (T1+T2+T3+T4+T5+T6+T7+T8+T9+T10)/10;
         
+
+%%%%% air  + mete + air_surround + mete_surround + traffic + checkin + om_range
+
+        T1 = my_predict(Tr(:,1), Tr(:,2:7), Tr(:,8:14), Te(:,1), Te(:,2:7), Te(:,8:14));
+        T2 = my_predict(Tr(:,1), Tr(:,2:7), Tr(:,15:19), Te(:,1), Te(:,2:7), Te(:,15:19));
+        T3 = my_predict(Tr(:,1), Tr(:,2:7), Tr(:,20:54), Te(:,1), Te(:,2:7), Te(:,20:54));
+        T4 = my_predict(Tr(:,1), Tr(:,2:7), Tr(:,55:62), Te(:,1), Te(:,2:7), Te(:,55:62));
+        T5 = my_predict(Tr(:,1), Tr(:,2:7), Tr(:,63:73), Te(:,1), Te(:,2:7), Te(:,63:73));
+        T6 = my_predict(Tr(:,1), Tr(:,2:7), Tr(:,74:81), Te(:,1), Te(:,2:7), Te(:,74:81));
+        T7 = my_predict(Tr(:,1), Tr(:,8:14), Tr(:,15:19), Te(:,1), Te(:,8:14), Te(:,15:19));
+        T8 = my_predict(Tr(:,1), Tr(:,8:14), Tr(:,20:54), Te(:,1), Te(:,8:14), Te(:,20:54));
+        T9 = my_predict(Tr(:,1), Tr(:,8:14), Tr(:,55:62), Te(:,1), Te(:,8:14), Te(:,55:62));
+        T10 = my_predict(Tr(:,1), Tr(:,8:14), Tr(:,63:73), Te(:,1), Te(:,8:14), Te(:,63:73));
+        T11 = my_predict(Tr(:,1), Tr(:,8:14), Tr(:,74:81), Te(:,1), Te(:,8:14), Te(:,74:81));
+        T12 = my_predict(Tr(:,1), Tr(:,15:19), Tr(:,20:54), Te(:,1), Te(:,15:19), Te(:,20:54));
+        T13 = my_predict(Tr(:,1), Tr(:,15:19), Tr(:,55:62), Te(:,1), Te(:,15:19), Te(:,55:62));
+        T14 = my_predict(Tr(:,1), Tr(:,15:19), Tr(:,63:73), Te(:,1), Te(:,15:19), Te(:,63:73));
+        T15 = my_predict(Tr(:,1), Tr(:,15:19), Tr(:,74:81), Te(:,1), Te(:,15:19), Te(:,74:81));
+        T16 = my_predict(Tr(:,1), Tr(:,20:54), Tr(:,55:62), Te(:,1), Te(:,20:54), Te(:,55:62));
+        T17 = my_predict(Tr(:,1), Tr(:,20:54), Tr(:,63:73), Te(:,1), Te(:,20:54), Te(:,63:73));
+        T18 = my_predict(Tr(:,1), Tr(:,20:54), Tr(:,74:81), Te(:,1), Te(:,20:54), Te(:,74:81));      
+        T19 = my_predict(Tr(:,1), Tr(:,55:62), Tr(:,63:73), Te(:,1), Te(:,55:62), Te(:,63:73));
+        T20 = my_predict(Tr(:,1), Tr(:,55:62), Tr(:,74:81), Te(:,1), Te(:,55:62), Te(:,74:81));
+        [T21,T_Expected] = my_predict(Tr(:,1), Tr(:,63:73), Tr(:,74:81), Te(:,1), Te(:,63:73), Te(:,74:81));
+        T_Actual = (T1+T2+T3+T4+T5+T6+T7+T8+T9+T10+T11+T12+T13+T14+T15+T16+T17+T18+T19+T20+T21)/21;
+     
+         
+         
+%%%%% air  + mete + air_surround + mete_surround + checkin          
+%{ 
+       T1 = my_predict(Tr(:,1), Tr(:,2:7), Tr(:,8:14), Te(:,1), Te(:,2:7), Te(:,8:14));
+        T2 = my_predict(Tr(:,1), Tr(:,2:7), Tr(:,15:19), Te(:,1), Te(:,2:7), Te(:,15:19));
+        T3 = my_predict(Tr(:,1), Tr(:,2:7), Tr(:,20:54), Te(:,1), Te(:,2:7), Te(:,20:54));     
+        T4 = my_predict(Tr(:,1), Tr(:,2:7), Tr(:,63:73), Te(:,1), Te(:,2:7), Te(:,63:73));
+        T5 = my_predict(Tr(:,1), Tr(:,8:14), Tr(:,15:19), Te(:,1), Te(:,8:14), Te(:,15:19));
+        T6 = my_predict(Tr(:,1), Tr(:,8:14), Tr(:,20:54), Te(:,1), Te(:,8:14), Te(:,20:54));
+        T7 = my_predict(Tr(:,1), Tr(:,8:14), Tr(:,63:73), Te(:,1), Te(:,8:14), Te(:,63:73));
+        T8 = my_predict(Tr(:,1), Tr(:,15:19), Tr(:,20:54), Te(:,1), Te(:,15:19), Te(:,20:54));
+        T9 = my_predict(Tr(:,1), Tr(:,15:19), Tr(:,63:73), Te(:,1), Te(:,15:19), Te(:,63:73));
+        [T10,T_Expected] = my_predict(Tr(:,1), Tr(:,20:54), Tr(:,63:73), Te(:,1), Te(:,20:54), Te(:,63:73));
+        T_Actual = (T1+T2+T3+T4+T5+T6+T7+T8+T9+T10)/10; 
+%}
+
+%%%%% air  + mete + air_surround + mete_surround + traffic + checkin
+%{
+        T1 = my_predict(Tr(:,1), Tr(:,2:7), Tr(:,8:14), Te(:,1), Te(:,2:7), Te(:,8:14));
+        T2 = my_predict(Tr(:,1), Tr(:,2:7), Tr(:,15:19), Te(:,1), Te(:,2:7), Te(:,15:19));
+        T3 = my_predict(Tr(:,1), Tr(:,2:7), Tr(:,20:54), Te(:,1), Te(:,2:7), Te(:,20:54));
+        T4 = my_predict(Tr(:,1), Tr(:,2:7), Tr(:,55:62), Te(:,1), Te(:,2:7), Te(:,55:62));
+        T5 = my_predict(Tr(:,1), Tr(:,2:7), Tr(:,63:73), Te(:,1), Te(:,2:7), Te(:,63:73));
+        T6 = my_predict(Tr(:,1), Tr(:,8:14), Tr(:,15:19), Te(:,1), Te(:,8:14), Te(:,15:19));
+        T7 = my_predict(Tr(:,1), Tr(:,8:14), Tr(:,20:54), Te(:,1), Te(:,8:14), Te(:,20:54));
+        T8 = my_predict(Tr(:,1), Tr(:,8:14), Tr(:,55:62), Te(:,1), Te(:,8:14), Te(:,55:62));
+        T9 = my_predict(Tr(:,1), Tr(:,8:14), Tr(:,63:73), Te(:,1), Te(:,8:14), Te(:,63:73));
+        T10 = my_predict(Tr(:,1), Tr(:,15:19), Tr(:,20:54), Te(:,1), Te(:,15:19), Te(:,20:54));
+        T11 = my_predict(Tr(:,1), Tr(:,15:19), Tr(:,55:62), Te(:,1), Te(:,15:19), Te(:,55:62));
+        T12 = my_predict(Tr(:,1), Tr(:,15:19), Tr(:,63:73), Te(:,1), Te(:,15:19), Te(:,63:73));
+        T13 = my_predict(Tr(:,1), Tr(:,20:54), Tr(:,55:62), Te(:,1), Te(:,20:54), Te(:,55:62));
+        T14 = my_predict(Tr(:,1), Tr(:,20:54), Tr(:,63:73), Te(:,1), Te(:,20:54), Te(:,63:73));
+        [T15,T_Expected] = my_predict(Tr(:,1), Tr(:,55:62), Tr(:,63:73), Te(:,1), Te(:,55:62), Te(:,63:73));
+       
+        T_Actual = (T1+T2+T3+T4+T5+T6+T7+T8+T9+T10+T11+T12+T13+T14+T15)/15;
+ %}    
+
+         
         num = 0;
         for j = 1:size(T_Actual,1)
             [x,label_Actual] = max(T_Actual(j,:));
@@ -112,10 +184,9 @@ function [d] = loadData(station, version, type1, type2)
     mete_range = 2:8;
     air_surround_range = 2:6;
     mete_surround_range = 2:36;
- %   air_surround_diff_range = 2:6;
- %   traffic_range = 2:9;
- %   checkin_range = 2:12;
- %   om_range = 2:9;
+    traffic_range = 2:9;
+    checkin_range = 2:12;
+    om_range = 2:9;
 
     air_f1 = ['air/' station '_' type1 version '.txt'];
     air_f0 = ['air/' station '_' type2 version '.txt'];
@@ -125,16 +196,14 @@ function [d] = loadData(station, version, type1, type2)
     air_surround_f0 = ['air_surround/' station '_' type2 version '.txt'];
     mete_surround_f1 = ['mete_surround/' station '_' type1 version '.txt'];
     mete_surround_f0 = ['mete_surround/' station '_' type2 version '.txt'];
-%{
-    air_surround_diff_f1 = ['air_surround_diff/' station '_' type1 version '.txt'];
-    air_surround_diff_f0 = ['air_surround_diff/' station '_' type2 version '.txt'];
+
     traffic_f1 = ['traffic_new/' station '_' type1 version '.txt'];
     traffic_f0 = ['traffic_new/' station '_' type2 version '.txt'];
     checkin_f1 = ['check-in/' station '_' type1 version '.txt'];
     checkin_f0 = ['check-in/' station '_' type2 version '.txt'];
     om_f1 = ['opinion_mining/' station '_' type1 version '.txt'];
     om_f0 = ['opinion_mining/' station '_' type2 version '.txt'];
-%}
+
 
     tmp_d = load(air_f1);
     d1 = tmp_d(:,air_range);
@@ -155,12 +224,6 @@ function [d] = loadData(station, version, type1, type2)
     d1 = [d1 tmp_d(:,mete_surround_range)];
     tmp_d = load(mete_surround_f0);
     d0 = [d0 tmp_d(:,mete_surround_range)];
-%{
-    tmp_d = load(air_surround_diff_f1);
-    d1 = [d1 tmp_d(:,air_surround_diff_range)];
-    tmp_d = load(air_surround_diff_f0);
-    d0 = [d0 tmp_d(:,air_surround_diff_range)];
-
 
     tmp_d = load(traffic_f1);
     d1 = [d1 tmp_d(:,traffic_range)];
@@ -179,7 +242,6 @@ function [d] = loadData(station, version, type1, type2)
     tmp_d = load(om_f0);
     d0 = [d0 tmp_d(:,om_range)];
 
-%}  
     d1 = [ones(size(d1,1),1) d1];
     d0 = [zeros(size(d0,1),1) d0];
     d = [d1;d0];
