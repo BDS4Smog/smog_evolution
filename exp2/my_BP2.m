@@ -17,7 +17,7 @@ net.trainParam.lr = 0.01 ;
 
 net = train( net, train_feature , train_target' ) ;
 
-test_feature = [train_data(:,2:end)]';
+test_feature = [test_data(:,2:end)]';
 test_raw_target = test_data(:,1);
 tmp = length(test_raw_target);
 test_target = zeros(tmp,2);

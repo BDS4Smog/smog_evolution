@@ -43,12 +43,12 @@ CLASSIFIER=1;
 %%%%%%%%%%% Load training dataset
 T=train_data(:,1)';
 P=train_data(:,2:size(train_data,2))';
-clear train_data;                                   %   Release raw training data array
+%clear train_data;                                   %   Release raw training data array
 
 %%%%%%%%%%% Load testing dataset
 TV.T=test_data(:,1)';
 TV.P=test_data(:,2:size(test_data,2))';
-clear test_data;                                    %   Release raw testing data array
+%clear test_data;                                    %   Release raw testing data array
 
 NumberofTrainingData=size(P,2);
 NumberofTestingData=size(TV.P,2);

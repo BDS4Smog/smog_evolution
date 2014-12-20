@@ -5,15 +5,15 @@ function evaluate_ELM( station )
 station = 'beijing';
 version = '1';
 
-type1 = 'increase';
-type2 = 'low';
+type1 = 'decrease';
+type2 = 'high';
 HIDDEN_NUM = 100;
 ROUND_NUM = 4;
-REPEAT_NUM = 500;
+REPEAT_NUM = 50;
 
 LIMIT_OF_EMPTY = 6;
 
-field = [0 0 0 0 0 0 0 1];
+field = [1 1 0 0 0 0 0 0];
 
 
 air_range = [2:7];
@@ -21,7 +21,7 @@ mete_range = [2:8];
 air_surround_range = [2:6];
 mete_surround_range = [2:36];
 air_surround_diff_range = [2:6];
-traffic_range = [2 4];
+traffic_range = [2:5];
 checkin_range = [2:12]
 om_range = [2:9]
 
@@ -126,8 +126,8 @@ for k = 1:REPEAT_NUM
         else
             Tr = [d(1:start_1-1,:)',d(end_1+1:length(d),:)']';    
         end
-        [Tr_acc, Te_acc, tmp_precision, tmp_recall, tmp_f1_score] = my_ELM(Tr, Te, 1, HIDDEN_NUM, 'sig');
-
+        %[Tr_acc, Te_acc, tmp_precision, tmp_recall, tmp_f1_score] = my_ELM(Tr, Te, 1, HIDDEN_NUM, 'sig');
+        [Tr_acc, Te_acc, tmp_precision, tmp_recall, tmp_f1_score] = my_SVM(Tr, Te);
         precision = precision+tmp_precision
         recall = recall+tmp_recall
         f1_score = f1_score+tmp_f1_score
