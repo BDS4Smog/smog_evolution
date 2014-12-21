@@ -5,37 +5,23 @@ function evaluate_ELM( station )
 station = 'beijing';
 version = '1';
 
-<<<<<<< HEAD
-type1 = 'decrease';
-type2 = 'high';
-HIDDEN_NUM = 100;
-=======
 type1 = 'increase';
 type2 = 'low';
 HIDDEN_NUM = 150;
->>>>>>> 577431068f8e34c302463f37ce47ee71b45260d8
+
 ROUND_NUM = 4;
-REPEAT_NUM = 50;
+REPEAT_NUM = 5;
 
 LIMIT_OF_EMPTY = 6;
 
-<<<<<<< HEAD
-field = [1 1 0 0 0 0 0 0];
-=======
-field = [1 1 1 1 0 0 0 0];
->>>>>>> 577431068f8e34c302463f37ce47ee71b45260d8
-
+field = [1 1 1 1 0 1 1 1];
 
 air_range = [2:7];
 mete_range = [2:8];
 air_surround_range = [2:6];
 mete_surround_range = [2:36];
 air_surround_diff_range = [2:6];
-<<<<<<< HEAD
 traffic_range = [2:5];
-=======
-traffic_range = [2:8];
->>>>>>> 577431068f8e34c302463f37ce47ee71b45260d8
 checkin_range = [2:12]
 om_range = [2:9]
 
@@ -140,8 +126,8 @@ for k = 1:REPEAT_NUM
         else
             Tr = [d(1:start_1-1,:)',d(end_1+1:length(d),:)']';    
         end
-        %[Tr_acc, Te_acc, tmp_precision, tmp_recall, tmp_f1_score] = my_ELM(Tr, Te, 1, HIDDEN_NUM, 'sig');
-        [Tr_acc, Te_acc, tmp_precision, tmp_recall, tmp_f1_score] = my_SVM(Tr, Te);
+        [Tr_acc, Te_acc, tmp_precision, tmp_recall, tmp_f1_score] = my_ELM(Tr, Te, 1, HIDDEN_NUM, 'sig');
+        %[Tr_acc, Te_acc, tmp_precision, tmp_recall, tmp_f1_score] = my_SVM(Tr, Te);
         precision = precision+tmp_precision
         recall = recall+tmp_recall
         f1_score = f1_score+tmp_f1_score
