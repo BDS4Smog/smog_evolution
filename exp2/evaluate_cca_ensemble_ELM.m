@@ -4,8 +4,8 @@ function evaluate_cca_ensemble_ELM( station )
 
 station = 'beijing';
 version = '1';
-type1 = 'increase';
-type2 = 'low';
+type1 = 'decrease';
+type2 = 'high';
 
 ROUND_NUM = 4;
 REPEAT_NUM = 3;
@@ -25,6 +25,14 @@ f1_score = 0
 for k = 1:REPEAT_NUM
     for i = 1:ROUND_NUM
         [Tr,Te] = dataPartion(d,i,ROUND_NUM);
+%%%%% air + mete + air_surround
+%{      
+        T1 = my_predict(Tr(:,1), Tr(:,2:7), Tr(:,8:14), Te(:,1), Te(:,2:7), Te(:,8:14)); 
+        T2 = my_predict(Tr(:,1), Tr(:,2:7), Tr(:,15:19), Te(:,1), Te(:,2:7), Te(:,15:19));
+        T3 = my_predict(Tr(:,1), Tr(:,2:7), Tr(:,20:54), Te(:,1), Te(:,2:7), Te(:,20:54));
+        [T4,T_Expected] = my_predict(Tr(:,1), Tr(:,8:14), Tr(:,15:19), Te(:,1), Te(:,8:14), Te(:,15:19));
+        T_Actual = (T1 + T2 + T3 + T4)/4;
+%}
 %%%%% air + mete + air_surround + mete_surround
 %{
         T1 = my_predict(Tr(:,1), Tr(:,2:7), Tr(:,8:14), Te(:,1), Te(:,2:7), Te(:,8:14)); 
@@ -35,7 +43,7 @@ for k = 1:REPEAT_NUM
         T_Actual = (T1 + T2 + T3 + T4 + T5)/5;
 %}
 %%%%% air  + mete + traffic + checkin + om_range
-
+%{
         T1 = my_predict(Tr(:,1), Tr(:,2:7), Tr(:,8:14), Te(:,1), Te(:,2:7), Te(:,8:14)); 
         T2 = my_predict(Tr(:,1), Tr(:,2:7), Tr(:,55:62), Te(:,1), Te(:,2:7), Te(:,55:62));
         T3 = my_predict(Tr(:,1), Tr(:,2:7), Tr(:,63:73), Te(:,1), Te(:,2:7), Te(:,63:73));
@@ -47,7 +55,7 @@ for k = 1:REPEAT_NUM
         T9 = my_predict(Tr(:,1), Tr(:,55:62), Tr(:,74:81), Te(:,1), Te(:,55:62), Te(:,74:81));
         [T10,T_Expected] = my_predict(Tr(:,1), Tr(:,63:73), Tr(:,74:81), Te(:,1), Te(:,63:73), Te(:,74:81));    
         T_Actual = (T1+T2+T3+T4+T5+T6+T7+T8+T9+T10)/10;
-       
+%}       
 
 %%%%% air  + mete + air_surround + mete_surround + traffic + checkin + om_range
 %{
@@ -89,6 +97,37 @@ for k = 1:REPEAT_NUM
         [T10,T_Expected] = my_predict(Tr(:,1), Tr(:,20:54), Tr(:,63:73), Te(:,1), Te(:,20:54), Te(:,63:73));
         T_Actual = (T1+T2+T3+T4+T5+T6+T7+T8+T9+T10)/10; 
 %}
+
+%%%%% air  + mete + air_surround + mete_surround + traffic          
+%{
+        T1 = my_predict(Tr(:,1), Tr(:,2:7), Tr(:,8:14), Te(:,1), Te(:,2:7), Te(:,8:14));
+        T2 = my_predict(Tr(:,1), Tr(:,2:7), Tr(:,15:19), Te(:,1), Te(:,2:7), Te(:,15:19));
+        T3 = my_predict(Tr(:,1), Tr(:,2:7), Tr(:,20:54), Te(:,1), Te(:,2:7), Te(:,20:54));     
+        T4 = my_predict(Tr(:,1), Tr(:,2:7), Tr(:,55:62), Te(:,1), Te(:,2:7), Te(:,55:62));
+        T5 = my_predict(Tr(:,1), Tr(:,8:14), Tr(:,15:19), Te(:,1), Te(:,8:14), Te(:,15:19));
+        T6 = my_predict(Tr(:,1), Tr(:,8:14), Tr(:,20:54), Te(:,1), Te(:,8:14), Te(:,20:54));
+        T7 = my_predict(Tr(:,1), Tr(:,8:14), Tr(:,55:62), Te(:,1), Te(:,8:14), Te(:,55:62));
+        T8 = my_predict(Tr(:,1), Tr(:,15:19), Tr(:,20:54), Te(:,1), Te(:,15:19), Te(:,20:54));
+        T9 = my_predict(Tr(:,1), Tr(:,15:19), Tr(:,55:62), Te(:,1), Te(:,15:19), Te(:,55:62));
+        [T10,T_Expected] = my_predict(Tr(:,1), Tr(:,20:54), Tr(:,55:62), Te(:,1), Te(:,20:54), Te(:,55:62));
+        T_Actual = (T1+T2+T3+T4+T5+T6+T7+T8+T9+T10)/10; 
+%}
+
+%%%%% air  + mete + air_surround + mete_surround + om_range         
+
+        T1 = my_predict(Tr(:,1), Tr(:,2:7), Tr(:,8:14), Te(:,1), Te(:,2:7), Te(:,8:14));
+        T2 = my_predict(Tr(:,1), Tr(:,2:7), Tr(:,15:19), Te(:,1), Te(:,2:7), Te(:,15:19));
+        T3 = my_predict(Tr(:,1), Tr(:,2:7), Tr(:,20:54), Te(:,1), Te(:,2:7), Te(:,20:54));     
+        T4 = my_predict(Tr(:,1), Tr(:,2:7), Tr(:,74:81), Te(:,1), Te(:,2:7), Te(:,74:81));
+        T5 = my_predict(Tr(:,1), Tr(:,8:14), Tr(:,15:19), Te(:,1), Te(:,8:14), Te(:,15:19));
+        T6 = my_predict(Tr(:,1), Tr(:,8:14), Tr(:,20:54), Te(:,1), Te(:,8:14), Te(:,20:54));
+        T7 = my_predict(Tr(:,1), Tr(:,8:14), Tr(:,74:81), Te(:,1), Te(:,8:14), Te(:,74:81));
+        T8 = my_predict(Tr(:,1), Tr(:,15:19), Tr(:,20:54), Te(:,1), Te(:,15:19), Te(:,20:54));
+        T9 = my_predict(Tr(:,1), Tr(:,15:19), Tr(:,74:81), Te(:,1), Te(:,15:19), Te(:,74:81));
+        [T10,T_Expected] = my_predict(Tr(:,1), Tr(:,20:54), Tr(:,74:81), Te(:,1), Te(:,20:54), Te(:,74:81));
+        T_Actual = (T1+T2+T3+T4+T5+T6+T7+T8+T9+T10)/10; 
+
+
 
 %%%%% air  + mete + air_surround + mete_surround + traffic + checkin
 %{

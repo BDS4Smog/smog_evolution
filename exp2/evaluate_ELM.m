@@ -5,8 +5,8 @@ function evaluate_ELM( station )
 station = 'beijing';
 version = '1';
 
-type1 = 'increase';
-type2 = 'low';
+type1 = 'decrease';
+type2 = 'high';
 HIDDEN_NUM = 150;
 
 ROUND_NUM = 4;
@@ -14,7 +14,7 @@ REPEAT_NUM = 5;
 
 LIMIT_OF_EMPTY = 6;
 
-field = [1 1 1 1 0 1 1 1];
+field = [1 1 1 0 0 0 0 0];
 
 air_range = [2:7];
 mete_range = [2:8];
