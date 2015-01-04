@@ -12,14 +12,14 @@ len2 = len(importances2)
 x2 = range(len2)
 indices2 = ['wind_direction','temperature','humidity','pressure','wind_speed','clouds','rain_in_3h']
 
-font = {'size':14}
+font = {'size':15}
 rc('font',**font)
 
 subplot(1,2,1)
 bar(x1, importances1,color="r", yerr=std1, align="center")
-rc('xtick', labelsize=10.5) 
+rc('xtick', labelsize=12) 
 #rc('ytick', labelsize=12) 
-title('Air Pollutant Features')
+title('Air Pollutants')
 xticks(x1, indices1)
 xlim([-1, len1])
 ylabel('Importance')
@@ -28,9 +28,9 @@ subplot(1,2,2)
 bar(x2, importances2, color="r", yerr=std2, align="center")
 #rc('xtick', labelsize=4) 
 #rc('ytick', labelsize=8) 
-title('Meteorological Features')
+title('Meteorological Conditions')
 ylabel('Importance')
-xticks(x2, indices2,rotation=20)
+xticks(x2, indices2,rotation=16)
 xlim([-1, len2])
 
 show()

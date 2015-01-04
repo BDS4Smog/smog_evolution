@@ -162,10 +162,13 @@ if __name__ == '__main__':
     plt.xticks(x+width/2,name,rotation=0)
     plt.ylim([0,9])
     plt.ylabel('Avg Checkin #')
-    plt.legend(['A','N-A'],bbox_to_anchor=(0., 1.02, 1., .102), loc=3, ncol=2, mode="expand", borderaxespad=0.)
     autolabel(rects1)
     autolabel(rects2)
     autoPec(rects1,rects2,1.34)
+#    plt.legend(['A','N-A'],bbox_to_anchor=(0., 1.02, 1., .102), loc=3, ncol=2, mode="expand", borderaxespad=0.)
+    params = {'legend.fontsize': 13, 'legend.linewidth': 1}
+    plt.rcParams.update(params)
+    plt.legend(['A','N-A'],loc=2)
 
     plt.subplot2grid((2,4),(0,1))
     x=np.array([0])
@@ -209,12 +212,12 @@ if __name__ == '__main__':
     autolabel(rects2)
     autoPec(rects1,rects2,1.32)
 
-
-    y1,y2 = calTrafficPec('../traffic/beijing_increase2.txt','../traffic/beijing_low2.txt')
+    width=0.4
+    y1,y2 = calTrafficPec('../traffic/beijing_increase1.txt','../traffic/beijing_low1.txt')
     y1 = y1*100
     y2 = y2*100
     plt.subplot2grid((2,4),(1,0),colspan=2)
-    x=np.array([0,1])
+    x=np.array([0,1.1])
     name=np.array(['Traffic jam tweet\n(Hour: 00-24)','Traffic jam tweet\n(Hour: 17-21)'])
     rects1 = plt.bar(x,y1,width,color='r',align='center')
     rects2 = plt.bar(x+width,y2,width,color='y',align='center')
@@ -235,7 +238,7 @@ if __name__ == '__main__':
     y1 = y1*100
     y2 = y2*100
     plt.subplot2grid((2,4),(1,2),colspan=2)
-    x=np.array([0,1])
+    x=np.array([0,1.1])
     name=np.array(['Smog disaster tweet','Good air tweet'])
     rects1 = plt.bar(x,y1,width,color='r',align='center')
     rects2 = plt.bar(x+width,y2,width,color='y',align='center')

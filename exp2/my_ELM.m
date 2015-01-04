@@ -209,9 +209,9 @@ if Elm_Type == CLASSIFIER
     T_Expected = TV.T';
     [~,label_Actual_whole] = max(T_Actual,[],2)
     [~,label_Expected_whole] = max(T_Expected,[],2)
-    positives_Actural = length(find(label_Actual_whole==1))
-    positives_Expected = length(find(label_Expected_whole==1))
-    positives_correct = length(find(label_Expected_whole==label_Actual_whole & label_Actual_whole==1))
+    positives_Actural = length(find(label_Actual_whole==2))
+    positives_Expected = length(find(label_Expected_whole==2))
+    positives_correct = length(find(label_Expected_whole==label_Actual_whole & label_Actual_whole==2))
     precision = positives_correct/positives_Actural
     recall = positives_correct/positives_Expected
     f1_score = 2*precision*recall/(precision+recall)
