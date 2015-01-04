@@ -34,14 +34,16 @@ for k = 1:REPEAT_NUM
         T_Actual = (T1 + T2 + T3 + T4)/4;
 %}
 %%%%% air + mete + air_surround + mete_surround
-%{
-        T1 = my_predict(Tr(:,1), Tr(:,2:7), Tr(:,8:14), Te(:,1), Te(:,2:7), Te(:,8:14)); 
-        T2 = my_predict(Tr(:,1), Tr(:,2:7), Tr(:,15:19), Te(:,1), Te(:,2:7), Te(:,15:19));
-        T3 = my_predict(Tr(:,1), Tr(:,2:7), Tr(:,20:54), Te(:,1), Te(:,2:7), Te(:,20:54));
-        T4 = my_predict(Tr(:,1), Tr(:,8:14), Tr(:,15:19), Te(:,1), Te(:,8:14), Te(:,15:19));
-        [T5,T_Expected] = my_predict(Tr(:,1), Tr(:,15:19), Tr(:,20:54), Te(:,1), Te(:,15:19), Te(:,20:54));
-        T_Actual = (T1 + T2 + T3 + T4 + T5)/5;
-%}
+
+
+%        T1 = my_predict(Tr(:,1), Tr(:,2:7), Tr(:,8:14), Te(:,1), Te(:,2:7), Te(:,8:14)); 
+%        T2 = my_predict(Tr(:,1), Tr(:,2:7), Tr(:,15:19), Te(:,1), Te(:,2:7), Te(:,15:19));
+%        T3 = my_predict(Tr(:,1), Tr(:,2:7), Tr(:,20:54), Te(:,1), Te(:,2:7), Te(:,20:54));
+%        T4 = my_predict(Tr(:,1), Tr(:,8:14), Tr(:,15:19), Te(:,1), Te(:,8:14), Te(:,15:19));
+%        [T5,T_Expected] = my_predict(Tr(:,1), Tr(:,15:19), Tr(:,20:54), Te(:,1), Te(:,15:19), Te(:,20:54));
+%        T_Actual = (T1 + T2 + T3 + T4 + T5)/5;
+
+
 %%%%% air  + mete + traffic + checkin + om_range
 %{
         T1 = my_predict(Tr(:,1), Tr(:,2:7), Tr(:,8:14), Te(:,1), Te(:,2:7), Te(:,8:14)); 
@@ -58,7 +60,7 @@ for k = 1:REPEAT_NUM
 %}       
 
 %%%%% air  + mete + air_surround + mete_surround + traffic + checkin + om_range
-%{
+
         T1 = my_predict(Tr(:,1), Tr(:,2:7), Tr(:,8:14), Te(:,1), Te(:,2:7), Te(:,8:14));
         T2 = my_predict(Tr(:,1), Tr(:,2:7), Tr(:,15:19), Te(:,1), Te(:,2:7), Te(:,15:19));
         T3 = my_predict(Tr(:,1), Tr(:,2:7), Tr(:,20:54), Te(:,1), Te(:,2:7), Te(:,20:54));
@@ -81,8 +83,7 @@ for k = 1:REPEAT_NUM
         T20 = my_predict(Tr(:,1), Tr(:,55:62), Tr(:,74:81), Te(:,1), Te(:,55:62), Te(:,74:81));
         [T21,T_Expected] = my_predict(Tr(:,1), Tr(:,63:73), Tr(:,74:81), Te(:,1), Te(:,63:73), Te(:,74:81));
         T_Actual = (T1+T2+T3+T4+T5+T6+T7+T8+T9+T10+T11+T12+T13+T14+T15+T16+T17+T18+T19+T20+T21)/21;
-%}          
-         
+
 %%%%% air  + mete + air_surround + mete_surround + checkin          
 %{
         T1 = my_predict(Tr(:,1), Tr(:,2:7), Tr(:,8:14), Te(:,1), Te(:,2:7), Te(:,8:14));
@@ -111,10 +112,10 @@ for k = 1:REPEAT_NUM
         T9 = my_predict(Tr(:,1), Tr(:,15:19), Tr(:,55:62), Te(:,1), Te(:,15:19), Te(:,55:62));
         [T10,T_Expected] = my_predict(Tr(:,1), Tr(:,20:54), Tr(:,55:62), Te(:,1), Te(:,20:54), Te(:,55:62));
         T_Actual = (T1+T2+T3+T4+T5+T6+T7+T8+T9+T10)/10; 
-%}
+
 
 %%%%% air  + mete + air_surround + mete_surround + om_range         
-
+%{
         T1 = my_predict(Tr(:,1), Tr(:,2:7), Tr(:,8:14), Te(:,1), Te(:,2:7), Te(:,8:14));
         T2 = my_predict(Tr(:,1), Tr(:,2:7), Tr(:,15:19), Te(:,1), Te(:,2:7), Te(:,15:19));
         T3 = my_predict(Tr(:,1), Tr(:,2:7), Tr(:,20:54), Te(:,1), Te(:,2:7), Te(:,20:54));     
@@ -126,7 +127,7 @@ for k = 1:REPEAT_NUM
         T9 = my_predict(Tr(:,1), Tr(:,15:19), Tr(:,74:81), Te(:,1), Te(:,15:19), Te(:,74:81));
         [T10,T_Expected] = my_predict(Tr(:,1), Tr(:,20:54), Tr(:,74:81), Te(:,1), Te(:,20:54), Te(:,74:81));
         T_Actual = (T1+T2+T3+T4+T5+T6+T7+T8+T9+T10)/10; 
-
+%}
 
 
 %%%%% air  + mete + air_surround + mete_surround + traffic + checkin
