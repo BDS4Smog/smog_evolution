@@ -8,7 +8,7 @@ HOST = '10.214.0.147'
 PORT = 27017
 DB_NAME = 'Air'
 C_NAME = 'Cities'
-CITY = '北京'
+CITY = '上海'
 IN_HOURS_BEFORE = 4 
 IN_HOURS_AFTER = 6 
 DE_HOURS_BEFORE = 4 
@@ -107,7 +107,7 @@ if __name__ == '__main__':
     position = sys.argv[2]
     fileName = position + '_' + eventType + '.txt'
     print 'get data from mongo ...'
-    if position == 'beijing':
+    if position == 'shanghai':
         t_aqi = dataFromMongo('')
     else:
         t_aqi = dataFromMongo(POSITION[position])
