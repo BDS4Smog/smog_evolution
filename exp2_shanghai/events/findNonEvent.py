@@ -6,7 +6,7 @@ import datetime
 ISOTIMEFORMAT='%Y-%m-%dT%XZ'
 STEP = 10 
 START_TIME = '2013-05-28T00:00:00'
-END_TIME = '2014-11-30T23:00:00'
+END_TIME = '2014-12-31T03:00:00'
 AQI_LEVEL = 150
 
 def strToDatetime(s):
@@ -43,16 +43,16 @@ def saveFile(file_name,lines):
     f.close()
 
 def isHigh(hour_i,t_aqi):
-    for k in range(0,STEP + 1): 
+    for k in range(0,STEP + 2): 
         hour = hour_i + datetime.timedelta(0,3600*k)
-        if t_aqi.has_key(hour.isoformat())==False or t_aqi[hour.isoformat()] < AQI_LEVEL:
+        if t_aqi.has_key(hour.isoformat())==False or t_aqi[hour.isoformat()] < (AQI_LEVEL+20):
             return False
     return True
 
 def isLow(hour_i,t_aqi):
-    for k in range(0,STEP + 1): 
+    for k in range(0,STEP + 4): 
         hour = hour_i + datetime.timedelta(0,3600*k)
-        if t_aqi.has_key(hour.isoformat())==False or t_aqi[hour.isoformat()] >= AQI_LEVEL:
+        if t_aqi.has_key(hour.isoformat())==False or t_aqi[hour.isoformat()] >= (AQI_LEVEL-30):
             return False
     return True
 
