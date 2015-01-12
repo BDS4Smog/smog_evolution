@@ -9,7 +9,7 @@ type1 = 'increase';
 type2 = 'low';
 HIDDEN_NUM = 150;
 ROUND_NUM = 4;
-REPEAT_NUM = 50;
+REPEAT_NUM = 5;
 
 LIMIT_OF_EMPTY = 6;
 
@@ -126,8 +126,8 @@ for k = 1:REPEAT_NUM
         else
             Tr = [d(1:start_1-1,:)',d(end_1+1:length(d),:)']';    
         end
-        %[Tr_acc, Te_acc, tmp_precision, tmp_recall, tmp_f1_score] = my_ELM(Tr, Te, 1, HIDDEN_NUM, 'sig');
-        [Tr_acc, Te_acc, tmp_precision, tmp_recall, tmp_f1_score] = my_SVM(Tr, Te);
+        [Tr_acc, Te_acc, tmp_precision, tmp_recall, tmp_f1_score] = my_ELM(Tr, Te, 1, HIDDEN_NUM, 'sig');
+%        [Tr_acc, Te_acc, tmp_precision, tmp_recall, tmp_f1_score] = my_SVM(Tr, Te);
         precision = precision+tmp_precision
         recall = recall+tmp_recall
         f1_score = f1_score+tmp_f1_score

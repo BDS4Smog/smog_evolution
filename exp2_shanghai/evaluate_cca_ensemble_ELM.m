@@ -8,7 +8,7 @@ type1 = 'increase';
 type2 = 'low';
 
 ROUND_NUM = 4;
-REPEAT_NUM = 10;
+REPEAT_NUM = 5;
 LIMIT_OF_EMPTY = 6;
 
 d = loadData(station, version, type1, type2);
@@ -64,24 +64,24 @@ for k = 1:REPEAT_NUM
         T1 = my_predict(Tr(:,1), Tr(:,2:7), Tr(:,8:14), Te(:,1), Te(:,2:7), Te(:,8:14));
         T2 = my_predict(Tr(:,1), Tr(:,2:7), Tr(:,15:19), Te(:,1), Te(:,2:7), Te(:,15:19));
         T3 = my_predict(Tr(:,1), Tr(:,2:7), Tr(:,20:54), Te(:,1), Te(:,2:7), Te(:,20:54));
-        T4 = my_predict(Tr(:,1), Tr(:,2:7), Tr(:,55:62), Te(:,1), Te(:,2:7), Te(:,55:62));
-        T5 = my_predict(Tr(:,1), Tr(:,2:7), Tr(:,63:73), Te(:,1), Te(:,2:7), Te(:,63:73));
-        T6 = my_predict(Tr(:,1), Tr(:,2:7), Tr(:,74:81), Te(:,1), Te(:,2:7), Te(:,74:81));
+        T4 = my_predict(Tr(:,1), Tr(:,2:7), Tr(:,55:59), Te(:,1), Te(:,2:7), Te(:,55:59));
+        T5 = my_predict(Tr(:,1), Tr(:,2:7), Tr(:,60:70), Te(:,1), Te(:,2:7), Te(:,60:70));
+        T6 = my_predict(Tr(:,1), Tr(:,2:7), Tr(:,71:75), Te(:,1), Te(:,2:7), Te(:,71:75));
         T7 = my_predict(Tr(:,1), Tr(:,8:14), Tr(:,15:19), Te(:,1), Te(:,8:14), Te(:,15:19));
         T8 = my_predict(Tr(:,1), Tr(:,8:14), Tr(:,20:54), Te(:,1), Te(:,8:14), Te(:,20:54));
-        T9 = my_predict(Tr(:,1), Tr(:,8:14), Tr(:,55:62), Te(:,1), Te(:,8:14), Te(:,55:62));
-        T10 = my_predict(Tr(:,1), Tr(:,8:14), Tr(:,63:73), Te(:,1), Te(:,8:14), Te(:,63:73));
-        T11 = my_predict(Tr(:,1), Tr(:,8:14), Tr(:,74:81), Te(:,1), Te(:,8:14), Te(:,74:81));
+        T9 = my_predict(Tr(:,1), Tr(:,8:14), Tr(:,55:59), Te(:,1), Te(:,8:14), Te(:,55:59));
+        T10 = my_predict(Tr(:,1), Tr(:,8:14), Tr(:,60:70), Te(:,1), Te(:,8:14), Te(:,60:70));
+        T11 = my_predict(Tr(:,1), Tr(:,8:14), Tr(:,71:75), Te(:,1), Te(:,8:14), Te(:,71:75));
         T12 = my_predict(Tr(:,1), Tr(:,15:19), Tr(:,20:54), Te(:,1), Te(:,15:19), Te(:,20:54));
-        T13 = my_predict(Tr(:,1), Tr(:,15:19), Tr(:,55:62), Te(:,1), Te(:,15:19), Te(:,55:62));
-        T14 = my_predict(Tr(:,1), Tr(:,15:19), Tr(:,63:73), Te(:,1), Te(:,15:19), Te(:,63:73));
-        T15 = my_predict(Tr(:,1), Tr(:,15:19), Tr(:,74:81), Te(:,1), Te(:,15:19), Te(:,74:81));
-        T16 = my_predict(Tr(:,1), Tr(:,20:54), Tr(:,55:62), Te(:,1), Te(:,20:54), Te(:,55:62));
-        T17 = my_predict(Tr(:,1), Tr(:,20:54), Tr(:,63:73), Te(:,1), Te(:,20:54), Te(:,63:73));
-        T18 = my_predict(Tr(:,1), Tr(:,20:54), Tr(:,74:81), Te(:,1), Te(:,20:54), Te(:,74:81));      
-        T19 = my_predict(Tr(:,1), Tr(:,55:62), Tr(:,63:73), Te(:,1), Te(:,55:62), Te(:,63:73));
-        T20 = my_predict(Tr(:,1), Tr(:,55:62), Tr(:,74:81), Te(:,1), Te(:,55:62), Te(:,74:81));
-        [T21,T_Expected] = my_predict(Tr(:,1), Tr(:,63:73), Tr(:,74:81), Te(:,1), Te(:,63:73), Te(:,74:81));
+        T13 = my_predict(Tr(:,1), Tr(:,15:19), Tr(:,55:59), Te(:,1), Te(:,15:19), Te(:,55:59));
+        T14 = my_predict(Tr(:,1), Tr(:,15:19), Tr(:,60:70), Te(:,1), Te(:,15:19), Te(:,60:70));
+        T15 = my_predict(Tr(:,1), Tr(:,15:19), Tr(:,71:75), Te(:,1), Te(:,15:19), Te(:,71:75));
+        T16 = my_predict(Tr(:,1), Tr(:,20:54), Tr(:,55:59), Te(:,1), Te(:,20:54), Te(:,55:59));
+        T17 = my_predict(Tr(:,1), Tr(:,20:54), Tr(:,60:70), Te(:,1), Te(:,20:54), Te(:,60:70));
+        T18 = my_predict(Tr(:,1), Tr(:,20:54), Tr(:,71:75), Te(:,1), Te(:,20:54), Te(:,71:75));      
+        T19 = my_predict(Tr(:,1), Tr(:,55:59), Tr(:,60:70), Te(:,1), Te(:,55:59), Te(:,60:70));
+        T20 = my_predict(Tr(:,1), Tr(:,55:59), Tr(:,71:75), Te(:,1), Te(:,55:59), Te(:,71:75));
+        [T21,T_Expected] = my_predict(Tr(:,1), Tr(:,60:70), Tr(:,71:75), Te(:,1), Te(:,60:70), Te(:,71:75));
         T_Actual = (T1+T2+T3+T4+T5+T6+T7+T8+T9+T10+T11+T12+T13+T14+T15+T16+T17+T18+T19+T20+T21)/21;
 
 %%%%% air  + mete + air_surround + mete_surround + checkin          
@@ -190,7 +190,7 @@ end
 
 function [Te_Actual,Te_Expected] = my_predict(Tr_Labs,Tr_Atts1,Tr_Atts2,Te_Labs, Te_Atts1,Te_Atts2)
     CCA = 0;
-    HIDDEN_NUM = 150;
+    HIDDEN_NUM = 100;
     if CCA == 1
         [A,B,r,U,V] = canoncorr(Tr_Atts1,Tr_Atts2);
         Tr_Atts = [U V];
