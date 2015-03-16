@@ -32,7 +32,7 @@ if __name__ == '__main__':
     plt.plot(x,e_bp[0],'k^-')
     plt.plot(x,e_rf[0],'b+-')
     plt.xlim([1.5,7.5])
-    plt.title('Smog disaster elimination')
+    plt.title('Smog disaster disappearance')
 
     plt.subplot2grid((3,2),(1,0))
     plt.plot(x,a_melm[1],'r*-')
