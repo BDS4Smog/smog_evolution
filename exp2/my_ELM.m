@@ -1,4 +1,4 @@
-function [TrainingAccuracy, TestingAccuracy, precision, recall, f1_score] = my_ELM(train_data, test_data, Elm_Type, NumberofHiddenNeurons, ActivationFunction)
+function [TrainingAccuracy, TestingAccuracy, precision, recall, f1_score,FPR,TPR,auc] = my_ELM(train_data, test_data, Elm_Type, NumberofHiddenNeurons, ActivationFunction)
 
 % Usage: elm(TrainingData_File, TestingData_File, Elm_Type, NumberofHiddenNeurons, ActivationFunction)
 % OR:    [TrainingTime, TestingTime, TrainingAccuracy, TestingAccuracy] = elm(TrainingData_File, TestingData_File, Elm_Type, NumberofHiddenNeurons, ActivationFunction)
@@ -206,14 +206,21 @@ if Elm_Type == CLASSIFIER
 
     %calculate precision,recall,f1_score
     T_Actual = TY';
-    T_Expected = TV.T';
-    [~,label_Actual_whole] = max(T_Actual,[],2)
-    [~,label_Expected_whole] = max(T_Expected,[],2)
-    positives_Actural = length(find(label_Actual_whole==2))
-    positives_Expected = length(find(label_Expected_whole==2))
-    positives_correct = length(find(label_Expected_whole==label_Actual_whole & label_Actual_whole==2))
-    precision = positives_correct/positives_Actural
-    recall = positives_correct/positives_Expected
-    f1_score = 2*precision*recall/(precision+recall)
+    T_Expected = TV.T';   
+    
+    T_Expected_2 = (T_Expected+1)/2;
+    T_Exp_roc = T_Expected_2(:,2);
+    T_Act_roc = T_Actual(:,2);
+    [FPR,TPR,T,auc] = perfcurve(T_Exp_roc',T_Act_roc',1);
+  %  auc = AUC(T_Exp_roc',T_Act_roc');
+    
+    [~,label_Actual_whole] = max(T_Actual,[],2);
+    [~,label_Expected_whole] = max(T_Expected,[],2);
+    positives_Actural = length(find(label_Actual_whole==2));
+    positives_Expected = length(find(label_Expected_whole==2));
+    positives_correct = length(find(label_Expected_whole==label_Actual_whole & label_Actual_whole==2));
+    precision = positives_correct/positives_Actural;
+    recall = positives_correct/positives_Expected;
+    f1_score = 2*precision*recall/(precision+recall);
 
 end
