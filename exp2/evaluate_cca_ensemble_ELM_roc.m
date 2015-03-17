@@ -18,9 +18,9 @@ d = d(randperm(length(d)),:);
 d = myNormalize(d);  
         
 Test_Accuracy = 0; 
-recall = 0
-precision = 0
-f1_score = 0
+recall = 0;
+precision = 0;
+f1_score = 0;
 
 for k = 1:REPEAT_NUM
     for i = 1:ROUND_NUM
@@ -83,6 +83,7 @@ for k = 1:REPEAT_NUM
         T20 = my_predict(Tr(:,1), Tr(:,55:62), Tr(:,74:81), Te(:,1), Te(:,55:62), Te(:,74:81));
         [T21,T_Expected] = my_predict(Tr(:,1), Tr(:,63:73), Tr(:,74:81), Te(:,1), Te(:,63:73), Te(:,74:81));
         T_Actual = (T1+T2+T3+T4+T5+T6+T7+T8+T9+T10+T11+T12+T13+T14+T15+T16+T17+T18+T19+T20+T21)/21;
+
 
 %%%%% air  + mete + air_surround + mete_surround + checkin          
 %{
@@ -155,8 +156,17 @@ for k = 1:REPEAT_NUM
         T_Expected_2 = (T_Expected+1)/2;
         T_Exp_roc = T_Expected_2(:,2);
         T_Act_roc = T_Actual(:,2);
-        plotroc(T_Exp_roc',T_Act_roc');
-        auc = AUC(T_Exp_roc',T_Act_roc');
+%        plotroc(T_Exp_roc',T_Act_roc');
+        [FPR,TPR,T,auc] = perfcurve(T_Exp_roc',T_Act_roc',1);
+        plot(X,Y);
+        hold on;
+  %      auc = AUC(T_Exp_roc',T_Act_roc');
+        fprintf('round: %d \n',i);
+        fprintf('FPR:\n');
+        fprintf('%f \n',FPR);
+        fprintf('TPR:\n');
+        fprintf('%f \n',TPR);
+        fprintf('auc: %f \n', auc);
         
         for j = 1:size(T_Actual,1)
             [x,label_Actual] = max(T_Actual(j,:));
@@ -167,19 +177,19 @@ for k = 1:REPEAT_NUM
         end
 
         %calculate precision,recall,f1_score
-        [~,label_Actual_whole] = max(T_Actual,[],2)
-        [~,label_Expected_whole] = max(T_Expected,[],2)
-        positives_Actural = length(find(label_Actual_whole==2))
-        positives_Expected = length(find(label_Expected_whole==2))
-        positives_correct = length(find(label_Expected_whole==label_Actual_whole & label_Actual_whole==2))
-        tmp_precision = positives_correct/positives_Actural
-        tmp_recall = positives_correct/positives_Expected
-        tmp_f1_score = 2*tmp_precision*tmp_recall/(tmp_precision+tmp_recall)
+        [~,label_Actual_whole] = max(T_Actual,[],2);
+        [~,label_Expected_whole] = max(T_Expected,[],2);
+        positives_Actural = length(find(label_Actual_whole==2));
+        positives_Expected = length(find(label_Expected_whole==2));
+        positives_correct = length(find(label_Expected_whole==label_Actual_whole & label_Actual_whole==2));
+        tmp_precision = positives_correct/positives_Actural;
+        tmp_recall = positives_correct/positives_Expected;
+        tmp_f1_score = 2*tmp_precision*tmp_recall/(tmp_precision+tmp_recall);
         %add up result of every iteration in order to caculate average value
         Test_Accuracy = Test_Accuracy + num/size(T_Actual,1);
-        precision = precision+tmp_precision
-        recall = recall+tmp_recall
-        f1_score = f1_score+tmp_f1_score
+        precision = precision+tmp_precision;
+        recall = recall+tmp_recall;
+        f1_score = f1_score+tmp_f1_score;
     end
 end
 
