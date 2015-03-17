@@ -153,8 +153,10 @@ for k = 1:REPEAT_NUM
          
         num = 0;
         T_Expected_2 = (T_Expected+1)/2;
-        plotroc(T_Expected_2(:,1)',T_Actual(:,1)');
-        auc = AUC(T_Expected_2',T_Actual');
+        T_Exp_roc = T_Expected_2(:,2);
+        T_Act_roc = T_Actual(:,2);
+        plotroc(T_Exp_roc',T_Act_roc');
+        auc = AUC(T_Exp_roc',T_Act_roc');
         
         for j = 1:size(T_Actual,1)
             [x,label_Actual] = max(T_Actual(j,:));
