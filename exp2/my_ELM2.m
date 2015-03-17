@@ -155,11 +155,11 @@ if Elm_Type == CLASSIFIER
    
     for i = 1 : size(TV.T, 2)
         [x, label_index_expected]=max(TV.T(:,i));
-         [x, label_index_actual]=max(TY(:,i));
+        [x, label_index_actual]=max(TY(:,i));
         if label_index_actual~=label_index_expected
             MissClassificationRate_Testing=MissClassificationRate_Testing+1;
         end
     end
     TestingAccuracy=1-MissClassificationRate_Testing/size(TV.T,2);  
-    fprintf('in TestingAccuracy: %f \n',TestingAccuracy);
+%    fprintf('in TestingAccuracy: %f \n',TestingAccuracy);
 end
