@@ -4,11 +4,11 @@ function evaluate_cca_ensemble_ELM( station )
 
 station = 'beijing';
 version = '1';
-type1 = 'decrease';
-type2 = 'high';
+type1 = 'increase';  %Positive (A, D),
+type2 = 'low';  %Negative (N-A, N-D)
 
 ROUND_NUM = 4;
-REPEAT_NUM = 3;
+REPEAT_NUM = 1;
 LIMIT_OF_EMPTY = 6;
 
 d = loadData(station, version, type1, type2);
@@ -153,7 +153,7 @@ for k = 1:REPEAT_NUM
          
         num = 0;
         T_Expected_2 = (T_Expected+1)/2;
-        plotroc(T_Expected_2',T_Actual');
+        plotroc(T_Expected_2(:,1)',T_Actual(:,1)');
         auc = AUC(T_Expected_2',T_Actual');
         
         for j = 1:size(T_Actual,1)
