@@ -9,11 +9,11 @@ type1 = 'decrease';
 type2 = 'high';
 HIDDEN_NUM = 150;
 ROUND_NUM = 4;
-REPEAT_NUM = 200;
+REPEAT_NUM = 1;
 
 LIMIT_OF_EMPTY = 6;
 
-field = [1 1 1 0 0 0 0 0];
+field = [0 0 0 0 0 0 0 1];
 
 
 air_range = [2:7];
@@ -22,8 +22,8 @@ air_surround_range = [2:6];
 mete_surround_range = [2:36];
 air_surround_diff_range = [2:6];
 traffic_range = [2:8];
-checkin_range = [2:12]
-om_range = [2:9]
+checkin_range = [2:12];
+om_range = [2:9];
 
 air_f1 = ['air/' station '_' type1 version '.txt'];
 air_f0 = ['air/' station '_' type2 version '.txt'];
@@ -105,9 +105,9 @@ d0 = extract_record(d0,LIMIT_OF_EMPTY);
 n_record = size(d1,1);
 Train_Accuracy = 0;
 Test_Accuracy = 0; 
-precision = 0
-recall = 0
-f1_score = 0
+precision = 0;
+recall = 0;
+f1_score = 0;
 for k = 1:REPEAT_NUM
     d0 = d0(randperm(length(d0)),:); 
     d0 = d0(1:size(d1,1),:);
@@ -126,11 +126,22 @@ for k = 1:REPEAT_NUM
         else
             Tr = [d(1:start_1-1,:)',d(end_1+1:length(d),:)']';    
         end
-        %[Tr_acc, Te_acc, tmp_precision, tmp_recall, tmp_f1_score] = my_ELM(Tr, Te, 1, HIDDEN_NUM, 'sig');
-        [Tr_acc, Te_acc, tmp_precision, tmp_recall, tmp_f1_score] = my_SVM(Tr, Te);
-        precision = precision+tmp_precision
-        recall = recall+tmp_recall
-        f1_score = f1_score+tmp_f1_score
+        [Tr_acc, Te_acc, tmp_precision, tmp_recall, tmp_f1_score,FPR,TPR,auc] = my_ELM(Tr, Te, 1, HIDDEN_NUM, 'sig');
+        plot(FPR,TPR);
+        hold on;
+%        [Tr_acc, Te_acc, tmp_precision, tmp_recall, tmp_f1_score] = my_SVM(Tr, Te);
+
+        fprintf('round: %d \n',i);
+        fprintf('FPR:\n');
+        fprintf('%f \n',FPR);
+        fprintf('TPR:\n');
+        fprintf('%f \n',TPR);
+        fprintf('auc: %f \n', auc);
+
+
+        precision = precision+tmp_precision;
+        recall = recall+tmp_recall;
+        f1_score = f1_score+tmp_f1_score;
         Train_Accuracy = Train_Accuracy + Tr_acc;
         Test_Accuracy = Test_Accuracy + Te_acc;
     end
