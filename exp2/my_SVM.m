@@ -1,4 +1,4 @@
-function [TrainingAccuracy, TestingAccuracy, precision, recall, f1_score] = my_SVM(train_data, test_data)
+function [TrainingAccuracy, TestingAccuracy, precision, recall, f1_score,FPR,TPR,auc] = my_SVM(train_data, test_data)
 
 train_feature = [train_data(:,2:end)];
 train_raw_target = train_data(:,1);
@@ -8,6 +8,14 @@ test_feature = [test_data(:,2:end)];
 test_raw_target = test_data(:,1);
 [a,Te_acc,prob] = svmpredict(test_raw_target,test_feature,svmstruct);
 
+tmp = length(test_data(:,1));
+T_Expected_2 = zeros(tmp,2);
+for i=1:tmp
+	T_Expected_2(i,test_data(i,1)+1)=1;
+end
+T_Exp_roc = T_Expected_2(:,2);
+T_Act_roc = a(:,2);
+[FPR,TPR,T,auc] = perfcurve(T_Exp_roc',T_Act_roc',1);
 
 
 label_Actual_whole = a;
