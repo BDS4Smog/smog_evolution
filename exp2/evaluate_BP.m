@@ -12,7 +12,7 @@ REPEAT_NUM = 1;
 
 LIMIT_OF_EMPTY = 6;
 
-field = [1 1 1 0 0 0 0 0];
+field = [0 0 0 0 0 1 1 1];
 
 
 air_range = [2:7];
@@ -104,9 +104,10 @@ d0 = extract_record(d0,LIMIT_OF_EMPTY);
 n_record = size(d1,1);
 Train_Accuracy = 0;
 Test_Accuracy = 0; 
-precision = 0
-recall = 0
-f1_score = 0
+precision = 0;
+recall = 0;
+f1_score = 0;
+auc_avg = 0;
 for k = 1:REPEAT_NUM
     d0 = d0(randperm(length(d0)),:); 
     d0 = d0(1:size(d1,1),:);
@@ -125,11 +126,11 @@ for k = 1:REPEAT_NUM
         else
             Tr = [d(1:start_1-1,:)',d(end_1+1:length(d),:)']';    
         end
-        [Tr_acc, Te_acc, tmp_precision, tmp_recall, tmp_f1_score] = my_BP(Tr, Te);
-
-        precision = precision+tmp_precision
-        recall = recall+tmp_recall
-        f1_score = f1_score+tmp_f1_score
+        [Tr_acc, Te_acc, tmp_precision, tmp_recall, tmp_f1_score,FPR,TPR,auc] = my_BP(Tr, Te);
+        auc_avg = auc_avg + auc;
+        precision = precision+tmp_precision;
+        recall = recall+tmp_recall;
+        f1_score = f1_score+tmp_f1_score;
         Train_Accuracy = Train_Accuracy + Tr_acc;
         Test_Accuracy = Test_Accuracy + Te_acc;
     end
@@ -139,12 +140,14 @@ Test_Accuracy = Test_Accuracy/(ROUND_NUM*REPEAT_NUM);
 precision = precision/(REPEAT_NUM*ROUND_NUM);
 recall = recall/(REPEAT_NUM*ROUND_NUM);
 f1_score = f1_score/(REPEAT_NUM*ROUND_NUM);
+auc_avg = auc_avg/(REPEAT_NUM*ROUND_NUM);
 fprintf('Train_Accuracy: %f \n',Train_Accuracy);
 fprintf('Test_Accuracy: %f \n',Test_Accuracy);
 fprintf('Test_precision: %f \n',precision);
 fprintf('Test_recall: %f \n',recall);
 fprintf('Test_f1_score: %f \n',f1_score);
 fprintf('Number of records: %d \n',n_record*2);
+fprintf('auc_avg: %f \n',auc_avg);
 
 end
 
