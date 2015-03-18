@@ -4,8 +4,8 @@ function evaluate_cca_ensemble_ELM( station )
 
 station = 'beijing';
 version = '1';
-type1 = 'increase';  %Positive (A, D),
-type2 = 'low';  %Negative (N-A, N-D)
+type1 = 'decrease';  %Positive (A, D),
+type2 = 'high';  %Negative (N-A, N-D)
 
 ROUND_NUM = 4;
 REPEAT_NUM = 1;
@@ -21,6 +21,7 @@ Test_Accuracy = 0;
 recall = 0;
 precision = 0;
 f1_score = 0;
+auc_avg = 0;
 
 for k = 1:REPEAT_NUM
     for i = 1:ROUND_NUM
@@ -34,15 +35,15 @@ for k = 1:REPEAT_NUM
         T_Actual = (T1 + T2 + T3 + T4)/4;
 %}
 %%%%% air + mete + air_surround + mete_surround
+%{
 
-
-%        T1 = my_predict(Tr(:,1), Tr(:,2:7), Tr(:,8:14), Te(:,1), Te(:,2:7), Te(:,8:14)); 
-%        T2 = my_predict(Tr(:,1), Tr(:,2:7), Tr(:,15:19), Te(:,1), Te(:,2:7), Te(:,15:19));
-%        T3 = my_predict(Tr(:,1), Tr(:,2:7), Tr(:,20:54), Te(:,1), Te(:,2:7), Te(:,20:54));
-%        T4 = my_predict(Tr(:,1), Tr(:,8:14), Tr(:,15:19), Te(:,1), Te(:,8:14), Te(:,15:19));
-%        [T5,T_Expected] = my_predict(Tr(:,1), Tr(:,15:19), Tr(:,20:54), Te(:,1), Te(:,15:19), Te(:,20:54));
-%        T_Actual = (T1 + T2 + T3 + T4 + T5)/5;
-
+        T1 = my_predict(Tr(:,1), Tr(:,2:7), Tr(:,8:14), Te(:,1), Te(:,2:7), Te(:,8:14)); 
+        T2 = my_predict(Tr(:,1), Tr(:,2:7), Tr(:,15:19), Te(:,1), Te(:,2:7), Te(:,15:19));
+        T3 = my_predict(Tr(:,1), Tr(:,2:7), Tr(:,20:54), Te(:,1), Te(:,2:7), Te(:,20:54));
+        T4 = my_predict(Tr(:,1), Tr(:,8:14), Tr(:,15:19), Te(:,1), Te(:,8:14), Te(:,15:19));
+        [T5,T_Expected] = my_predict(Tr(:,1), Tr(:,15:19), Tr(:,20:54), Te(:,1), Te(:,15:19), Te(:,20:54));
+        T_Actual = (T1 + T2 + T3 + T4 + T5)/5;
+%}
 
 %%%%% air  + mete + traffic + checkin + om_range
 %{
@@ -158,8 +159,8 @@ for k = 1:REPEAT_NUM
         T_Act_roc = T_Actual(:,2);
 %        plotroc(T_Exp_roc',T_Act_roc');
         [FPR,TPR,T,auc] = perfcurve(T_Exp_roc',T_Act_roc',1);
-        plot(X,Y);
-        hold on;
+%        plot(X,Y);
+%        hold on;
   %      auc = AUC(T_Exp_roc',T_Act_roc');
         fprintf('round: %d \n',i);
         fprintf('FPR:\n');
@@ -177,6 +178,7 @@ for k = 1:REPEAT_NUM
         end
 
         %calculate precision,recall,f1_score
+        auc_avg = auc_avg+auc;
         [~,label_Actual_whole] = max(T_Actual,[],2);
         [~,label_Expected_whole] = max(T_Expected,[],2);
         positives_Actural = length(find(label_Actual_whole==2));
@@ -197,11 +199,13 @@ Test_Accuracy = Test_Accuracy/(REPEAT_NUM*ROUND_NUM);
 precision = precision/(REPEAT_NUM*ROUND_NUM);
 recall = recall/(REPEAT_NUM*ROUND_NUM);
 f1_score = f1_score/(REPEAT_NUM*ROUND_NUM);
+auc_avg = auc_avg/(REPEAT_NUM*ROUND_NUM);
 fprintf('Test_Accuracy: %f \n',Test_Accuracy);
 fprintf('Test_precision: %f \n',precision);
 fprintf('Test_recall: %f \n',recall);
 fprintf('Test_f1_score: %f \n',f1_score);
 fprintf('Size of d: %d \n', size(d,1));
+fprintf('auc_avg: %f \n',auc_avg);
 end
 
 function [Te_Actual,Te_Expected] = my_predict(Tr_Labs,Tr_Atts1,Tr_Atts2,Te_Labs, Te_Atts1,Te_Atts2)
