@@ -1,4 +1,4 @@
-function  [Tr_acc, Te_acc, tmp_precision, tmp_recall, tmp_f1_score] = my_RF(Tr, Te, nTrees)
+function  [Tr_acc, Te_acc, tmp_precision, tmp_recall, tmp_f1_score,FPR,TPR,auc] = my_RF(Tr, Te, nTrees)
 
 train_features = Tr(:,2:end);
 train_target = Tr(:,1);
