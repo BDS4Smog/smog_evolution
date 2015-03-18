@@ -4,13 +4,13 @@ function evaluate_ELM( station )
 %Local air
 station = 'beijing';
 version = '1';
-type1 = 'increase';
-type2 = 'low';
+type1 = 'decrease';
+type2 = 'high';
 ROUND_NUM = 4;
 REPEAT_NUM = 5;
 LIMIT_OF_EMPTY = 6;
-NTREES = 8;
-field = [1 1 1 1 0 0 0 0];
+NTREES = 30;
+field = [0 0 0 0 0 1 1 1];
 air_range = [2:7];
 mete_range = [2:8];
 air_surround_range = [2:6];
@@ -18,7 +18,7 @@ mete_surround_range = [2:36];
 air_surround_diff_range = [2:6];
 traffic_range = [2:4];
 checkin_range = [2:12];
-om_range = [2:9]
+om_range = [2:9];
 air_f1 = ['air/' station '_' type1 version '.txt'];
 air_f0 = ['air/' station '_' type2 version '.txt'];
 mete_f1 = ['mete/' station '_' type1 version '.txt'];
@@ -118,6 +118,7 @@ for k = 1:REPEAT_NUM
             Tr = [d(1:start_1-1,:)',d(end_1+1:length(d),:)']';
         end
         [Tr_acc, Te_acc, tmp_precision, tmp_recall, tmp_f1_score,FPR,TPR,auc] = my_RF(Tr, Te, NTREES);
+        
         auc_avg = auc_avg + auc;
         precision = precision+tmp_precision;
         recall = recall+tmp_recall;
