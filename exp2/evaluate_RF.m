@@ -4,8 +4,8 @@ function evaluate_ELM( station )
 %Local air
 station = 'beijing';
 version = '1';
-type1 = 'decrease';
-type2 = 'high';
+type1 = 'increase';
+type2 = 'low';
 ROUND_NUM = 4;
 REPEAT_NUM = 5;
 LIMIT_OF_EMPTY = 6;
