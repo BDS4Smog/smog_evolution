@@ -2,10 +2,10 @@ function evaluate_cca_ensemble_ELM( station )
 %EVALUATE_CCA_ENSEMBLE_ELM Summary of this function goes here
 %   Detailed explanation goes here
 
-station = 'beijing';
+station = 'shanghai';
 version = '1';
-type1 = 'decrease';  %Positive (A, D),
-type2 = 'high';  %Negative (N-A, N-D)
+type1 = 'decrease';
+type2 = 'high';
 
 ROUND_NUM = 4;
 REPEAT_NUM = 1;
@@ -35,15 +35,15 @@ for k = 1:REPEAT_NUM
         T_Actual = (T1 + T2 + T3 + T4)/4;
 %}
 %%%%% air + mete + air_surround + mete_surround
-%{
 
-        T1 = my_predict(Tr(:,1), Tr(:,2:7), Tr(:,8:14), Te(:,1), Te(:,2:7), Te(:,8:14)); 
-        T2 = my_predict(Tr(:,1), Tr(:,2:7), Tr(:,15:19), Te(:,1), Te(:,2:7), Te(:,15:19));
-        T3 = my_predict(Tr(:,1), Tr(:,2:7), Tr(:,20:54), Te(:,1), Te(:,2:7), Te(:,20:54));
-        T4 = my_predict(Tr(:,1), Tr(:,8:14), Tr(:,15:19), Te(:,1), Te(:,8:14), Te(:,15:19));
-        [T5,T_Expected] = my_predict(Tr(:,1), Tr(:,15:19), Tr(:,20:54), Te(:,1), Te(:,15:19), Te(:,20:54));
-        T_Actual = (T1 + T2 + T3 + T4 + T5)/5;
-%}
+
+%        T1 = my_predict(Tr(:,1), Tr(:,2:7), Tr(:,8:14), Te(:,1), Te(:,2:7), Te(:,8:14)); 
+%        T2 = my_predict(Tr(:,1), Tr(:,2:7), Tr(:,15:19), Te(:,1), Te(:,2:7), Te(:,15:19));
+%        T3 = my_predict(Tr(:,1), Tr(:,2:7), Tr(:,20:54), Te(:,1), Te(:,2:7), Te(:,20:54));
+%        T4 = my_predict(Tr(:,1), Tr(:,8:14), Tr(:,15:19), Te(:,1), Te(:,8:14), Te(:,15:19));
+%        [T5,T_Expected] = my_predict(Tr(:,1), Tr(:,15:19), Tr(:,20:54), Te(:,1), Te(:,15:19), Te(:,20:54));
+%        T_Actual = (T1 + T2 + T3 + T4 + T5)/5;
+
 
 %%%%% air  + mete + traffic + checkin + om_range
 %{
@@ -65,26 +65,25 @@ for k = 1:REPEAT_NUM
         T1 = my_predict(Tr(:,1), Tr(:,2:7), Tr(:,8:14), Te(:,1), Te(:,2:7), Te(:,8:14));
         T2 = my_predict(Tr(:,1), Tr(:,2:7), Tr(:,15:19), Te(:,1), Te(:,2:7), Te(:,15:19));
         T3 = my_predict(Tr(:,1), Tr(:,2:7), Tr(:,20:54), Te(:,1), Te(:,2:7), Te(:,20:54));
-        T4 = my_predict(Tr(:,1), Tr(:,2:7), Tr(:,55:62), Te(:,1), Te(:,2:7), Te(:,55:62));
-        T5 = my_predict(Tr(:,1), Tr(:,2:7), Tr(:,63:73), Te(:,1), Te(:,2:7), Te(:,63:73));
-        T6 = my_predict(Tr(:,1), Tr(:,2:7), Tr(:,74:81), Te(:,1), Te(:,2:7), Te(:,74:81));
+        T4 = my_predict(Tr(:,1), Tr(:,2:7), Tr(:,55:59), Te(:,1), Te(:,2:7), Te(:,55:59));
+        T5 = my_predict(Tr(:,1), Tr(:,2:7), Tr(:,60:70), Te(:,1), Te(:,2:7), Te(:,60:70));
+        T6 = my_predict(Tr(:,1), Tr(:,2:7), Tr(:,71:75), Te(:,1), Te(:,2:7), Te(:,71:75));
         T7 = my_predict(Tr(:,1), Tr(:,8:14), Tr(:,15:19), Te(:,1), Te(:,8:14), Te(:,15:19));
         T8 = my_predict(Tr(:,1), Tr(:,8:14), Tr(:,20:54), Te(:,1), Te(:,8:14), Te(:,20:54));
-        T9 = my_predict(Tr(:,1), Tr(:,8:14), Tr(:,55:62), Te(:,1), Te(:,8:14), Te(:,55:62));
-        T10 = my_predict(Tr(:,1), Tr(:,8:14), Tr(:,63:73), Te(:,1), Te(:,8:14), Te(:,63:73));
-        T11 = my_predict(Tr(:,1), Tr(:,8:14), Tr(:,74:81), Te(:,1), Te(:,8:14), Te(:,74:81));
+        T9 = my_predict(Tr(:,1), Tr(:,8:14), Tr(:,55:59), Te(:,1), Te(:,8:14), Te(:,55:59));
+        T10 = my_predict(Tr(:,1), Tr(:,8:14), Tr(:,60:70), Te(:,1), Te(:,8:14), Te(:,60:70));
+        T11 = my_predict(Tr(:,1), Tr(:,8:14), Tr(:,71:75), Te(:,1), Te(:,8:14), Te(:,71:75));
         T12 = my_predict(Tr(:,1), Tr(:,15:19), Tr(:,20:54), Te(:,1), Te(:,15:19), Te(:,20:54));
-        T13 = my_predict(Tr(:,1), Tr(:,15:19), Tr(:,55:62), Te(:,1), Te(:,15:19), Te(:,55:62));
-        T14 = my_predict(Tr(:,1), Tr(:,15:19), Tr(:,63:73), Te(:,1), Te(:,15:19), Te(:,63:73));
-        T15 = my_predict(Tr(:,1), Tr(:,15:19), Tr(:,74:81), Te(:,1), Te(:,15:19), Te(:,74:81));
-        T16 = my_predict(Tr(:,1), Tr(:,20:54), Tr(:,55:62), Te(:,1), Te(:,20:54), Te(:,55:62));
-        T17 = my_predict(Tr(:,1), Tr(:,20:54), Tr(:,63:73), Te(:,1), Te(:,20:54), Te(:,63:73));
-        T18 = my_predict(Tr(:,1), Tr(:,20:54), Tr(:,74:81), Te(:,1), Te(:,20:54), Te(:,74:81));      
-        T19 = my_predict(Tr(:,1), Tr(:,55:62), Tr(:,63:73), Te(:,1), Te(:,55:62), Te(:,63:73));
-        T20 = my_predict(Tr(:,1), Tr(:,55:62), Tr(:,74:81), Te(:,1), Te(:,55:62), Te(:,74:81));
-        [T21,T_Expected] = my_predict(Tr(:,1), Tr(:,63:73), Tr(:,74:81), Te(:,1), Te(:,63:73), Te(:,74:81));
+        T13 = my_predict(Tr(:,1), Tr(:,15:19), Tr(:,55:59), Te(:,1), Te(:,15:19), Te(:,55:59));
+        T14 = my_predict(Tr(:,1), Tr(:,15:19), Tr(:,60:70), Te(:,1), Te(:,15:19), Te(:,60:70));
+        T15 = my_predict(Tr(:,1), Tr(:,15:19), Tr(:,71:75), Te(:,1), Te(:,15:19), Te(:,71:75));
+        T16 = my_predict(Tr(:,1), Tr(:,20:54), Tr(:,55:59), Te(:,1), Te(:,20:54), Te(:,55:59));
+        T17 = my_predict(Tr(:,1), Tr(:,20:54), Tr(:,60:70), Te(:,1), Te(:,20:54), Te(:,60:70));
+        T18 = my_predict(Tr(:,1), Tr(:,20:54), Tr(:,71:75), Te(:,1), Te(:,20:54), Te(:,71:75));      
+        T19 = my_predict(Tr(:,1), Tr(:,55:59), Tr(:,60:70), Te(:,1), Te(:,55:59), Te(:,60:70));
+        T20 = my_predict(Tr(:,1), Tr(:,55:59), Tr(:,71:75), Te(:,1), Te(:,55:59), Te(:,71:75));
+        [T21,T_Expected] = my_predict(Tr(:,1), Tr(:,60:70), Tr(:,71:75), Te(:,1), Te(:,60:70), Te(:,71:75));
         T_Actual = (T1+T2+T3+T4+T5+T6+T7+T8+T9+T10+T11+T12+T13+T14+T15+T16+T17+T18+T19+T20+T21)/21;
-
 
 %%%%% air  + mete + air_surround + mete_surround + checkin          
 %{
@@ -114,8 +113,8 @@ for k = 1:REPEAT_NUM
         T9 = my_predict(Tr(:,1), Tr(:,15:19), Tr(:,55:62), Te(:,1), Te(:,15:19), Te(:,55:62));
         [T10,T_Expected] = my_predict(Tr(:,1), Tr(:,20:54), Tr(:,55:62), Te(:,1), Te(:,20:54), Te(:,55:62));
         T_Actual = (T1+T2+T3+T4+T5+T6+T7+T8+T9+T10)/10; 
-%}
 
+%}
 %%%%% air  + mete + air_surround + mete_surround + om_range         
 %{
         T1 = my_predict(Tr(:,1), Tr(:,2:7), Tr(:,8:14), Te(:,1), Te(:,2:7), Te(:,8:14));
@@ -157,17 +156,14 @@ for k = 1:REPEAT_NUM
         T_Expected_2 = (T_Expected+1)/2;
         T_Exp_roc = T_Expected_2(:,2);
         T_Act_roc = T_Actual(:,2);
-%        plotroc(T_Exp_roc',T_Act_roc');
         [FPR,TPR,T,auc] = perfcurve(T_Exp_roc',T_Act_roc',1);
-%        plot(X,Y);
-%        hold on;
-  %      auc = AUC(T_Exp_roc',T_Act_roc');
         fprintf('round: %d \n',i);
         fprintf('FPR:\n');
         fprintf('%f \n',FPR);
         fprintf('TPR:\n');
         fprintf('%f \n',TPR);
         fprintf('auc: %f \n', auc);
+        
         
         for j = 1:size(T_Actual,1)
             [x,label_Actual] = max(T_Actual(j,:));
@@ -179,19 +175,19 @@ for k = 1:REPEAT_NUM
 
         %calculate precision,recall,f1_score
         auc_avg = auc_avg+auc;
-        [~,label_Actual_whole] = max(T_Actual,[],2);
-        [~,label_Expected_whole] = max(T_Expected,[],2);
-        positives_Actural = length(find(label_Actual_whole==2));
-        positives_Expected = length(find(label_Expected_whole==2));
-        positives_correct = length(find(label_Expected_whole==label_Actual_whole & label_Actual_whole==2));
-        tmp_precision = positives_correct/positives_Actural;
-        tmp_recall = positives_correct/positives_Expected;
-        tmp_f1_score = 2*tmp_precision*tmp_recall/(tmp_precision+tmp_recall);
+        [~,label_Actual_whole] = max(T_Actual,[],2)
+        [~,label_Expected_whole] = max(T_Expected,[],2)
+        positives_Actural = length(find(label_Actual_whole==2))
+        positives_Expected = length(find(label_Expected_whole==2))
+        positives_correct = length(find(label_Expected_whole==label_Actual_whole & label_Actual_whole==2))
+        tmp_precision = positives_correct/positives_Actural
+        tmp_recall = positives_correct/positives_Expected
+        tmp_f1_score = 2*tmp_precision*tmp_recall/(tmp_precision+tmp_recall)
         %add up result of every iteration in order to caculate average value
         Test_Accuracy = Test_Accuracy + num/size(T_Actual,1);
-        precision = precision+tmp_precision;
-        recall = recall+tmp_recall;
-        f1_score = f1_score+tmp_f1_score;
+        precision = precision+tmp_precision
+        recall = recall+tmp_recall
+        f1_score = f1_score+tmp_f1_score
     end
 end
 
@@ -210,7 +206,7 @@ end
 
 function [Te_Actual,Te_Expected] = my_predict(Tr_Labs,Tr_Atts1,Tr_Atts2,Te_Labs, Te_Atts1,Te_Atts2)
     CCA = 0;
-    HIDDEN_NUM = 150;
+    HIDDEN_NUM = 100;
     if CCA == 1
         [A,B,r,U,V] = canoncorr(Tr_Atts1,Tr_Atts2);
         Tr_Atts = [U V];
@@ -244,9 +240,9 @@ function [d] = loadData(station, version, type1, type2)
     mete_range = 2:8;
     air_surround_range = 2:6;
     mete_surround_range = 2:36;
-    traffic_range = 2:9;
+    traffic_range = 2:6;
     checkin_range = 2:12;
-    om_range = 2:9;
+    om_range = 2:6;
 
     air_f1 = ['air/' station '_' type1 version '.txt'];
     air_f0 = ['air/' station '_' type2 version '.txt'];
