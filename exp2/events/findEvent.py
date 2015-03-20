@@ -8,16 +8,16 @@ HOST = '10.214.0.147'
 PORT = 27017
 DB_NAME = 'Air'
 C_NAME = 'Cities'
-CITY = '上海'
-IN_HOURS_BEFORE = 4 
-IN_HOURS_AFTER = 6 
-DE_HOURS_BEFORE = 4 
-DE_HOURS_AFTER = 6 
+CITY = '北京'
+IN_HOURS_BEFORE = 8 
+IN_HOURS_AFTER = 10 
+DE_HOURS_BEFORE = 8 
+DE_HOURS_AFTER = 10 
 AQI_LEVEL = 150
 START_TIME = '2013-05-28T00:00:00'
 END_TIME = '2014-11-04T18:00:00'
-STEP = 6
-POSITION={'haidian':'海淀区万柳','gucheng':'古城'}
+STEP = 23 
+#POSITION={'haidian':'海淀区万柳','gucheng':'古城'}
 
 def strToDatetime(s):
     year = int(s[0:4])
@@ -101,16 +101,16 @@ def eventExtend(hour_i,t,t_aqi):
 
 if __name__ == '__main__':
     if len(sys.argv) != 3:
-        print 'usage: python findEvent.py increase/decrease station'
+        print 'usage: python findEvent.py increase/decrease position'
         sys.exit(0)
     eventType = sys.argv[1]
     position = sys.argv[2]
     fileName = position + '_' + eventType + '.txt'
     print 'get data from mongo ...'
-    if position == 'shanghai':
-        t_aqi = dataFromMongo('')
-    else:
-        t_aqi = dataFromMongo(POSITION[position])
+#    if position == 'shanghai':
+    t_aqi = dataFromMongo('')
+#    else:
+#        t_aqi = dataFromMongo(POSITION[position])
     t_aqi = aqiFit(t_aqi)
     print 'find events ...'
     hour_i = strToDatetime(START_TIME)
