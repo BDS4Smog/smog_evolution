@@ -4,11 +4,11 @@ function evaluate_cca_ensemble_ELM( station )
 
 station = 'shanghai';
 version = '1';
-type1 = 'decrease';
-type2 = 'high';
+type1 = 'increase';
+type2 = 'low';
 
 ROUND_NUM = 4;
-REPEAT_NUM = 5;
+REPEAT_NUM = 1;
 LIMIT_OF_EMPTY = 6;
 
 d = loadData(station, version, type1, type2);
