@@ -1,0 +1,35 @@
+import numpy
+from sklearn import svm
+from sklearn import linear_model
+from sklearn.neighbors import KNeighborsClassifier
+
+if __name__ == "__main__":
+    print "start"
+    tr = numpy.loadtxt("./trdata_for_python.txt")
+    te = numpy.loadtxt("./tedata_for_python.txt")
+    #clf = svm.SVC(C=1.0,kernel='linear' )
+    #clf = linear_model.LogisticRegression(penalty="l2",dual=True)
+    clf = KNeighborsClassifier(n_neighbors=1)
+    #print tr[:,1:-1]
+    clf.fit(tr[0:2,1:-1],tr[0:2,0])
+    #mat = numpy.matrix("1 2 3; 4 5 6; 7 8 9")
+    #mat.dump("my_matrix.dat")
+    #mat2 = numpy.load("my_matrix.dat")
+    print tr[0 3 4,0]
+ 
+    
+    label_actual = clf.predict(te[:,1:-1])
+    label_expected = te[:,0]
+    count = 0
+    '''
+    for i in range(len(label_actual)):
+        if(label_actual[i]==label_expected[i]):
+            count+=1
+    result = float(count)/len(label_actual)
+    print result
+    '''
+
+    #for i in range(len(label_actual)):
+        #print str(label_actual[i])+" "+str(label_expected[i])
+    print "end" 
+    

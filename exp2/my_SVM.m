@@ -2,19 +2,26 @@ function [TrainingAccuracy, TestingAccuracy, precision, recall, f1_score,FPR,TPR
 
 train_feature = [train_data(:,2:end)];
 train_raw_target = train_data(:,1);
-svmstruct = svmtrain(train_raw_target,train_feature);
+%[coeff,score,latent] =  princomp(train_feature);
+%tranM = coeff(:,1:3);
+%train_feature = train_feature*tranM;
+%svmstruct = svmtrain(train_raw_target,train_feature,'-t 3');
+classifier = glmfit(train_feature,train_raw_target,'binomial','link','logit');
+
 
 test_feature = [test_data(:,2:end)];
 test_raw_target = test_data(:,1);
-[a,Te_acc,prob] = svmpredict(test_raw_target,test_feature,svmstruct);
+%test_feature = test_feature*tranM;
+%[a,Te_acc,prob] = svmpredict(test_raw_target,test_feature,svmstruct);
+a = glmval(classifier,test_feature,'logit');
 
 tmp = length(test_data(:,1));
 T_Expected_2 = zeros(tmp,2);
 for i=1:tmp
 	T_Expected_2(i,test_data(i,1)+1)=1;
 end
-T_Exp_roc = T_Expected_2(:,2);
-T_Act_roc = a(:,2);
+T_Exp_roc = test_raw_target;
+T_Act_roc = -prob;
 [FPR,TPR,T,auc] = perfcurve(T_Exp_roc',T_Act_roc',1);
 
 
