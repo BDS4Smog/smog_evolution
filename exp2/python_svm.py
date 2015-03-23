@@ -2,31 +2,32 @@ import numpy
 from sklearn import svm
 from sklearn import linear_model
 from sklearn.neighbors import KNeighborsClassifier
+from sklearn import metrics
+from sklearn.multiclass import OneVsRestClassifier
 
 if __name__ == "__main__":
     print "start"
     tr = numpy.loadtxt("./trdata_for_python.txt")
     te = numpy.loadtxt("./tedata_for_python.txt")
-    #clf = svm.SVC(C=1.0,kernel='linear' )
+
+    #SVM
+    #clf = svm.SVC(C=1.0,kernel='linear',probability=True)
+    #clf.fit(tr[:,1:-1],tr[:,0])
+    #y = clf.predict_proba(te[:,1:-1])
+
+    #logistic regression
     clf = linear_model.LogisticRegression(penalty="l2",dual=True)
-    #clf = KNeighborsClassifier(n_neighbors=1)
-    #print tr[:,1:-1]
-    clf.fit(tr[0:2,1:-1],tr[0:2,0])
-    #mat = numpy.matrix("1 2 3; 4 5 6; 7 8 9")
-    #mat.dump("my_matrix.dat")
-    #mat2 = numpy.load("my_matrix.dat")
+    clf.fit(tr[:,1:-1],tr[:,0])
+    y = clf.predict_proba(te[:,1:-1])
+    #clf = KNeighborsClassifier(n_neighbors=2)
 
-    
-    label_actual = clf.predict(te[:,1:-1])
-    label_expected = te[:,0]
-    count = 0
-    for i in range(len(label_actual)):
-        if(label_actual[i]==label_expected[i]):
-            count+=1
-    result = float(count)/len(label_actual)
-    print result
+    #classifier = OneVsRestClassifier(clf)
+    #y_score = classifier.fit(tr[:,1:-1],tr[:,0]).decision_function(te[:,1:-1])
 
-    #for i in range(len(label_actual)):
-        #print str(label_actual[i])+" "+str(label_expected[i])
+    fpr, tpr, thresholds = metrics.roc_curve(te[:,0], y[:,1])
+    auc = metrics.auc(fpr, tpr)
+    print 'AUC: '
+    print auc
+
     print "end" 
     

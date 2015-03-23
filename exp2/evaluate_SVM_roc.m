@@ -5,14 +5,14 @@ function evaluate_BP( station )
 station = 'beijing';
 version = '1';
 
-type1 = 'decrease';
-type2 = 'high';
-ROUND_NUM = 4;
+type1 = 'increase';
+type2 = 'low';
+ROUND_NUM = 2;
 REPEAT_NUM = 1;
 
-LIMIT_OF_EMPTY = 4;
+LIMIT_OF_EMPTY = 6;
 
-field = [1 1 1 1 0 0 0 0];
+field = [0 0 0 0 0 1 1 1];
 
 
 air_range = [2:7];
@@ -128,10 +128,9 @@ for k = 1:REPEAT_NUM
         end
          %write Tr and Te to a txt file
         
-        if i==3
+
             save trdata_for_python.txt -ascii Tr
             save tedata_for_python.txt -ascii Te
-        end
         
 %          [Tr_acc, Te_acc, tmp_precision, tmp_recall, tmp_f1_score,FPR,TPR,auc] = my_SVM(Tr, Te);
 %         
