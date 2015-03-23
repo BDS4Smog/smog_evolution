@@ -128,18 +128,17 @@ for k = 1:REPEAT_NUM
         end
          %write Tr and Te to a txt file
         
-
             save trdata_for_python.txt -ascii Tr
             save tedata_for_python.txt -ascii Te
         
-%          [Tr_acc, Te_acc, tmp_precision, tmp_recall, tmp_f1_score,FPR,TPR,auc] = my_SVM(Tr, Te);
-%         
-%          auc_avg = auc_avg + auc;
-%          precision = precision+tmp_precision;
-%          recall = recall+tmp_recall;
-%          f1_score = f1_score+tmp_f1_score;
-%          Train_Accuracy = Train_Accuracy + Tr_acc;
-%          Test_Accuracy = Test_Accuracy + Te_acc;
+          [Tr_acc, Te_acc, tmp_precision, tmp_recall, tmp_f1_score,FPR,TPR,auc] = my_SVM(Tr, Te);
+         
+          auc_avg = auc_avg + auc;
+          precision = precision+tmp_precision;
+          recall = recall+tmp_recall;
+          f1_score = f1_score+tmp_f1_score;
+          Train_Accuracy = Train_Accuracy + Tr_acc;
+          Test_Accuracy = Test_Accuracy + Te_acc;
     end
 end
 Train_Accuracy = Train_Accuracy/(ROUND_NUM*REPEAT_NUM);

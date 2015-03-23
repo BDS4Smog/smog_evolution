@@ -2,7 +2,7 @@ function [TrainingAccuracy, TestingAccuracy, precision, recall, f1_score,FPR,TPR
 
 train_feature = [train_data(:,2:end)];
 train_raw_target = train_data(:,1);
-svmstruct = svmtrain(train_raw_target,train_feature,'-t 3');
+svmstruct = svmtrain(train_raw_target,train_feature);
 
 
 test_feature = [test_data(:,2:end)];
