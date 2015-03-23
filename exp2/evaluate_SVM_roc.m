@@ -5,10 +5,10 @@ function evaluate_BP( station )
 station = 'beijing';
 version = '1';
 
-type1 = 'decrease';
-type2 = 'high';
+type1 = 'increase';
+type2 = 'low';
 ROUND_NUM = 4;
-REPEAT_NUM = 1;
+REPEAT_NUM = 100;
 
 LIMIT_OF_EMPTY = 4;
 
@@ -128,19 +128,19 @@ for k = 1:REPEAT_NUM
         end
          %write Tr and Te to a txt file
         
-        if i==3
+        
             save trdata_for_python.txt -ascii Tr
             save tedata_for_python.txt -ascii Te
-        end
+       
         
-%          [Tr_acc, Te_acc, tmp_precision, tmp_recall, tmp_f1_score,FPR,TPR,auc] = my_SVM(Tr, Te);
-%         
-%          auc_avg = auc_avg + auc;
-%          precision = precision+tmp_precision;
-%          recall = recall+tmp_recall;
-%          f1_score = f1_score+tmp_f1_score;
-%          Train_Accuracy = Train_Accuracy + Tr_acc;
-%          Test_Accuracy = Test_Accuracy + Te_acc;
+          [Tr_acc, Te_acc, tmp_precision, tmp_recall, tmp_f1_score,FPR,TPR,auc] = my_SVM(Tr, Te);
+         
+          auc_avg = auc_avg + auc;
+          precision = precision+tmp_precision;
+          recall = recall+tmp_recall;
+          f1_score = f1_score+tmp_f1_score;
+          Train_Accuracy = Train_Accuracy + Tr_acc;
+          Test_Accuracy = Test_Accuracy + Te_acc;
     end
 end
 Train_Accuracy = Train_Accuracy/(ROUND_NUM*REPEAT_NUM);
