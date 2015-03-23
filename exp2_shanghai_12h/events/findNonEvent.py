@@ -4,7 +4,7 @@ import time
 import datetime
 
 ISOTIMEFORMAT='%Y-%m-%dT%XZ'
-STEP = 24 
+STEP = 12 
 START_TIME = '2013-05-28T00:00:00'
 END_TIME = '2014-12-31T03:00:00'
 AQI_LEVEL = 150

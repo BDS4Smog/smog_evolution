@@ -1,28 +1,29 @@
-function evaluate_BP( station )
+function evaluate_ELM( station )
 %EVALUATE_ELM Summary of this function goes here
 %   Detailed explanation goes here
 %Local air
-station = 'beijing';
+station = 'shanghai';
 version = '1';
 
 type1 = 'decrease';
 type2 = 'high';
+HIDDEN_NUM = 120;
 ROUND_NUM = 4;
-REPEAT_NUM = 1;
+REPEAT_NUM = 3;
 
-LIMIT_OF_EMPTY = 4;
+LIMIT_OF_EMPTY = 300;
 
-field = [1 1 1 1 0 0 0 0];
+field = [1 1 1 1 0 1 1 1];
 
 
-air_range = [2:7];
+air_range = [2:8];
 mete_range = [2:8];
 air_surround_range = [2:6];
 mete_surround_range = [2:36];
 air_surround_diff_range = [2:6];
-traffic_range = [2:8];
-checkin_range = [2:12]
-om_range = [2:9]
+traffic_range = [2:6];
+checkin_range = [2:12];
+om_range = [2:6];
 
 air_f1 = ['air/' station '_' type1 version '.txt'];
 air_f0 = ['air/' station '_' type2 version '.txt'];
@@ -34,8 +35,8 @@ mete_surround_f1 = ['mete_surround/' station '_' type1 version '.txt'];
 mete_surround_f0 = ['mete_surround/' station '_' type2 version '.txt'];
 air_surround_diff_f1 = ['air_surround_diff/' station '_' type1 version '.txt'];
 air_surround_diff_f0 = ['air_surround_diff/' station '_' type2 version '.txt'];
-traffic_f1 = ['traffic_new/' station '_' type1  version '.txt'];
-traffic_f0 = ['traffic_new/' station '_' type2  version '.txt'];
+traffic_f1 = ['traffic_new/' station '_traffic_' type1  version '.txt'];
+traffic_f0 = ['traffic_new/' station '_traffic_' type2  version '.txt'];
 checkin_f1 = ['check-in/' station '_' type1 version '.txt'];
 checkin_f0 = ['check-in/' station '_' type2 version '.txt'];
 om_f1 = ['opinion_mining/' station '_' type1 version '.txt'];
@@ -110,7 +111,7 @@ f1_score = 0;
 auc_avg = 0;
 for k = 1:REPEAT_NUM
     d0 = d0(randperm(length(d0)),:); 
-    d0 = d0(1:length(d1),:);
+    d0 = d0(1:size(d1,1),:);
     d = [d0;d1];
     d = d(randperm(length(d)),:); 
     d = myNormalize(d);
@@ -126,21 +127,23 @@ for k = 1:REPEAT_NUM
         else
             Tr = [d(1:start_1-1,:)',d(end_1+1:length(d),:)']';    
         end
-         %write Tr and Te to a txt file
+        [Tr_acc, Te_acc, tmp_precision, tmp_recall, tmp_f1_score,FPR,TPR,auc] = my_ELM(Tr, Te, 1, HIDDEN_NUM, 'sig');
+
+%        [Tr_acc, Te_acc, tmp_precision, tmp_recall, tmp_f1_score,FPR,TPR,auc] = my_SVM(Tr, Te);
+
+        fprintf('round: %d \n',i);
+        fprintf('FPR:\n');
+        fprintf('%f \n',FPR);
+        fprintf('TPR:\n');
+        fprintf('%f \n',TPR);
+        fprintf('auc: %f \n', auc);
         
-        if i==3
-            save trdata_for_python.txt -ascii Tr
-            save tedata_for_python.txt -ascii Te
-        end
-        
-%          [Tr_acc, Te_acc, tmp_precision, tmp_recall, tmp_f1_score,FPR,TPR,auc] = my_SVM(Tr, Te);
-%         
-%          auc_avg = auc_avg + auc;
-%          precision = precision+tmp_precision;
-%          recall = recall+tmp_recall;
-%          f1_score = f1_score+tmp_f1_score;
-%          Train_Accuracy = Train_Accuracy + Tr_acc;
-%          Test_Accuracy = Test_Accuracy + Te_acc;
+        auc_avg = auc_avg + auc;
+        precision = precision+tmp_precision;
+        recall = recall+tmp_recall;
+        f1_score = f1_score+tmp_f1_score;
+        Train_Accuracy = Train_Accuracy + Tr_acc;
+        Test_Accuracy = Test_Accuracy + Te_acc;
     end
 end
 Train_Accuracy = Train_Accuracy/(ROUND_NUM*REPEAT_NUM);
@@ -155,8 +158,7 @@ fprintf('Test_precision: %f \n',precision);
 fprintf('Test_recall: %f \n',recall);
 fprintf('Test_f1_score: %f \n',f1_score);
 fprintf('Number of records: %d \n',n_record*2);
-fprintf('auc_avg: %f \n',auc_avg);
-
+fprintf('average auc: %f \n',auc_avg);
 end
 
 function [r_d] = compRecord(d)

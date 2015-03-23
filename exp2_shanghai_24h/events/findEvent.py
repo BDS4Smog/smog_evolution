@@ -16,7 +16,7 @@ DE_HOURS_AFTER = 10
 AQI_LEVEL = 150
 START_TIME = '2013-05-28T00:00:00'
 END_TIME = '2014-11-30T23:00:00'
-STEP = 12
+STEP = 24 
 POSITION={'haidian':'海淀区万柳','gucheng':'古城'}
 
 def strToDatetime(s):
