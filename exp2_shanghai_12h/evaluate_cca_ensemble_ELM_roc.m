@@ -4,8 +4,8 @@ function evaluate_cca_ensemble_ELM( station )
 
 station = 'shanghai';
 version = '1';
-type1 = 'decrease';  %Positive (A, D),
-type2 = 'high';  %Negative (N-A, N-D)
+type1 = 'increase';  %Positive (A, D),
+type2 = 'low';  %Negative (N-A, N-D)
 
 ROUND_NUM = 4;
 REPEAT_NUM = 1;
